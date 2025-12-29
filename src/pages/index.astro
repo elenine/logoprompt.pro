@@ -1,33 +1,69 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LogoCard from '../components/LogoCard.astro';
+import logoPrompts from '../data/logo-prompts.json';
+import type { LogoPrompt } from '../types/logo';
+
+const prompts = logoPrompts as LogoPrompt[];
 ---
 
-<Layout title="Welcome to Astro">
+<Layout title="LogoPrompt Pro - AI Logo Generation Prompts">
   <main>
-    <h1>Welcome to <span class="text-gradient">Astro</span></h1>
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-    </p>
+    <header class="hero">
+      <h1>Logo<span class="text-gradient">Prompt</span>.pro</h1>
+      <p class="tagline">
+        Curated collection of logo prompts with AI-generated results across multiple models
+      </p>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <span class="stat-value">{prompts.length}</span>
+        <span class="stat-label">Prompts</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{prompts.reduce((acc, p) => acc + p.generations.length, 0)}</span>
+        <span class="stat-label">Generations</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{[...new Set(prompts.flatMap(p => p.generations.map(g => g.model)))].length}</span>
+        <span class="stat-label">AI Models</span>
+      </div>
+    </section>
+
+    <section class="prompts-grid">
+      {prompts.map((logo) => (
+        <LogoCard logo={logo} />
+      ))}
+    </section>
   </main>
 </Layout>
 
 <style>
   main {
     margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    font-size: 20px;
-    line-height: 1.6;
+    padding: 2rem 1rem;
+    max-width: 1200px;
   }
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1;
+
+  .hero {
     text-align: center;
-    margin-bottom: 1em;
+    margin-bottom: 3rem;
   }
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    h1 {
+      font-size: 4.5rem;
+    }
+  }
+
   .text-gradient {
     background-image: var(--accent-gradient);
     -webkit-background-clip: text;
@@ -35,19 +71,62 @@ import Layout from '../layouts/Layout.astro';
     background-size: 400%;
     background-position: 0%;
   }
-  .instructions {
-    margin-bottom: 2rem;
-    border: 1px solid rgba(var(--accent-light), 25%);
-    background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-    padding: 1.5rem;
-    border-radius: 8px;
+
+  .tagline {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto;
   }
-  .instructions code {
-    font-size: 0.8em;
-    font-weight: bold;
-    background: rgba(var(--accent-light), 12%);
-    color: rgb(var(--accent-light));
-    border-radius: 4px;
-    padding: 0.3em 0.4em;
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .prompts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .prompts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 </style>

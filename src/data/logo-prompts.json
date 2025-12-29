@@ -1,0 +1,130 @@
+[
+  {
+    "id": "tech-startup-minimal",
+    "prompt": "A minimalist tech startup logo featuring a geometric abstract shape, clean lines, modern sans-serif typography, blue and white color scheme, suitable for a SaaS company",
+    "category": "Technology",
+    "createdAt": "2025-01-15",
+    "generations": [
+      {
+        "model": "DALL-E 3",
+        "imageUrl": "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-15T10:30:00Z"
+      },
+      {
+        "model": "Midjourney",
+        "imageUrl": "https://images.unsplash.com/photo-1614680376408-81e91ffe3db7?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-15T10:35:00Z"
+      },
+      {
+        "model": "Stable Diffusion",
+        "imageUrl": "https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-15T10:40:00Z"
+      }
+    ]
+  },
+  {
+    "id": "organic-food-brand",
+    "prompt": "An organic food brand logo with a leaf motif, earthy green and brown tones, hand-drawn aesthetic, farm-to-table concept, natural and wholesome feel",
+    "category": "Food & Beverage",
+    "createdAt": "2025-01-14",
+    "generations": [
+      {
+        "model": "DALL-E 3",
+        "imageUrl": "https://images.unsplash.com/photo-1504274066651-8d31a536b11a?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-14T14:20:00Z"
+      },
+      {
+        "model": "Midjourney",
+        "imageUrl": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-14T14:25:00Z"
+      }
+    ]
+  },
+  {
+    "id": "fitness-app",
+    "prompt": "A dynamic fitness app logo with an abstract running figure, energetic orange and black gradient, bold modern typography, sense of movement and energy",
+    "category": "Health & Fitness",
+    "createdAt": "2025-01-13",
+    "generations": [
+      {
+        "model": "DALL-E 3",
+        "imageUrl": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-13T09:15:00Z"
+      },
+      {
+        "model": "Midjourney",
+        "imageUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-13T09:20:00Z"
+      },
+      {
+        "model": "Stable Diffusion",
+        "imageUrl": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-13T09:25:00Z"
+      },
+      {
+        "model": "Ideogram",
+        "imageUrl": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-13T09:30:00Z"
+      }
+    ]
+  },
+  {
+    "id": "luxury-fashion",
+    "prompt": "An elegant luxury fashion brand logo, sophisticated gold and black color palette, minimalist monogram design, high-end boutique aesthetic, timeless and refined",
+    "category": "Fashion",
+    "createdAt": "2025-01-12",
+    "generations": [
+      {
+        "model": "DALL-E 3",
+        "imageUrl": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-12T16:45:00Z"
+      },
+      {
+        "model": "Midjourney",
+        "imageUrl": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-12T16:50:00Z"
+      }
+    ]
+  },
+  {
+    "id": "creative-agency",
+    "prompt": "A creative design agency logo with overlapping colorful shapes, playful yet professional, gradient purple and pink tones, represents creativity and innovation",
+    "category": "Creative Services",
+    "createdAt": "2025-01-11",
+    "generations": [
+      {
+        "model": "DALL-E 3",
+        "imageUrl": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-11T11:00:00Z"
+      },
+      {
+        "model": "Midjourney",
+        "imageUrl": "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-11T11:05:00Z"
+      },
+      {
+        "model": "Stable Diffusion",
+        "imageUrl": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-11T11:10:00Z"
+      }
+    ]
+  },
+  {
+    "id": "coffee-shop",
+    "prompt": "A cozy coffee shop logo with a steaming cup illustration, warm brown and cream colors, vintage hand-lettered typography, inviting and artisanal atmosphere",
+    "category": "Food & Beverage",
+    "createdAt": "2025-01-10",
+    "generations": [
+      {
+        "model": "DALL-E 3",
+        "imageUrl": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-10T08:30:00Z"
+      },
+      {
+        "model": "Midjourney",
+        "imageUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop",
+        "generatedAt": "2025-01-10T08:35:00Z"
+      }
+    ]
+  }
+]
