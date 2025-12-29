@@ -37,21 +37,6 @@ const models = [...new Set(generations.map(g => g.model))].sort();
       </p>
     </header>
 
-    <section class="stats">
-      <div class="stat">
-        <span class="stat-value">{logos.length}</span>
-        <span class="stat-label">Logo Prompts</span>
-      </div>
-      <div class="stat">
-        <span class="stat-value">{generations.length}</span>
-        <span class="stat-label">Generated Images</span>
-      </div>
-      <div class="stat">
-        <span class="stat-value">{[...new Set(generations.map(g => g.model))].length}</span>
-        <span class="stat-label">AI Models</span>
-      </div>
-    </section>
-
     <section class="logos-section">
       <h2 class="section-title">Recent Generations</h2>
       <ModelFilter models={models} />
@@ -99,40 +84,6 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
-  }
-
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    padding: 2rem;
-    background: rgba(var(--accent-dark), 0.5);
-    border-radius: 16px;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-  }
-
-  .stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .stat-value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .stat-label {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
 
   .section-title {
