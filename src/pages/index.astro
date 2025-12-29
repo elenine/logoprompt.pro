@@ -1,53 +1,134 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LogoCard from '../components/LogoCard.astro';
+import logosData from '../data/logos.json';
+import type { LogoPrompt } from '../types/logo';
+
+const logos = logosData.logos as LogoPrompt[];
 ---
 
-<Layout title="Welcome to Astro">
+<Layout title="LogoPrompt Pro - AI Logo Generation Gallery">
   <main>
-    <h1>Welcome to <span class="text-gradient">Astro</span></h1>
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-    </p>
+    <header class="hero">
+      <h1>Logo<span class="text-gradient">Prompt</span>.pro</h1>
+      <p class="tagline">
+        Explore AI-generated logo concepts across multiple models.
+        One prompt, many creative possibilities.
+      </p>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <span class="stat-value">{logos.length}</span>
+        <span class="stat-label">Logo Prompts</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{logos.reduce((sum, logo) => sum + logo.outputs.length, 0)}</span>
+        <span class="stat-label">Generated Outputs</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{[...new Set(logos.flatMap(l => l.outputs.map(o => o.model)))].length}</span>
+        <span class="stat-label">AI Models</span>
+      </div>
+    </section>
+
+    <section class="logos-section">
+      <h2 class="section-title">Recent Logo Prompts</h2>
+      <div class="logos-grid">
+        {logos.map((logo) => (
+          <LogoCard logo={logo} />
+        ))}
+      </div>
+    </section>
   </main>
 </Layout>
 
 <style>
   main {
     margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    font-size: 20px;
-    line-height: 1.6;
+    padding: 2rem 1rem;
+    max-width: 1200px;
   }
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1;
+
+  .hero {
     text-align: center;
-    margin-bottom: 1em;
+    padding: 2rem 0 3rem;
   }
+
+  h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 1rem 0;
+  }
+
   .text-gradient {
     background-image: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
     background-size: 400%;
     background-position: 0%;
   }
-  .instructions {
-    margin-bottom: 2rem;
-    border: 1px solid rgba(var(--accent-light), 25%);
-    background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-    padding: 1.5rem;
-    border-radius: 8px;
+
+  .tagline {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
   }
-  .instructions code {
-    font-size: 0.8em;
-    font-weight: bold;
-    background: rgba(var(--accent-light), 12%);
-    color: rgb(var(--accent-light));
-    border-radius: 4px;
-    padding: 0.3em 0.4em;
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    background: rgba(var(--accent-dark), 0.5);
+    border-radius: 16px;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .logos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 400px) {
+    .logos-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

@@ -1,0 +1,160 @@
+{
+  "logos": [
+    {
+      "id": "logo-001",
+      "title": "TechFlow Startup",
+      "prompt": "A minimalist tech startup logo featuring flowing lines that form the letter T, using gradient blue and purple colors, modern and clean design, suitable for a SaaS company",
+      "category": "Technology",
+      "tags": ["minimalist", "tech", "startup", "gradient", "modern"],
+      "createdAt": "2024-12-15",
+      "outputs": [
+        {
+          "id": "logo-001-dalle3",
+          "model": "DALL-E 3",
+          "imageUrl": "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-15T10:30:00Z"
+        },
+        {
+          "id": "logo-001-midjourney",
+          "model": "Midjourney",
+          "imageUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-15T10:35:00Z"
+        },
+        {
+          "id": "logo-001-stable",
+          "model": "Stable Diffusion XL",
+          "imageUrl": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-15T10:40:00Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-002",
+      "title": "Green Earth Eco",
+      "prompt": "An eco-friendly company logo with a stylized leaf integrated into a circular earth shape, green and brown earthy tones, organic and natural feeling",
+      "category": "Environmental",
+      "tags": ["eco", "nature", "leaf", "organic", "sustainable"],
+      "createdAt": "2024-12-14",
+      "outputs": [
+        {
+          "id": "logo-002-dalle3",
+          "model": "DALL-E 3",
+          "imageUrl": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-14T14:20:00Z"
+        },
+        {
+          "id": "logo-002-midjourney",
+          "model": "Midjourney",
+          "imageUrl": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-14T14:25:00Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-003",
+      "title": "Apex Athletics",
+      "prompt": "A dynamic sports brand logo with an abstract mountain peak or arrow pointing upward, bold and energetic, red and black color scheme, representing strength and achievement",
+      "category": "Sports",
+      "tags": ["sports", "athletic", "dynamic", "bold", "energy"],
+      "createdAt": "2024-12-13",
+      "outputs": [
+        {
+          "id": "logo-003-dalle3",
+          "model": "DALL-E 3",
+          "imageUrl": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-13T09:15:00Z"
+        },
+        {
+          "id": "logo-003-midjourney",
+          "model": "Midjourney",
+          "imageUrl": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-13T09:20:00Z"
+        },
+        {
+          "id": "logo-003-stable",
+          "model": "Stable Diffusion XL",
+          "imageUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-13T09:25:00Z"
+        },
+        {
+          "id": "logo-003-firefly",
+          "model": "Adobe Firefly",
+          "imageUrl": "https://images.unsplash.com/photo-1526676037777-05a232554f77?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-13T09:30:00Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-004",
+      "title": "Artisan Coffee Co",
+      "prompt": "A vintage-style coffee shop logo with a steaming coffee cup, hand-drawn aesthetic, warm brown and cream colors, cozy and inviting atmosphere",
+      "category": "Food & Beverage",
+      "tags": ["coffee", "vintage", "artisan", "warm", "cozy"],
+      "createdAt": "2024-12-12",
+      "outputs": [
+        {
+          "id": "logo-004-dalle3",
+          "model": "DALL-E 3",
+          "imageUrl": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-12T16:45:00Z"
+        },
+        {
+          "id": "logo-004-midjourney",
+          "model": "Midjourney",
+          "imageUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-12T16:50:00Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-005",
+      "title": "Nova Finance",
+      "prompt": "A professional financial services logo with abstract geometric shapes suggesting growth and stability, navy blue and gold colors, trustworthy and sophisticated",
+      "category": "Finance",
+      "tags": ["finance", "professional", "geometric", "corporate", "trust"],
+      "createdAt": "2024-12-11",
+      "outputs": [
+        {
+          "id": "logo-005-dalle3",
+          "model": "DALL-E 3",
+          "imageUrl": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-11T11:00:00Z"
+        },
+        {
+          "id": "logo-005-midjourney",
+          "model": "Midjourney",
+          "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-11T11:05:00Z"
+        },
+        {
+          "id": "logo-005-stable",
+          "model": "Stable Diffusion XL",
+          "imageUrl": "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-11T11:10:00Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-006",
+      "title": "Pixel Play Games",
+      "prompt": "A playful gaming studio logo with pixel art style elements, vibrant neon colors on dark background, fun and retro-modern gaming aesthetic",
+      "category": "Gaming",
+      "tags": ["gaming", "pixel", "retro", "neon", "fun"],
+      "createdAt": "2024-12-10",
+      "outputs": [
+        {
+          "id": "logo-006-dalle3",
+          "model": "DALL-E 3",
+          "imageUrl": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-10T20:30:00Z"
+        },
+        {
+          "id": "logo-006-midjourney",
+          "model": "Midjourney",
+          "imageUrl": "https://images.unsplash.com/photo-1493711662062-fa541f7f3d24?w=400&h=400&fit=crop",
+          "generatedAt": "2024-12-10T20:35:00Z"
+        }
+      ]
+    }
+  ]
+}
