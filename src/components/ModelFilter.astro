@@ -69,6 +69,26 @@ const { models } = Astro.props;
     color: white;
     box-shadow: 0 0 20px rgba(var(--accent), 0.15);
   }
+
+  /* Light theme filter button adjustments */
+  [data-theme="light"] .filter-btn {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  [data-theme="light"] .filter-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  [data-theme="light"] .filter-btn.active {
+    background: rgba(var(--accent), 0.1);
+    border-color: rgba(var(--accent), 0.4);
+    color: rgb(var(--accent-dark));
+    box-shadow: 0 0 15px rgba(var(--accent), 0.1);
+  }
 </style>
 
 <script>

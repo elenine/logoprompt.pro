@@ -68,6 +68,27 @@
     color: rgb(var(--accent));
   }
 
+  /* Light theme adjustments */
+  [data-theme="light"] .theme-toggle {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  [data-theme="light"] .theme-btn {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  [data-theme="light"] .theme-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  [data-theme="light"] .theme-btn.active {
+    background: rgba(var(--accent), 0.1);
+    color: rgb(var(--accent-dark));
+  }
+
   @media (max-width: 600px) {
     .theme-toggle {
       top: 0.75rem;

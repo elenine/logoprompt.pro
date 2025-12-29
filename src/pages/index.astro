@@ -211,6 +211,19 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     box-shadow: 0 0 20px rgba(var(--accent), 0.3);
   }
 
+  /* Light theme step icon adjustments */
+  [data-theme="light"] .step-icon {
+    background: rgba(var(--accent), 0.1);
+    border-color: rgba(var(--accent), 0.25);
+    color: rgb(var(--accent));
+  }
+
+  [data-theme="light"] .steps li:hover .step-icon {
+    background: rgba(var(--accent), 0.15);
+    border-color: rgba(var(--accent), 0.4);
+    box-shadow: 0 0 20px rgba(var(--accent), 0.15);
+  }
+
   .steps li strong {
     font-size: 0.9rem;
     font-weight: 500;
