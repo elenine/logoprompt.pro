@@ -7,14 +7,19 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "transform": "npx tsx scripts/transform-generations.ts",
+    "transform:dry": "DRY_RUN=true npx tsx scripts/transform-generations.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
-    "astro": "^5.1.1"
+    "astro": "^5.1.1",
+    "sharp": "^0.34.5",
+    "uploadthing": "^7.4.4"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
 }
