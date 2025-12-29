@@ -1,23 +1,101 @@
 ---
+import Footer from '../components/Footer.astro';
+
 interface Props {
   title: string;
+  description?: string;
+  image?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = "Discover AI-generated logo concepts and prompts. Copy prompts to use with Ideogram, Google Gemini, and other AI image generators. One prompt, many creative possibilities.",
+  image = "https://logoprompt.pro/og-image.png"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, "https://logoprompt.pro");
+const siteName = "LogoPrompt.pro";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Explore AI-generated logo concepts across multiple models. Compare outputs from DALL-E, Midjourney, Stable Diffusion, and more." />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Primary Meta Tags -->
     <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="AI logo generator, logo prompts, AI image prompts, Ideogram prompts, Gemini prompts, logo design, AI art, logo concepts, creative prompts, brand design, logo inspiration" />
+    <meta name="author" content="LogoPrompt.pro" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#13151a" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": siteName,
+      "url": "https://logoprompt.pro",
+      "description": description,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://logoprompt.pro/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": siteName,
+      "url": "https://logoprompt.pro",
+      "logo": "https://logoprompt.pro/favicon.svg",
+      "sameAs": []
+    })} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "AI Logo Prompts Gallery",
+      "description": "Browse and discover AI-generated logo concepts. Copy prompts to create your own unique logos with AI image generators.",
+      "url": "https://logoprompt.pro",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": siteName,
+        "url": "https://logoprompt.pro"
+      }
+    })} />
   </head>
   <body>
     <slot />
+    <Footer />
   </body>
 </html>
 
