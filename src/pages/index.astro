@@ -94,7 +94,6 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     </section>
 
     <section class="logos-section">
-      <h2 class="section-title">Recent Generations</h2>
       <ModelFilter models={models} />
       <div class="logos-grid">
         {generations.map((generation) => (
@@ -316,24 +315,6 @@ const models = [...new Set(generations.map(g => g.model))].sort();
   /* Logos Section */
   .logos-section {
     padding-top: 1rem;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem 0;
-    color: rgb(var(--text-primary));
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .section-title::before {
-    content: '';
-    width: 4px;
-    height: 24px;
-    background: rgb(var(--accent));
-    border-radius: 2px;
   }
 
   .logos-grid {

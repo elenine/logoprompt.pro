@@ -144,7 +144,7 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
     gap: 0.5rem;
     padding: 0.6rem 0.875rem;
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 600;
     color: white;
     background: rgb(var(--accent));
     border: none;
@@ -169,7 +169,6 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
   .btn-icon-success,
   .btn-text-success {
     display: none;
-    color: #16a34a;
   }
 
   .action-btn.copied .btn-icon,
@@ -182,14 +181,11 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
     display: inline;
   }
 
-  .action-btn.copied {
-    background: #dcfce7;
-    color: #16a34a;
-  }
-
+  .action-btn.copied,
   .action-btn-secondary.copied {
-    background: #dcfce7;
-    border-color: #bbf7d0;
+    background: #16a34a;
+    color: white;
+    border-color: #16a34a;
   }
 
   .btn-text,
