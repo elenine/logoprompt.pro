@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LogoCard from '../components/LogoCard.astro';
+import ModelFilter from '../components/ModelFilter.astro';
 import Pagination from '../components/Pagination.astro';
 import logosData from '../data/logos.json';
 import type { LogoPrompt, LogoGeneration } from '../types/logo';
@@ -24,6 +25,9 @@ const generations: LogoGeneration[] = logos.flatMap((logo) =>
 
 // Sort by generation date (newest first)
 generations.sort((a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime());
+
+// Get unique models for filter
+const models = [...new Set(generations.map(g => g.model))].sort();
 ---
 
 <Layout title="LogoPrompt Pro - AI Logo Generation Gallery">
@@ -53,6 +57,7 @@ generations.sort((a, b) => new Date(b.generatedAt).getTime() - new Date(a.genera
 
     <section class="logos-section">
       <h2 class="section-title">Recent Generations</h2>
+      <ModelFilter models={models} />
       <div class="logos-grid">
         {generations.map((generation) => (
           <LogoCard generation={generation} />

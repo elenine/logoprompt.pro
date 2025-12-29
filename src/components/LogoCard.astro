@@ -28,12 +28,6 @@ const { generation } = Astro.props;
       <p>{generation.prompt}</p>
     </div>
 
-    <div class="logo-tags">
-      {generation.tags.map((tag) => (
-        <span class="tag">#{tag}</span>
-      ))}
-    </div>
-
     <footer class="logo-footer">
       <time datetime={generation.generatedAt}>
         {new Date(generation.generatedAt).toLocaleDateString()}
@@ -137,19 +131,6 @@ const { generation } = Astro.props;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  }
-
-  .logo-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .tag {
-    font-size: 0.75rem;
-    color: rgb(var(--accent-light));
-    opacity: 0.8;
   }
 
   .logo-footer {

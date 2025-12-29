@@ -1,0 +1,202 @@
+---
+interface Props {
+  models: string[];
+}
+
+const { models } = Astro.props;
+---
+
+<div class="model-filter">
+  <span class="filter-label">Filter by Model:</span>
+  <div class="filter-buttons">
+    <button class="filter-btn active" data-model="all">All</button>
+    {models.map((model) => (
+      <button class="filter-btn" data-model={model}>{model}</button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .model-filter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(var(--accent-dark), 0.5);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+  }
+
+  .filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(var(--accent-light), 0.2);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover {
+    background: rgba(var(--accent), 0.3);
+    border-color: rgba(var(--accent-light), 0.4);
+  }
+
+  .filter-btn.active {
+    background: rgba(var(--accent), 0.5);
+    border-color: rgb(var(--accent-light));
+    color: white;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLButtonElement>;
+    const grid = document.querySelector('.logos-grid') as HTMLElement;
+    const cards = Array.from(grid?.querySelectorAll('.logo-card') || []) as HTMLElement[];
+    const pagination = document.querySelector('.pagination') as HTMLElement;
+    const paginationInfo = pagination?.querySelector('.page-current') as HTMLElement;
+    const paginationTotal = pagination?.querySelector('.page-total') as HTMLElement;
+    const prevBtn = pagination?.querySelector('.prev') as HTMLButtonElement;
+    const nextBtn = pagination?.querySelector('.next') as HTMLButtonElement;
+
+    const itemsPerPage = parseInt(pagination?.dataset.itemsPerPage || '12');
+
+    // Get filter and page from URL
+    function getStateFromURL(): { model: string; page: number } {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        model: params.get('model') || 'all',
+        page: parseInt(params.get('page') || '1')
+      };
+    }
+
+    // Update URL with current state
+    function updateURL(model: string, page: number) {
+      const url = new URL(window.location.href);
+
+      if (model === 'all') {
+        url.searchParams.delete('model');
+      } else {
+        url.searchParams.set('model', model);
+      }
+
+      if (page === 1) {
+        url.searchParams.delete('page');
+      } else {
+        url.searchParams.set('page', page.toString());
+      }
+
+      window.history.pushState({ model, page }, '', url.toString());
+    }
+
+    let currentState = getStateFromURL();
+
+    function getFilteredCards(): HTMLElement[] {
+      if (currentState.model === 'all') {
+        return cards;
+      }
+      return cards.filter(card => {
+        const modelBadge = card.querySelector('.model-badge');
+        return modelBadge?.textContent === currentState.model;
+      });
+    }
+
+    function updateDisplay(shouldScroll: boolean = true) {
+      const filteredCards = getFilteredCards();
+      const totalPages = Math.max(1, Math.ceil(filteredCards.length / itemsPerPage));
+
+      // Ensure current page is valid
+      if (currentState.page > totalPages) {
+        currentState.page = totalPages;
+      }
+
+      const start = (currentState.page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+
+      // Hide all cards first
+      cards.forEach(card => {
+        card.style.display = 'none';
+      });
+
+      // Show only filtered cards for current page
+      filteredCards.forEach((card, index) => {
+        if (index >= start && index < end) {
+          card.style.display = '';
+        }
+      });
+
+      // Update pagination display
+      if (paginationInfo) paginationInfo.textContent = currentState.page.toString();
+      if (paginationTotal) paginationTotal.textContent = totalPages.toString();
+      if (prevBtn) prevBtn.disabled = currentState.page === 1;
+      if (nextBtn) nextBtn.disabled = currentState.page === totalPages;
+
+      // Update filter buttons
+      filterButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.model === currentState.model);
+      });
+
+      // Update URL
+      updateURL(currentState.model, currentState.page);
+
+      if (shouldScroll && grid) {
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Filter button click handlers
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const model = btn.dataset.model || 'all';
+        if (model !== currentState.model) {
+          currentState.model = model;
+          currentState.page = 1; // Reset to page 1 when filter changes
+          updateDisplay();
+        }
+      });
+    });
+
+    // Pagination button handlers
+    prevBtn?.addEventListener('click', () => {
+      if (currentState.page > 1) {
+        currentState.page--;
+        updateDisplay();
+      }
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      const filteredCards = getFilteredCards();
+      const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+      if (currentState.page < totalPages) {
+        currentState.page++;
+        updateDisplay();
+      }
+    });
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', () => {
+      currentState = getStateFromURL();
+      updateDisplay(false);
+    });
+
+    // Initial display
+    updateDisplay(false);
+  });
+</script>
