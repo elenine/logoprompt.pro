@@ -1,4 +1,5 @@
 ---
+import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props {
@@ -23,6 +24,11 @@ const siteName = "LogoPrompt.pro";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -97,6 +103,7 @@ const siteName = "LogoPrompt.pro";
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2092470205166235" crossorigin="anonymous"></script>
   </head>
   <body>
+    <Header />
     <slot />
     <Footer />
   </body>
@@ -104,24 +111,117 @@ const siteName = "LogoPrompt.pro";
 
 <style is:global>
   :root {
+    /* Primary accent - vibrant coral red */
     --accent: 239, 68, 68;
     --accent-light: 254, 202, 202;
     --accent-dark: 127, 29, 29;
+
+    /* Secondary accent - purple for variety */
+    --secondary: 139, 92, 246;
+    --secondary-light: 196, 181, 253;
+
+    /* Neutral colors */
+    --bg-primary: 13, 15, 20;
+    --bg-secondary: 22, 25, 32;
+    --bg-tertiary: 32, 36, 46;
+
+    /* Gradients */
     --accent-gradient: linear-gradient(
-      45deg,
+      135deg,
       rgb(var(--accent)),
-      rgb(var(--accent-light)) 30%,
-      white 60%
+      rgb(var(--secondary)) 50%,
+      rgb(var(--accent-light)) 100%
     );
+
+    --bg-gradient: radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      rgba(var(--accent), 0.15),
+      transparent
+    );
+
+    --card-gradient: linear-gradient(
+      145deg,
+      rgba(var(--bg-tertiary), 0.6),
+      rgba(var(--bg-secondary), 0.4)
+    );
+
+    /* Glass effect */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+
+    /* Spacing scale */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+
+    /* Border radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 400ms ease;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 40px rgba(var(--accent), 0.3);
   }
+
+  * {
+    box-sizing: border-box;
+  }
+
   html {
-    font-family: system-ui, sans-serif;
-    background: #13151a;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: rgb(var(--bg-primary));
     color: white;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
   body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    background-image: var(--bg-gradient);
+    background-attachment: fixed;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background: rgba(var(--accent), 0.3);
+    color: white;
+  }
+
+  /* Focus visible for accessibility */
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+  }
+
+  /* Smooth scroll for reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>

@@ -40,33 +40,55 @@ const models = [...new Set(generations.map(g => g.model))].sort();
 <Layout title="LogoPrompt Pro - AI Logo Generation Gallery">
   <main>
     <header class="hero">
-      <h1>Logo<span class="text-gradient">Prompt</span>.pro</h1>
-      <p class="tagline">
-        Explore AI-generated logo concepts across multiple models.
-        One prompt, many creative possibilities.
-      </p>
+      <div class="hero-glow"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>AI-Powered Logo Inspiration</span>
+        </div>
+        <h1>
+          <span class="hero-title-line">Discover stunning</span>
+          <span class="hero-title-gradient">AI logo prompts</span>
+        </h1>
+        <p class="tagline">
+          Explore a curated collection of AI-generated logo concepts. Copy prompts instantly
+          and create unique brand identities with Ideogram, Gemini, and more.
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-value">{generations.length}</span>
+            <span class="stat-label">Logos</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-value">{models.length}</span>
+            <span class="stat-label">AI Models</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-value">Free</span>
+            <span class="stat-label">To Use</span>
+          </div>
+        </div>
+      </div>
     </header>
 
     <section class="how-to-use">
-      <h2>How to Use</h2>
       <ol class="steps">
-        <li>
-          <span class="step-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          </span>
-          <strong>Copy prompt</strong>
+        <li class="step-item">
+          <span class="step-num">1</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span><strong>Copy prompt</strong> from any logo</span>
         </li>
-        <li>
-          <span class="step-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-          </span>
-          <strong>Open Ideogram or Gemini</strong>
+        <li class="step-item">
+          <span class="step-num">2</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          <span><strong>Open</strong> Ideogram or Gemini</span>
         </li>
-        <li>
-          <span class="step-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          </span>
-          <strong>Paste & generate</strong>
+        <li class="step-item">
+          <span class="step-num">3</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span><strong>Paste & generate</strong> your logo</span>
         </li>
       </ol>
     </section>
@@ -95,56 +117,173 @@ const models = [...new Set(generations.map(g => g.model))].sort();
 <style>
   main {
     margin: auto;
-    padding: 2rem 1rem;
+    padding: 0 1rem 2rem;
     max-width: 1400px;
   }
 
+  /* Hero Section */
   .hero {
+    position: relative;
     text-align: center;
-    padding: 2rem 0 3rem;
+    padding: 2rem 0 2.5rem;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(var(--accent), 0.15) 0%,
+      rgba(var(--secondary), 0.08) 30%,
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: pulse 8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.6;
+      transform: translateX(-50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(-50%) scale(1.1);
+    }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.875rem;
+    background: rgba(var(--accent), 0.1);
+    border: 1px solid rgba(var(--accent), 0.2);
+    border-radius: var(--radius-full);
+    color: rgb(var(--accent-light));
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .hero-badge svg {
+    color: rgb(var(--accent));
   }
 
   h1 {
-    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-size: clamp(2rem, 6vw, 3.5rem);
     font-weight: 800;
     line-height: 1.1;
     margin: 0 0 1rem 0;
+    letter-spacing: -0.03em;
+    animation: fadeInUp 0.6s ease-out 0.1s both;
   }
 
-  .text-gradient {
-    background-image: var(--accent-gradient);
+  .hero-title-line {
+    display: block;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .hero-title-gradient {
+    display: block;
+    background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    background-size: 400%;
-    background-position: 0%;
+    background-size: 200% auto;
+    animation: gradient-shift 4s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% center;
+    }
+    50% {
+      background-position: 100% center;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .tagline {
-    font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 600px;
-    margin: 0 auto;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 550px;
+    margin: 0 auto 1.25rem;
     line-height: 1.6;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
   }
 
+  .hero-stats {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(8px);
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-value {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* How to Use Section */
   .how-to-use {
     max-width: 700px;
     margin: 0 auto 2rem;
-    padding: 1rem 1.5rem;
-    background: rgba(var(--accent-dark), 0.3);
-    border-radius: 12px;
-    border: 1px solid rgba(var(--accent-light), 0.1);
-  }
-
-  .how-to-use h2 {
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin: 0 0 0.75rem 0;
-    color: rgba(255, 255, 255, 0.5);
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    padding: 0.875rem 1.25rem;
+    background: var(--card-gradient);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    animation: fadeInUp 0.6s ease-out 0.4s both;
   }
 
   .steps {
@@ -152,66 +291,87 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     padding: 0;
     margin: 0;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 2rem;
   }
 
-  .steps li {
+  .step-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    position: relative;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
   }
 
-  .steps li:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: -1.25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 6px;
-    height: 6px;
-    border-top: 2px solid rgba(255, 255, 255, 0.3);
-    border-right: 2px solid rgba(255, 255, 255, 0.3);
-    transform: translateY(-50%) rotate(45deg);
-  }
-
-  .step-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, rgb(var(--accent)), rgb(var(--accent-light)));
-    border-radius: 8px;
-    color: white;
+  .step-item svg {
+    color: rgb(var(--accent-light));
     flex-shrink: 0;
   }
 
-  .steps li strong {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
+  .step-item strong {
+    color: white;
+    font-weight: 600;
   }
 
-  @media (max-width: 600px) {
+  .step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba(var(--accent), 0.2);
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgb(var(--accent-light));
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
     .steps {
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.5rem;
+      align-items: flex-start;
     }
 
-    .steps li:not(:last-child)::after {
+    .hero {
+      padding: 1.5rem 0 2rem;
+    }
+
+    .hero-stats {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+    }
+
+    .stat-divider {
       display: none;
     }
   }
 
+  /* Logos Section */
+  .logos-section {
+    padding-top: 1rem;
+  }
+
   .section-title {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
     margin: 0 0 1.5rem 0;
-    color: rgba(255, 255, 255, 0.9);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 24px;
+    background: var(--accent-gradient);
+    border-radius: 2px;
   }
 
   .logos-grid {
