@@ -37,7 +37,7 @@ export const SOCIAL_COPY_CONFIG = {
  */
 export const AD_CONFIG = {
   /** Master switch to enable/disable all advertisements */
-  showAdvertisement: true,
+  showAdvertisement: false,
 
   /** Show direct URL advertisement (opens on copy actions) */
   showDirectAd: false,
