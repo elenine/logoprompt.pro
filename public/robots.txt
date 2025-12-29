@@ -1,0 +1,10 @@
+# robots.txt for logoprompt.pro
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://logoprompt.pro/sitemap-index.xml
+
+# Crawl-delay (optional, for politeness)
+Crawl-delay: 1
