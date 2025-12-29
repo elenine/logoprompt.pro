@@ -66,6 +66,8 @@ const { models } = Astro.props;
 </style>
 
 <script>
+  import { AD_CONFIG, shouldShowBannerAd } from '../constants/socialCopy';
+
   document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLButtonElement>;
     const grid = document.querySelector('.logos-grid') as HTMLElement;
@@ -73,14 +75,17 @@ const { models } = Astro.props;
     const loadingIndicator = document.querySelector('.loading-indicator') as HTMLElement;
     const scrollSentinel = document.querySelector('.scroll-sentinel') as HTMLElement;
 
+    const { bannerAd } = AD_CONFIG;
     const itemsPerBatch = 12;
     let currentModel = 'all';
     let visibleCount = 0;
     let isLoading = false;
     let hasMore = true;
 
-    // Get ad banner template with real ad
-    function createAdBanner(slotNumber: number): HTMLElement {
+    // Get ad banner template with real ad (returns null if ads disabled)
+    function createAdBanner(slotNumber: number): HTMLElement | null {
+      if (!shouldShowBannerAd()) return null;
+
       const adBanner = document.createElement('div');
       adBanner.className = 'ad-banner';
       adBanner.dataset.adSlot = slotNumber.toString();
@@ -102,18 +107,18 @@ const { models } = Astro.props;
 
       // Load ad script after element is added to DOM
       setTimeout(() => {
-        // Set ad options
+        // Set ad options from config
         (window as any).atOptions = {
-          'key': '882d73406cd815f47161aad7e2526995',
-          'format': 'iframe',
-          'height': 90,
-          'width': 728,
+          'key': bannerAd.key,
+          'format': bannerAd.format,
+          'height': bannerAd.height,
+          'width': bannerAd.width,
           'params': {}
         };
 
         // Create and inject the ad script
         const script = document.createElement('script');
-        script.src = 'https://www.highperformanceformat.com/882d73406cd815f47161aad7e2526995/invoke.js';
+        script.src = bannerAd.scriptUrl;
         script.async = true;
         adContainer.appendChild(script);
       }, 100);
@@ -169,10 +174,12 @@ const { models } = Astro.props;
           const adSlot = Math.floor(start / itemsPerBatch);
           const adBanner = createAdBanner(adSlot);
 
-          // Find the last visible card and insert ad after it
-          const lastVisibleCard = filteredCards[start - 1];
-          if (lastVisibleCard && lastVisibleCard.parentNode) {
-            lastVisibleCard.parentNode.insertBefore(adBanner, lastVisibleCard.nextSibling);
+          // Find the last visible card and insert ad after it (only if ads enabled)
+          if (adBanner) {
+            const lastVisibleCard = filteredCards[start - 1];
+            if (lastVisibleCard && lastVisibleCard.parentNode) {
+              lastVisibleCard.parentNode.insertBefore(adBanner, lastVisibleCard.nextSibling);
+            }
           }
         }
 

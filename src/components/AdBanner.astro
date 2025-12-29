@@ -1,19 +1,32 @@
 ---
+import { AD_CONFIG, shouldShowBannerAd } from '../constants/socialCopy';
+
 interface Props {
   slot?: number;
 }
 
 const { slot = 1 } = Astro.props;
+const { bannerAd } = AD_CONFIG;
+const showBanner = shouldShowBannerAd();
 ---
 
-<div class="ad-banner" data-ad-slot={slot}>
-  <div class="ad-content">
-    <div class="ad-label">Advertisement</div>
-    <div class="ad-container" id={`ad-container-${slot}`}>
-      <!-- Ad will be loaded here -->
+{showBanner && (
+  <div class="ad-banner" data-ad-slot={slot}>
+    <div class="ad-content">
+      <div class="ad-label">Advertisement</div>
+      <div
+        class="ad-container"
+        id={`ad-container-${slot}`}
+        data-ad-key={bannerAd.key}
+        data-ad-script={bannerAd.scriptUrl}
+        data-ad-height={bannerAd.height}
+        data-ad-width={bannerAd.width}
+      >
+        <!-- Ad will be loaded here -->
+      </div>
     </div>
   </div>
-</div>
+)}
 
 <script is:inline>
   (function() {
@@ -22,12 +35,17 @@ const { slot = 1 } = Astro.props;
       if (container.dataset.adLoaded) return;
       container.dataset.adLoaded = 'true';
 
+      var key = container.dataset.adKey;
+      var scriptUrl = container.dataset.adScript;
+      var height = parseInt(container.dataset.adHeight) || 90;
+      var width = parseInt(container.dataset.adWidth) || 728;
+
       // Create and inject the ad scripts
       var atOptions = {
-        'key': '882d73406cd815f47161aad7e2526995',
+        'key': key,
         'format': 'iframe',
-        'height': 90,
-        'width': 728,
+        'height': height,
+        'width': width,
         'params': {}
       };
 
@@ -36,7 +54,7 @@ const { slot = 1 } = Astro.props;
 
       // Create the invoke script
       var script = document.createElement('script');
-      script.src = 'https://www.highperformanceformat.com/882d73406cd815f47161aad7e2526995/invoke.js';
+      script.src = scriptUrl;
       script.async = true;
       container.appendChild(script);
     });

@@ -144,11 +144,12 @@ const { generation } = Astro.props;
 </style>
 
 <script>
-  import { SOCIAL_COPY_CONFIG } from '../constants/socialCopy';
+  import { SOCIAL_COPY_CONFIG, AD_CONFIG, shouldShowDirectAd } from '../constants/socialCopy';
 
   document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.logo-card');
-    const { storageKey, adUrl } = SOCIAL_COPY_CONFIG;
+    const { storageKey } = SOCIAL_COPY_CONFIG;
+    const { directAdUrl } = AD_CONFIG;
 
     // Check if search=true is in URL params
     const urlParams = new URLSearchParams(window.location.search);
@@ -209,8 +210,10 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
           const textToCopy = isSearchMode ? formatSocialCopy(prompt, model) : prompt;
           await navigator.clipboard.writeText(textToCopy);
           showCopied(copyPromptBtn as HTMLButtonElement, 'Copied!');
-          // Open ad URL
-          window.open(adUrl, '_blank');
+          // Open ad URL randomly based on config
+          if (shouldShowDirectAd()) {
+            window.open(directAdUrl, '_blank');
+          }
         } catch (err) {
           console.error('Failed to copy prompt:', err);
         }
@@ -226,8 +229,10 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
             new ClipboardItem({ 'image/png': pngBlob })
           ]);
           showCopied(copyImageBtn as HTMLButtonElement, 'Copied!');
-          // Open ad URL
-          window.open(adUrl, '_blank');
+          // Open ad URL randomly based on config
+          if (shouldShowDirectAd()) {
+            window.open(directAdUrl, '_blank');
+          }
         } catch (err) {
           console.error('Failed to copy image:', err);
         }
