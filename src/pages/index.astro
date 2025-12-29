@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LogoCard from '../components/LogoCard.astro';
+import Pagination from '../components/Pagination.astro';
 import logosData from '../data/logos.json';
 import type { LogoPrompt, LogoGeneration } from '../types/logo';
 
 const logos = logosData.logos as LogoPrompt[];
+const ITEMS_PER_PAGE = 12;
 
 // Flatten logos into individual generation cards
 const generations: LogoGeneration[] = logos.flatMap((logo) =>
@@ -56,6 +58,7 @@ generations.sort((a, b) => new Date(b.generatedAt).getTime() - new Date(a.genera
           <LogoCard generation={generation} />
         ))}
       </div>
+      <Pagination totalItems={generations.length} itemsPerPage={ITEMS_PER_PAGE} />
     </section>
   </main>
 </Layout>
