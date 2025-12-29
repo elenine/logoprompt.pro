@@ -11,7 +11,7 @@
         {
           "id": "logo-2-001-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXkqaeMdl7JtlMEikKIuD5SVAhHRzG2p60f1Fq",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXvYg8UHmcembEao4nO38hAWiF7MjIwKCkP95Y",
           "generatedAt": "2025-12-24T11:37:16.600Z"
         }
       ]
@@ -23,14 +23,14 @@
       "outputs": [
         {
           "id": "logo-2-002-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXVej3LA9rukD0wTXM4QmP9FzO7B6vWZhgLfbe",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXsU0rHxQNBbtxc2TImyGjRz1MXVYHlo4iPEqn",
           "generatedAt": "2025-12-24T11:36:49.906Z"
         },
         {
           "id": "logo-2-002-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXPWgFeK6zHoLnCfw7FyGq9RNc2QTDgZstV8iE",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXGnPRRxss6vuxd0O1i3zJBFKAehC8SRI42Zmq",
           "generatedAt": "2025-12-24T11:36:49.906Z"
         }
       ]
@@ -42,14 +42,14 @@
       "outputs": [
         {
           "id": "logo-2-003-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXL1ymXzJNafU8JBX0c2SzP6Dd3HYG59L7j4xZ",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXaxcDSV1PM7FO6YZEcGnpizDd8Lg5C4fjKX1k",
           "generatedAt": "2025-12-24T11:36:17.478Z"
         },
         {
           "id": "logo-2-003-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXx8TuN81kL2t3mNviDUZ6dgch78RH4qna1k9M",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXEMxXF9ZbK7tselTQ4G9DBp6HxmfJqWMcSVId",
           "generatedAt": "2025-12-24T11:36:17.478Z"
         }
       ]
@@ -61,14 +61,14 @@
       "outputs": [
         {
           "id": "logo-2-004-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXS1Tgt8vi1Z4ukTFjxy9wa37XfLlN6oKqDHmJ",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXVQy6uW9rukD0wTXM4QmP9FzO7B6vWZhgLfbe",
           "generatedAt": "2025-12-24T11:35:27.607Z"
         },
         {
           "id": "logo-2-004-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXd8atxNfEesCIRf6qt1MTnyWg3u8KJzPBxZUF",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXQC3lVebLRJBXMAwzEtDl7Ibe5L3drkSUYPTy",
           "generatedAt": "2025-12-24T11:35:27.607Z"
         }
       ]
@@ -80,14 +80,14 @@
       "outputs": [
         {
           "id": "logo-2-005-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXsR4qBgQNBbtxc2TImyGjRz1MXVYHlo4iPEqn",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXxYrc6DkL2t3mNviDUZ6dgch78RH4qna1k9MW",
           "generatedAt": "2025-12-24T11:35:00.326Z"
         },
         {
           "id": "logo-2-005-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX8tAPLyI4WuyJvfld5xcFRp1oUj60I8rEYZnV",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXLikjcgJNafU8JBX0c2SzP6Dd3HYG59L7j4xZ",
           "generatedAt": "2025-12-24T11:35:00.326Z"
         }
       ]
@@ -99,32 +99,32 @@
       "outputs": [
         {
           "id": "logo-2-006-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXlYzDwW8D3VezAqRTLNm7fiZn4arQ8JKFbhBw",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX6cw6YUOhb015fauQ7rPV6UN3sFpAxKyJMewc",
           "generatedAt": "2025-12-24T11:34:39.148Z"
         },
         {
           "id": "logo-2-006-ideogram-1",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXLmoMxzJNafU8JBX0c2SzP6Dd3HYG59L7j4xZ",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXq8GPDfeGicS5txhjk9QvezfpuywHCJ3goXA1",
           "generatedAt": "2025-12-24T11:34:39.148Z"
         },
         {
           "id": "logo-2-006-ideogram-2",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX3KhzPpqU4hL87mqBQRJlrOyif3GuW6KEeP1D",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXiP3qNmAzAnwgj2Ma5PysRSktmVvNTofdXihO",
           "generatedAt": "2025-12-24T11:34:39.148Z"
         },
         {
           "id": "logo-2-006-ideogram-3",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXqyCf8neGicS5txhjk9QvezfpuywHCJ3goXA1",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXYCe25UD7Lt0Bn9pM5u3Xz6mwU2WxcdlFPSDY",
           "generatedAt": "2025-12-24T11:34:39.148Z"
         },
         {
           "id": "logo-2-006-ideogram-4",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXpUcdtehPn6Xl4kCOi2h3It8L17JcEgWZsjFG",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXR1hqIT0pbaxDSEwTYQrm2M1yFNKsHOztu0kd",
           "generatedAt": "2025-12-24T11:34:39.148Z"
         }
       ]
@@ -136,32 +136,32 @@
       "outputs": [
         {
           "id": "logo-2-007-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXefHwLEhg560qJgUOGzsDuMwYd2ZxynStVvC7",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXsJzdC0TQNBbtxc2TImyGjRz1MXVYHlo4iPEq",
           "generatedAt": "2025-12-24T11:34:08.231Z"
         },
         {
           "id": "logo-2-007-ideogram-1",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXgc7arQdas0V9lryIuDFTnzWdOXjfwQUBKN4e",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXQCTNipPLRJBXMAwzEtDl7Ibe5L3drkSUYPTy",
           "generatedAt": "2025-12-24T11:34:08.231Z"
         },
         {
           "id": "logo-2-007-ideogram-2",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXoVqR6AFzqRQjTlfNhvA9GeaOHUV8LE7K6JIn",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXCTpQWWonZdOu85KWq9wCkpmeXaGg3SYQPsht",
           "generatedAt": "2025-12-24T11:34:08.231Z"
         },
         {
           "id": "logo-2-007-ideogram-3",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXzhIVLQNK1kDWwe0VBI9n8QEpgmJf5ShvoXxU",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXZ00p8AYFCJqUB9sMbKg4vcHOXSiIewu8QzaY",
           "generatedAt": "2025-12-24T11:34:08.231Z"
         },
         {
           "id": "logo-2-007-ideogram-4",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXDO5KeIVA7XfMgSnbKrNepHsQhoBtT1jO2Gi3",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXaUILF21PM7FO6YZEcGnpizDd8Lg5C4fjKX1k",
           "generatedAt": "2025-12-24T11:34:08.231Z"
         }
       ]
@@ -173,20 +173,20 @@
       "outputs": [
         {
           "id": "logo-2-008-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXDlLSLDVA7XfMgSnbKrNepHsQhoBtT1jO2Gi3",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXnsCqI6GjrJKpOUl7WiyE8k3geHG5PZdmYjI2",
           "generatedAt": "2025-12-24T11:33:35.792Z"
         },
         {
           "id": "logo-2-008-ideogram-1",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXEKXVdrZbK7tselTQ4G9DBp6HxmfJqWMcSVId",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXbA9DIw4GaknNSHIRlfQw8uV9is1Apjq7Jmx5",
           "generatedAt": "2025-12-24T11:33:35.792Z"
         },
         {
           "id": "logo-2-008-ideogram-2",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXecWyS1g560qJgUOGzsDuMwYd2ZxynStVvC7b",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXKxbdZXFphVy6jBmWOeYLt9ICvgiGD0TolKHX",
           "generatedAt": "2025-12-24T11:33:35.792Z"
         }
       ]
@@ -198,20 +198,20 @@
       "outputs": [
         {
           "id": "logo-2-009-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXeQjSPPg560qJgUOGzsDuMwYd2ZxynStVvC7b",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXLoka67OJNafU8JBX0c2SzP6Dd3HYG59L7j4x",
           "generatedAt": "2025-12-24T11:33:16.179Z"
         },
         {
           "id": "logo-2-009-ideogram-1",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXPoDIxW6zHoLnCfw7FyGq9RNc2QTDgZstV8iE",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXvBtg6DmcembEao4nO38hAWiF7MjIwKCkP95Y",
           "generatedAt": "2025-12-24T11:33:16.179Z"
         },
         {
           "id": "logo-2-009-ideogram-2",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXibyy9gjAzAnwgj2Ma5PysRSktmVvNTofdXih",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXV5gSM09rukD0wTXM4QmP9FzO7B6vWZhgLfbe",
           "generatedAt": "2025-12-24T11:33:16.179Z"
         }
       ]
@@ -223,14 +223,14 @@
       "outputs": [
         {
           "id": "logo-2-010-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXu1Ey9VsMH1L6xNtknXWczbdY8lrgf27Ppavj",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXVafrah9rukD0wTXM4QmP9FzO7B6vWZhgLfbe",
           "generatedAt": "2025-12-24T11:32:45.724Z"
         },
         {
           "id": "logo-2-010-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXu1ZswOsMH1L6xNtknXWczbdY8lrgf27Ppavj",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXCHknghonZdOu85KWq9wCkpmeXaGg3SYQPsht",
           "generatedAt": "2025-12-24T11:32:45.724Z"
         }
       ]
@@ -242,14 +242,14 @@
       "outputs": [
         {
           "id": "logo-2-011-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX4ckgPSNstn1COPSujZ7UDL5T89FcehagpR6i",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXizjxJLAzAnwgj2Ma5PysRSktmVvNTofdXihO",
           "generatedAt": "2025-12-24T11:32:13.945Z"
         },
         {
           "id": "logo-2-011-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXnzx5Z8jrJKpOUl7WiyE8k3geHG5PZdmYjI2z",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXlSSnKY8D3VezAqRTLNm7fiZn4arQ8JKFbhBw",
           "generatedAt": "2025-12-24T11:32:13.945Z"
         }
       ]
@@ -261,20 +261,20 @@
       "outputs": [
         {
           "id": "logo-2-012-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXDt359lVA7XfMgSnbKrNepHsQhoBtT1jO2Gi3",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXsvByTEQNBbtxc2TImyGjRz1MXVYHlo4iPEqn",
           "generatedAt": "2025-12-24T11:31:44.280Z"
         },
         {
           "id": "logo-2-012-ideogram-1",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXA44d8n7yytLfXGSJ8hKDox05wIgTY2FjbHNC",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXoUBvwvaFzqRQjTlfNhvA9GeaOHUV8LE7K6JI",
           "generatedAt": "2025-12-24T11:31:44.280Z"
         },
         {
           "id": "logo-2-012-ideogram-2",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXfCE5vNREZQW3URvcbrOjn6DBzCMFxNiyoaY8",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXnfUVhGjrJKpOUl7WiyE8k3geHG5PZdmYjI2z",
           "generatedAt": "2025-12-24T11:31:44.280Z"
         }
       ]
@@ -286,14 +286,14 @@
       "outputs": [
         {
           "id": "logo-2-013-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXndHZU4jrJKpOUl7WiyE8k3geHG5PZdmYjI2z",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXZoc8wFYFCJqUB9sMbKg4vcHOXSiIewu8QzaY",
           "generatedAt": "2025-12-24T11:31:15.477Z"
         },
         {
           "id": "logo-2-013-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXod7wnRFzqRQjTlfNhvA9GeaOHUV8LE7K6JIn",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXxLLpXOkL2t3mNviDUZ6dgch78RH4qna1k9MW",
           "generatedAt": "2025-12-24T11:31:15.477Z"
         }
       ]
@@ -305,14 +305,14 @@
       "outputs": [
         {
           "id": "logo-2-014-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXUfap6xzBqp5ePd9QhliI2TARMVvzOacCHEto",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXofTiR1FzqRQjTlfNhvA9GeaOHUV8LE7K6JIn",
           "generatedAt": "2025-12-24T11:30:41.137Z"
         },
         {
           "id": "logo-2-014-ideogram",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX2OmyQRGPSegUK64IaqHbZLjEotFVBC3cPdh9",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXf1zelnREZQW3URvcbrOjn6DBzCMFxNiyoaY8",
           "generatedAt": "2025-12-24T11:30:41.137Z"
         }
       ]
@@ -324,32 +324,32 @@
       "outputs": [
         {
           "id": "logo-2-015-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX3nZGT8U4hL87mqBQRJlrOyif3GuW6KEeP1DM",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXM2SPk9ja0IR8FL6YZu429MPkvxrHwJAWgC7s",
           "generatedAt": "2025-12-24T11:30:16.301Z"
         },
         {
           "id": "logo-2-015-ideogram-1",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXFvvFiL3xs5gcM4wLDGKapBAf8EYitI7O261l",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXDdm4kgVA7XfMgSnbKrNepHsQhoBtT1jO2Gi3",
           "generatedAt": "2025-12-24T11:30:16.301Z"
         },
         {
           "id": "logo-2-015-ideogram-2",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX0RXsYeu8cO5HMUgEGpo29jVKbTdFJwYBSmlx",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXvPuwzQmcembEao4nO38hAWiF7MjIwKCkP95Y",
           "generatedAt": "2025-12-24T11:30:16.301Z"
         },
         {
           "id": "logo-2-015-ideogram-3",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXrRcnzciV4LwjdGC7ygkRh1fxIS9UJMzbr6uE",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX9bpBbLn1zGScqHUiXDrRTnajxFAoIvytlpLk",
           "generatedAt": "2025-12-24T11:30:16.301Z"
         },
         {
           "id": "logo-2-015-ideogram-4",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXsSI4x2QNBbtxc2TImyGjRz1MXVYHlo4iPEqn",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX0BtGAHu8cO5HMUgEGpo29jVKbTdFJwYBSmlx",
           "generatedAt": "2025-12-24T11:30:16.301Z"
         }
       ]
@@ -361,32 +361,32 @@
       "outputs": [
         {
           "id": "logo-2-016-gemini",
-          "model": "gemini-2.5-flash",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX2mVZOSPSegUK64IaqHbZLjEotFVBC3cPdh9r",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXrvlVFQiV4LwjdGC7ygkRh1fxIS9UJMzbr6uE",
           "generatedAt": "2025-12-24T11:29:48.580Z"
         },
         {
           "id": "logo-2-016-ideogram-1",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXMPHAVDa0IR8FL6YZu429MPkvxrHwJAWgC7sd",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXQCkER0LRJBXMAwzEtDl7Ibe5L3drkSUYPTyH",
           "generatedAt": "2025-12-24T11:29:48.580Z"
         },
         {
           "id": "logo-2-016-ideogram-2",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXHohmAIStg6p2ljX5KzZh3ireQLDUqdmGwxNc",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXQr456PLRJBXMAwzEtDl7Ibe5L3drkSUYPTyH",
           "generatedAt": "2025-12-24T11:29:48.580Z"
         },
         {
           "id": "logo-2-016-ideogram-3",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXGTHKVPss6vuxd0O1i3zJBFKAehC8SRI42Zmq",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXL8hptEJNafU8JBX0c2SzP6Dd3HYG59L7j4xZ",
           "generatedAt": "2025-12-24T11:29:48.580Z"
         },
         {
           "id": "logo-2-016-ideogram-4",
           "model": "ideogram",
-          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXMCpEpSa0IR8FL6YZu429MPkvxrHwJAWgC7sd",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXG3G5Qqss6vuxd0O1i3zJBFKAehC8SRI42Zmq",
           "generatedAt": "2025-12-24T11:29:48.580Z"
         }
       ]

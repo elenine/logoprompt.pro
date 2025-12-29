@@ -343,7 +343,7 @@ async function processFolder(
         if (imageUrl) {
           outputs.push({
             id: `${logoId}-gemini`,
-            model: "gemini-2.5-flash",
+            model: "Gemini nano banana",
             imageUrl,
             generatedAt: entry.iso_date,
           });
@@ -358,7 +358,7 @@ async function processFolder(
           if (imageUrl) {
             outputs.push({
               id: `${logoId}-gemini`,
-              model: "gemini-2.5-flash",
+              model: "Gemini nano banana",
               imageUrl,
               generatedAt: entry.iso_date,
             });
