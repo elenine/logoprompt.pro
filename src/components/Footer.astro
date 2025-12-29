@@ -94,24 +94,13 @@ const socialLinks = [
     position: relative;
     margin-top: 6rem;
     padding: 4rem 1.5rem 2rem;
-    background: rgb(var(--bg-secondary));
-    border-top: 1px solid var(--glass-border);
+    background: rgb(var(--bg-primary));
+    border-top: 1px solid rgb(var(--card-border));
     overflow: hidden;
   }
 
   .footer-glow {
-    position: absolute;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 200px;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(var(--accent), 0.08) 0%,
-      transparent 70%
-    );
-    pointer-events: none;
+    display: none;
   }
 
   .footer-content {
@@ -125,7 +114,7 @@ const socialLinks = [
     grid-template-columns: 1.5fr 1fr 1fr;
     gap: 4rem;
     padding-bottom: 3rem;
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: 1px solid rgb(var(--card-border));
   }
 
   /* Brand Section */
@@ -150,29 +139,26 @@ const socialLinks = [
   .logo-text {
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
+    color: rgb(var(--text-primary));
     letter-spacing: -0.02em;
   }
 
   .logo-accent {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: rgb(var(--accent));
   }
 
   .logo-badge {
     font-size: 0.7rem;
     font-weight: 600;
     padding: 0.2rem 0.5rem;
-    background: rgba(var(--accent), 0.15);
-    border: 1px solid rgba(var(--accent), 0.3);
+    background: rgb(var(--accent-light));
+    border: 1px solid rgba(var(--accent), 0.2);
     border-radius: var(--radius-full);
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accent-dark));
   }
 
   .footer-tagline {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgb(var(--text-secondary));
     font-size: 0.9rem;
     line-height: 1.6;
     margin: 0;
@@ -191,17 +177,17 @@ const socialLinks = [
     justify-content: center;
     width: 36px;
     height: 36px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
+    background: rgb(var(--bg-tertiary));
+    border: 1px solid rgb(var(--card-border));
     border-radius: var(--radius-sm);
-    color: rgba(255, 255, 255, 0.6);
+    color: rgb(var(--text-secondary));
     transition: all var(--transition-fast);
   }
 
   .social-link:hover {
-    background: rgba(var(--accent), 0.2);
-    border-color: rgba(var(--accent), 0.4);
-    color: rgb(var(--accent-light));
+    background: rgb(var(--accent-light));
+    border-color: rgba(var(--accent), 0.3);
+    color: rgb(var(--accent));
     transform: translateY(-2px);
   }
 
@@ -215,7 +201,7 @@ const socialLinks = [
   .nav-title {
     font-size: 0.75rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgb(var(--text-tertiary));
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin: 0;
@@ -234,7 +220,7 @@ const socialLinks = [
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgb(var(--text-secondary));
     text-decoration: none;
     font-size: 0.9rem;
     transition: all var(--transition-fast);
@@ -247,7 +233,7 @@ const socialLinks = [
   }
 
   .nav-link:hover {
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accent));
   }
 
   .nav-link:hover svg {
@@ -265,12 +251,12 @@ const socialLinks = [
   .cta-title {
     font-size: 1rem;
     font-weight: 600;
-    color: white;
+    color: rgb(var(--text-primary));
     margin: 0;
   }
 
   .cta-text {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgb(var(--text-secondary));
     font-size: 0.875rem;
     line-height: 1.5;
     margin: 0;
@@ -281,8 +267,8 @@ const socialLinks = [
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
-    background: linear-gradient(135deg, rgba(var(--accent), 0.3), rgba(var(--secondary), 0.2));
-    border: 1px solid rgba(var(--accent), 0.4);
+    background: rgb(var(--accent));
+    border: 1px solid rgb(var(--accent));
     border-radius: var(--radius-sm);
     color: white;
     font-size: 0.875rem;
@@ -294,8 +280,8 @@ const socialLinks = [
   }
 
   .cta-btn:hover {
-    background: linear-gradient(135deg, rgba(var(--accent), 0.5), rgba(var(--secondary), 0.3));
-    border-color: rgba(var(--accent), 0.6);
+    background: rgb(var(--accent-hover));
+    border-color: rgb(var(--accent-hover));
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(var(--accent), 0.3);
   }
@@ -309,7 +295,7 @@ const socialLinks = [
   }
 
   .footer-copyright {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgb(var(--text-tertiary));
     font-size: 0.8rem;
     margin: 0;
   }
@@ -318,7 +304,7 @@ const socialLinks = [
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgb(var(--text-tertiary));
     font-size: 0.8rem;
     margin: 0;
   }

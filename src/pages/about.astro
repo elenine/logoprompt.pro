@@ -119,7 +119,7 @@ const features = [
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgb(var(--text-secondary));
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
@@ -128,7 +128,7 @@ const features = [
   }
 
   .back-link:hover {
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accent));
     transform: translateX(-4px);
   }
 
@@ -142,18 +142,16 @@ const features = [
     font-weight: 800;
     margin: 0 0 1rem;
     letter-spacing: -0.02em;
+    color: rgb(var(--text-primary));
   }
 
   .text-gradient {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: rgb(var(--accent));
   }
 
   .subtitle {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgb(var(--text-secondary));
     margin: 0;
   }
 
@@ -165,9 +163,10 @@ const features = [
   .mission-card {
     text-align: center;
     padding: 3rem 2rem;
-    background: var(--card-gradient);
-    border: 1px solid var(--glass-border);
+    background: rgb(var(--card-bg));
+    border: 1px solid rgb(var(--card-border));
     border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
   }
 
   .mission-icon {
@@ -176,10 +175,10 @@ const features = [
     justify-content: center;
     width: 64px;
     height: 64px;
-    background: rgba(var(--accent), 0.1);
+    background: rgb(var(--accent-light));
     border: 1px solid rgba(var(--accent), 0.2);
     border-radius: var(--radius-lg);
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accent));
     margin-bottom: 1.5rem;
   }
 
@@ -187,12 +186,12 @@ const features = [
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0 0 1rem;
-    color: white;
+    color: rgb(var(--text-primary));
   }
 
   .mission-card p {
     font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgb(var(--text-secondary));
     line-height: 1.7;
     margin: 0;
     max-width: 600px;
@@ -207,14 +206,14 @@ const features = [
   .section-title {
     font-size: 1.75rem;
     font-weight: 700;
-    color: white;
+    color: rgb(var(--text-primary));
     margin: 0 0 0.5rem;
     text-align: center;
   }
 
   .section-description {
     text-align: center;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgb(var(--text-secondary));
     margin: 0 0 2rem;
     max-width: 600px;
     margin-left: auto;
@@ -229,16 +228,17 @@ const features = [
 
   .feature-card {
     padding: 1.5rem;
-    background: var(--card-gradient);
-    border: 1px solid var(--glass-border);
+    background: rgb(var(--card-bg));
+    border: 1px solid rgb(var(--card-border));
     border-radius: var(--radius-lg);
     transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
   }
 
   .feature-card:hover {
     transform: translateY(-4px);
     border-color: rgba(var(--accent), 0.3);
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-md);
   }
 
   .feature-icon {
@@ -247,22 +247,22 @@ const features = [
     justify-content: center;
     width: 48px;
     height: 48px;
-    background: rgba(var(--accent), 0.1);
+    background: rgb(var(--accent-light));
     border-radius: var(--radius-md);
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accent));
     margin-bottom: 1rem;
   }
 
   .feature-card h3 {
     font-size: 1rem;
     font-weight: 600;
-    color: white;
+    color: rgb(var(--text-primary));
     margin: 0 0 0.5rem;
   }
 
   .feature-card p {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgb(var(--text-secondary));
     line-height: 1.6;
     margin: 0;
   }
@@ -271,20 +271,21 @@ const features = [
   .content-section {
     margin-bottom: 2.5rem;
     padding: 2rem;
-    background: var(--card-gradient);
-    border: 1px solid var(--glass-border);
+    background: rgb(var(--card-bg));
+    border: 1px solid rgb(var(--card-border));
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
   }
 
   .content-section h2 {
     font-size: 1.25rem;
     font-weight: 600;
-    color: white;
+    color: rgb(var(--text-primary));
     margin: 0 0 1rem;
   }
 
   .content-section p {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgb(var(--text-secondary));
     line-height: 1.7;
     margin: 0;
   }
@@ -293,7 +294,7 @@ const features = [
   .cta-section {
     text-align: center;
     padding: 3rem 2rem;
-    background: linear-gradient(135deg, rgba(var(--accent), 0.1), rgba(var(--secondary), 0.1));
+    background: rgb(var(--accent-light));
     border: 1px solid rgba(var(--accent), 0.2);
     border-radius: var(--radius-xl);
     margin-top: 3rem;
@@ -302,12 +303,12 @@ const features = [
   .cta-section h2 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
+    color: rgb(var(--text-primary));
     margin: 0 0 0.5rem;
   }
 
   .cta-section p {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgb(var(--text-secondary));
     margin: 0 0 1.5rem;
   }
 
@@ -316,7 +317,7 @@ const features = [
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.75rem;
-    background: linear-gradient(135deg, rgb(var(--accent)), rgb(var(--secondary)));
+    background: rgb(var(--accent));
     border: none;
     border-radius: var(--radius-sm);
     color: white;
@@ -327,8 +328,9 @@ const features = [
   }
 
   .cta-button:hover {
+    background: rgb(var(--accent-hover));
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(var(--accent), 0.4);
+    box-shadow: 0 8px 24px rgba(var(--accent), 0.3);
   }
 
   @media (max-width: 768px) {

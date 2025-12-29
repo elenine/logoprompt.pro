@@ -130,32 +130,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
   }
 
   .hero-glow {
-    position: absolute;
-    top: -60%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 600px;
-    height: 400px;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(var(--accent), 0.15) 0%,
-      rgba(var(--secondary), 0.08) 30%,
-      transparent 70%
-    );
-    pointer-events: none;
-    animation: pulse 8s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 0.6;
-      transform: translateX(-50%) scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: translateX(-50%) scale(1.1);
-    }
+    display: none;
   }
 
   .hero-content {
@@ -168,10 +143,10 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     align-items: center;
     gap: 0.5rem;
     padding: 0.4rem 0.875rem;
-    background: rgba(var(--accent), 0.1);
+    background: rgb(var(--accent-light));
     border: 1px solid rgba(var(--accent), 0.2);
     border-radius: var(--radius-full);
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accent-dark));
     font-size: 0.75rem;
     font-weight: 500;
     margin-bottom: 1rem;
@@ -193,26 +168,12 @@ const models = [...new Set(generations.map(g => g.model))].sort();
 
   .hero-title-line {
     display: block;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgb(var(--text-primary));
   }
 
   .hero-title-gradient {
     display: block;
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 200% auto;
-    animation: gradient-shift 4s ease-in-out infinite;
-  }
-
-  @keyframes gradient-shift {
-    0%, 100% {
-      background-position: 0% center;
-    }
-    50% {
-      background-position: 100% center;
-    }
+    color: rgb(var(--accent));
   }
 
   @keyframes fadeInUp {
@@ -228,7 +189,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
 
   .tagline {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgb(var(--text-secondary));
     max-width: 550px;
     margin: 0 auto 1.25rem;
     line-height: 1.6;
@@ -240,10 +201,10 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     align-items: center;
     gap: 1.25rem;
     padding: 0.75rem 1.5rem;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    background: rgb(var(--bg-primary));
+    border: 1px solid rgb(var(--card-border));
     border-radius: var(--radius-lg);
-    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-sm);
     animation: fadeInUp 0.6s ease-out 0.3s both;
   }
 
@@ -255,7 +216,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     display: block;
     font-size: 1.25rem;
     font-weight: 700;
-    color: white;
+    color: rgb(var(--accent));
     line-height: 1;
   }
 
@@ -263,7 +224,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     display: block;
     font-size: 0.7rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgb(var(--text-tertiary));
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-top: 0.2rem;
@@ -272,7 +233,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
   .stat-divider {
     width: 1px;
     height: 28px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(var(--card-border));
   }
 
   /* How to Use Section */
@@ -280,9 +241,10 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     max-width: 700px;
     margin: 0 auto 2rem;
     padding: 0.875rem 1.25rem;
-    background: var(--card-gradient);
-    border: 1px solid var(--glass-border);
+    background: rgb(var(--bg-primary));
+    border: 1px solid rgb(var(--card-border));
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     animation: fadeInUp 0.6s ease-out 0.4s both;
   }
 
@@ -301,16 +263,16 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     align-items: center;
     gap: 0.5rem;
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgb(var(--text-secondary));
   }
 
   .step-item svg {
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accent));
     flex-shrink: 0;
   }
 
   .step-item strong {
-    color: white;
+    color: rgb(var(--text-primary));
     font-weight: 600;
   }
 
@@ -320,11 +282,11 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     justify-content: center;
     width: 20px;
     height: 20px;
-    background: rgba(var(--accent), 0.2);
+    background: rgb(var(--accent-light));
     border-radius: var(--radius-full);
     font-size: 0.7rem;
     font-weight: 700;
-    color: rgb(var(--accent-light));
+    color: rgb(var(--accent-dark));
     flex-shrink: 0;
   }
 
@@ -360,7 +322,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0 0 1.5rem 0;
-    color: white;
+    color: rgb(var(--text-primary));
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -370,7 +332,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     content: '';
     width: 4px;
     height: 24px;
-    background: var(--accent-gradient);
+    background: rgb(var(--accent));
     border-radius: 2px;
   }
 
@@ -411,7 +373,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgb(var(--text-tertiary));
     margin-bottom: 0.25rem;
   }
 
@@ -435,14 +397,14 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     justify-content: center;
     gap: 1rem;
     padding: 2rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgb(var(--text-tertiary));
   }
 
   .spinner {
     width: 24px;
     height: 24px;
-    border: 3px solid rgba(var(--accent-light), 0.3);
-    border-top-color: rgb(var(--accent-light));
+    border: 3px solid rgb(var(--accent-light));
+    border-top-color: rgb(var(--accent));
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }

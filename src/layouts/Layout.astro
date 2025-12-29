@@ -111,43 +111,27 @@ const siteName = "LogoPrompt.pro";
 
 <style is:global>
   :root {
-    /* Primary accent - vibrant coral red */
-    --accent: 239, 68, 68;
-    --accent-light: 254, 202, 202;
-    --accent-dark: 127, 29, 29;
+    /* Primary accent - solid red */
+    --accent: 220, 38, 38;
+    --accent-light: 254, 226, 226;
+    --accent-dark: 153, 27, 27;
+    --accent-hover: 185, 28, 28;
 
-    /* Secondary accent - purple for variety */
-    --secondary: 139, 92, 246;
-    --secondary-light: 196, 181, 253;
+    /* Text colors */
+    --text-primary: 17, 24, 39;
+    --text-secondary: 75, 85, 99;
+    --text-tertiary: 107, 114, 128;
+    --text-muted: 156, 163, 175;
 
-    /* Neutral colors */
-    --bg-primary: 13, 15, 20;
-    --bg-secondary: 22, 25, 32;
-    --bg-tertiary: 32, 36, 46;
+    /* Background colors - light theme */
+    --bg-primary: 255, 255, 255;
+    --bg-secondary: 249, 250, 251;
+    --bg-tertiary: 243, 244, 246;
 
-    /* Gradients */
-    --accent-gradient: linear-gradient(
-      135deg,
-      rgb(var(--accent)),
-      rgb(var(--secondary)) 50%,
-      rgb(var(--accent-light)) 100%
-    );
-
-    --bg-gradient: radial-gradient(
-      ellipse 80% 50% at 50% -20%,
-      rgba(var(--accent), 0.15),
-      transparent
-    );
-
-    --card-gradient: linear-gradient(
-      145deg,
-      rgba(var(--bg-tertiary), 0.6),
-      rgba(var(--bg-secondary), 0.4)
-    );
-
-    /* Glass effect */
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    /* Card styling */
+    --card-bg: 255, 255, 255;
+    --card-border: 229, 231, 235;
+    --card-hover-border: 209, 213, 219;
 
     /* Spacing scale */
     --space-xs: 0.25rem;
@@ -170,11 +154,12 @@ const siteName = "LogoPrompt.pro";
     --transition-base: 250ms ease;
     --transition-slow: 400ms ease;
 
-    /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
-    --shadow-glow: 0 0 40px rgba(var(--accent), 0.3);
+    /* Shadows - light theme */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 20px rgba(var(--accent), 0.15);
   }
 
   * {
@@ -183,8 +168,8 @@ const siteName = "LogoPrompt.pro";
 
   html {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: rgb(var(--bg-primary));
-    color: white;
+    background: rgb(var(--bg-secondary));
+    color: rgb(var(--text-primary));
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -194,14 +179,12 @@ const siteName = "LogoPrompt.pro";
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background-image: var(--bg-gradient);
-    background-attachment: fixed;
   }
 
   /* Selection styling */
   ::selection {
-    background: rgba(var(--accent), 0.3);
-    color: white;
+    background: rgba(var(--accent), 0.2);
+    color: rgb(var(--text-primary));
   }
 
   /* Focus visible for accessibility */
