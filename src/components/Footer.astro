@@ -1,0 +1,88 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <span class="footer-logo">Logo<span class="text-gradient">Prompt</span>.pro</span>
+      <p class="footer-tagline">AI logo prompts for creative inspiration</p>
+    </div>
+
+    <nav class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <span class="divider">|</span>
+      <a href="/terms">Terms & Conditions</a>
+    </nav>
+
+    <p class="footer-copyright">
+      &copy; {currentYear} LogoPrompt.pro. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 4rem;
+    padding: 2rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .footer-brand {
+    margin-bottom: 1rem;
+  }
+
+  .footer-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-tagline {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin: 0.25rem 0 0;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-links a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: rgb(var(--accent-light));
+  }
+
+  .divider {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .footer-copyright {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+    margin: 0;
+  }
+</style>

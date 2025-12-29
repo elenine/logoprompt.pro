@@ -1,4 +1,6 @@
 ---
+import Footer from '../components/Footer.astro';
+
 interface Props {
   title: string;
   description?: string;
@@ -93,6 +95,7 @@ const siteName = "LogoPrompt.pro";
   </head>
   <body>
     <slot />
+    <Footer />
   </body>
 </html>
 
