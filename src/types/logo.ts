@@ -22,10 +22,6 @@ export interface LogoPrompt {
   prompt: string;
   /** Brief title/name for this logo concept */
   title: string;
-  /** Category or style of the logo */
-  category: string;
-  /** Tags for filtering/searching */
-  tags: string[];
   /** Timestamp when this prompt was created */
   createdAt: string;
   /** Array of outputs from different AI models */
@@ -50,10 +46,6 @@ export interface LogoGeneration {
   prompt: string;
   /** Brief title/name for this logo concept */
   title: string;
-  /** Category or style of the logo */
-  category: string;
-  /** Tags for filtering/searching */
-  tags: string[];
   /** The AI model used to generate this output */
   model: string;
   /** URL to the generated image */
