@@ -2,12 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import LogoCard from '../components/LogoCard.astro';
 import ModelFilter from '../components/ModelFilter.astro';
-import Pagination from '../components/Pagination.astro';
 import logosData from '../data/logos.json';
 import type { LogoPrompt, LogoGeneration } from '../types/logo';
 
 const logos = logosData.logos as LogoPrompt[];
-const ITEMS_PER_PAGE = 12;
 
 // Flatten logos into individual generation cards
 const generations: LogoGeneration[] = logos.flatMap((logo) =>
@@ -45,7 +43,15 @@ const models = [...new Set(generations.map(g => g.model))].sort();
           <LogoCard generation={generation} />
         ))}
       </div>
-      <Pagination totalItems={generations.length} itemsPerPage={ITEMS_PER_PAGE} />
+
+      <!-- Loading indicator for infinite scroll -->
+      <div class="loading-indicator" style="display: none;">
+        <div class="spinner"></div>
+        <span>Loading more...</span>
+      </div>
+
+      <!-- Scroll sentinel for intersection observer -->
+      <div class="scroll-sentinel"></div>
     </section>
   </main>
 </Layout>
@@ -97,6 +103,109 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
+  }
+
+  /* Animation for cards loading in */
+  .logos-grid :global(.logo-card) {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .logos-grid :global(.logo-card.fade-in) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Ad banner styles (for dynamically inserted ads) */
+  .logos-grid :global(.ad-banner) {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .logos-grid :global(.ad-content) {
+    background: linear-gradient(135deg, rgba(var(--accent-dark), 0.6), rgba(var(--accent-dark), 0.3));
+    border: 1px dashed rgba(var(--accent-light), 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    position: relative;
+  }
+
+  .logos-grid :global(.ad-label) {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.75rem;
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .logos-grid :global(.ad-placeholder) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .logos-grid :global(.ad-placeholder svg) {
+    opacity: 0.6;
+  }
+
+  .logos-grid :global(.ad-placeholder span) {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  /* Loading indicator */
+  .loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(var(--accent-light), 0.3);
+    border-top-color: rgb(var(--accent-light));
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Scroll sentinel - invisible element at bottom */
+  .scroll-sentinel {
+    height: 1px;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .logos-grid :global(.ad-content) {
+      padding: 1.5rem;
+      min-height: 100px;
+    }
+
+    .logos-grid :global(.ad-placeholder svg) {
+      width: 36px;
+      height: 36px;
+    }
   }
 
   @media (max-width: 400px) {
