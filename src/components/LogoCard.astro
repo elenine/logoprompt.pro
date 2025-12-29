@@ -148,7 +148,7 @@ const { generation } = Astro.props;
 
   document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.logo-card');
-    const { storageKey } = SOCIAL_COPY_CONFIG;
+    const { storageKey, adUrl } = SOCIAL_COPY_CONFIG;
 
     // Check if search=true is in URL params
     const urlParams = new URLSearchParams(window.location.search);
@@ -209,6 +209,8 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
           const textToCopy = isSearchMode ? formatSocialCopy(prompt, model) : prompt;
           await navigator.clipboard.writeText(textToCopy);
           showCopied(copyPromptBtn as HTMLButtonElement, 'Copied!');
+          // Open ad URL
+          window.open(adUrl, '_blank');
         } catch (err) {
           console.error('Failed to copy prompt:', err);
         }
@@ -224,6 +226,8 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
             new ClipboardItem({ 'image/png': pngBlob })
           ]);
           showCopied(copyImageBtn as HTMLButtonElement, 'Copied!');
+          // Open ad URL
+          window.open(adUrl, '_blank');
         } catch (err) {
           console.error('Failed to copy image:', err);
         }

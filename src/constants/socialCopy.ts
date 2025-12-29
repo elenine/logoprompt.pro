@@ -30,6 +30,9 @@ export const SOCIAL_COPY_CONFIG = {
 
   /** LocalStorage key for persisting social copy mode */
   storageKey: 'logoprompt_social_copy_mode',
+
+  /** Advertisement URL to open on copy actions */
+  adUrl: 'https://otieu.com/4/9338001',
 } as const;
 
 /**
