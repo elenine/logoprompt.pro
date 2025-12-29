@@ -40,7 +40,7 @@ export const AD_CONFIG = {
   showAdvertisement: true,
 
   /** Show direct URL advertisement (opens on copy actions) */
-  showDirectAd: true,
+  showDirectAd: false,
 
   /** Show banner advertisements */
   showBannerAd: true,
