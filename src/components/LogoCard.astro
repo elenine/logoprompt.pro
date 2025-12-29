@@ -6,6 +6,11 @@ interface Props {
 }
 
 const { generation } = Astro.props;
+
+// Truncate prompt for preview
+const promptPreview = generation.prompt.length > 80
+  ? generation.prompt.substring(0, 80) + '...'
+  : generation.prompt;
 ---
 
 <article class="logo-card" data-prompt={generation.prompt} data-image-url={generation.imageUrl}>
@@ -19,7 +24,9 @@ const { generation } = Astro.props;
   </div>
 
   <div class="logo-content">
-    <div class="copy-buttons">
+    <p class="prompt-preview">{promptPreview}</p>
+
+    <div class="card-actions">
       <button class="copy-btn copy-prompt-btn" type="button">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -27,7 +34,7 @@ const { generation } = Astro.props;
         </svg>
         <span>Copy Prompt</span>
       </button>
-      <button class="copy-btn copy-image-btn" type="button">
+      <button class="copy-btn copy-image-btn secondary" type="button">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
           <circle cx="8.5" cy="8.5" r="1.5"></circle>
@@ -37,9 +44,15 @@ const { generation } = Astro.props;
       </button>
     </div>
 
-    <footer class="logo-footer">
+    <footer class="card-footer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
       <time datetime={generation.generatedAt}>
-        {new Date(generation.generatedAt).toLocaleDateString()}
+        {new Date(generation.generatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
       </time>
     </footer>
   </div>
@@ -47,16 +60,27 @@ const { generation } = Astro.props;
 
 <style>
   .logo-card {
-    background: linear-gradient(135deg, rgba(var(--accent-dark), 0.8), rgba(var(--accent-dark), 0.4));
-    border: 1px solid rgba(var(--accent-light), 0.2);
-    border-radius: 16px;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
     overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
   }
 
   .logo-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(var(--accent), 0.2);
+    transform: translateY(-6px);
+    border-color: var(--border-hover);
+    box-shadow: var(--glow);
+  }
+
+  [data-theme="light"] .logo-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  [data-theme="light"] .logo-card:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
   }
 
   .logo-image {
@@ -64,13 +88,14 @@ const { generation } = Astro.props;
     width: 100%;
     aspect-ratio: 1;
     overflow: hidden;
+    background: linear-gradient(135deg, rgba(var(--accent), 0.05), rgba(var(--secondary), 0.05));
   }
 
   .logo-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .logo-card:hover .logo-image img {
@@ -79,67 +104,134 @@ const { generation } = Astro.props;
 
   .model-badge {
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    font-size: 0.75rem;
+    top: 0.875rem;
+    right: 0.875rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    padding: 0.35rem 0.75rem;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
+    padding: 0.4rem 0.875rem;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     color: rgb(var(--accent-light));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  [data-theme="light"] .model-badge {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgb(var(--accent-dark));
   }
 
   .logo-content {
-    padding: 1rem;
+    padding: 1.25rem;
   }
 
-  .copy-buttons {
+  .prompt-preview {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0 0 1rem 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.8em;
+  }
+
+  .card-actions {
     display: flex;
-    flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
   }
 
   .copy-btn {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
+    gap: 0.4rem;
     padding: 0.6rem 1rem;
     font-size: 0.8rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(var(--accent), 0.3);
-    border: 1px solid rgba(var(--accent-light), 0.3);
-    border-radius: 8px;
+    color: white;
+    background: rgba(var(--accent), 0.8);
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    flex: 1;
+    justify-content: center;
+    white-space: nowrap;
   }
 
   .copy-btn:hover {
-    background: rgba(var(--accent), 0.5);
-    border-color: rgba(var(--accent-light), 0.5);
+    background: rgb(var(--accent));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(var(--accent), 0.4);
+  }
+
+  .copy-btn.secondary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .copy-btn.secondary:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Light theme button adjustments */
+  [data-theme="light"] .copy-btn {
+    background: rgb(var(--accent));
+    color: white;
+  }
+
+  [data-theme="light"] .copy-btn:hover {
+    background: rgb(var(--accent-dark));
+    box-shadow: 0 6px 20px rgba(var(--accent), 0.3);
+  }
+
+  [data-theme="light"] .copy-btn.secondary {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  [data-theme="light"] .copy-btn.secondary:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .copy-btn.copied {
-    background: rgba(34, 197, 94, 0.4);
-    border-color: rgba(34, 197, 94, 0.6);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(16, 185, 129, 0.8)) !important;
+    border-color: rgba(34, 197, 94, 0.6) !important;
+    color: white !important;
   }
 
   .copy-btn svg {
     flex-shrink: 0;
   }
 
-  .logo-footer {
-    padding-top: 0.75rem;
-    border-top: 1px solid rgba(var(--accent-light), 0.1);
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
   }
 
-  .logo-footer time {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
+  .card-footer svg {
+    opacity: 0.6;
+  }
+
+  .card-footer time {
+    font-size: 0.8rem;
   }
 </style>
 
