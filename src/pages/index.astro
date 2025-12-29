@@ -2,9 +2,26 @@
 import Layout from '../layouts/Layout.astro';
 import LogoCard from '../components/LogoCard.astro';
 import logosData from '../data/logos.json';
-import type { LogoPrompt } from '../types/logo';
+import type { LogoPrompt, LogoGeneration } from '../types/logo';
 
 const logos = logosData.logos as LogoPrompt[];
+
+// Flatten logos into individual generation cards
+const generations: LogoGeneration[] = logos.flatMap((logo) =>
+  logo.outputs.map((output) => ({
+    id: output.id,
+    prompt: logo.prompt,
+    title: logo.title,
+    category: logo.category,
+    tags: logo.tags,
+    model: output.model,
+    imageUrl: output.imageUrl,
+    generatedAt: output.generatedAt,
+  }))
+);
+
+// Sort by generation date (newest first)
+generations.sort((a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime());
 ---
 
 <Layout title="LogoPrompt Pro - AI Logo Generation Gallery">
@@ -23,20 +40,20 @@ const logos = logosData.logos as LogoPrompt[];
         <span class="stat-label">Logo Prompts</span>
       </div>
       <div class="stat">
-        <span class="stat-value">{logos.reduce((sum, logo) => sum + logo.outputs.length, 0)}</span>
-        <span class="stat-label">Generated Outputs</span>
+        <span class="stat-value">{generations.length}</span>
+        <span class="stat-label">Generated Images</span>
       </div>
       <div class="stat">
-        <span class="stat-value">{[...new Set(logos.flatMap(l => l.outputs.map(o => o.model)))].length}</span>
+        <span class="stat-value">{[...new Set(generations.map(g => g.model))].length}</span>
         <span class="stat-label">AI Models</span>
       </div>
     </section>
 
     <section class="logos-section">
-      <h2 class="section-title">Recent Logo Prompts</h2>
+      <h2 class="section-title">Recent Generations</h2>
       <div class="logos-grid">
-        {logos.map((logo) => (
-          <LogoCard logo={logo} />
+        {generations.map((generation) => (
+          <LogoCard generation={generation} />
         ))}
       </div>
     </section>
@@ -47,7 +64,7 @@ const logos = logosData.logos as LogoPrompt[];
   main {
     margin: auto;
     padding: 2rem 1rem;
-    max-width: 1200px;
+    max-width: 1400px;
   }
 
   .hero {
@@ -122,7 +139,7 @@ const logos = logosData.logos as LogoPrompt[];
 
   .logos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
   }
 

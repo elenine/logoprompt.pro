@@ -38,3 +38,26 @@ export interface LogoPrompt {
 export interface LogosData {
   logos: LogoPrompt[];
 }
+
+/**
+ * Flattened structure representing a single generation card
+ * Combines prompt info with a single output for display
+ */
+export interface LogoGeneration {
+  /** Unique identifier for this generation (output id) */
+  id: string;
+  /** The prompt used to generate the logo */
+  prompt: string;
+  /** Brief title/name for this logo concept */
+  title: string;
+  /** Category or style of the logo */
+  category: string;
+  /** Tags for filtering/searching */
+  tags: string[];
+  /** The AI model used to generate this output */
+  model: string;
+  /** URL to the generated image */
+  imageUrl: string;
+  /** Timestamp when this output was generated */
+  generatedAt: string;
+}
