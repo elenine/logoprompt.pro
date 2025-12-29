@@ -70,133 +70,196 @@ const { models } = Astro.props;
     const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLButtonElement>;
     const grid = document.querySelector('.logos-grid') as HTMLElement;
     const cards = Array.from(grid?.querySelectorAll('.logo-card') || []) as HTMLElement[];
-    const pagination = document.querySelector('.pagination') as HTMLElement;
-    const paginationInfo = pagination?.querySelector('.page-current') as HTMLElement;
-    const paginationTotal = pagination?.querySelector('.page-total') as HTMLElement;
-    const prevBtn = pagination?.querySelector('.prev') as HTMLButtonElement;
-    const nextBtn = pagination?.querySelector('.next') as HTMLButtonElement;
+    const loadingIndicator = document.querySelector('.loading-indicator') as HTMLElement;
+    const scrollSentinel = document.querySelector('.scroll-sentinel') as HTMLElement;
 
-    const itemsPerPage = parseInt(pagination?.dataset.itemsPerPage || '12');
+    const itemsPerBatch = 12;
+    let currentModel = 'all';
+    let visibleCount = 0;
+    let isLoading = false;
+    let hasMore = true;
 
-    // Get filter and page from URL
-    function getStateFromURL(): { model: string; page: number } {
-      const params = new URLSearchParams(window.location.search);
-      return {
-        model: params.get('model') || 'all',
-        page: parseInt(params.get('page') || '1')
-      };
+    // Get ad banner template
+    function createAdBanner(slotNumber: number): HTMLElement {
+      const adBanner = document.createElement('div');
+      adBanner.className = 'ad-banner';
+      adBanner.dataset.adSlot = slotNumber.toString();
+      adBanner.innerHTML = `
+        <div class="ad-content">
+          <div class="ad-label">Advertisement</div>
+          <div class="ad-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>Your Ad Here</span>
+          </div>
+        </div>
+      `;
+      return adBanner;
     }
-
-    // Update URL with current state
-    function updateURL(model: string, page: number) {
-      const url = new URL(window.location.href);
-
-      if (model === 'all') {
-        url.searchParams.delete('model');
-      } else {
-        url.searchParams.set('model', model);
-      }
-
-      if (page === 1) {
-        url.searchParams.delete('page');
-      } else {
-        url.searchParams.set('page', page.toString());
-      }
-
-      window.history.pushState({ model, page }, '', url.toString());
-    }
-
-    let currentState = getStateFromURL();
 
     function getFilteredCards(): HTMLElement[] {
-      if (currentState.model === 'all') {
+      if (currentModel === 'all') {
         return cards;
       }
       return cards.filter(card => {
         const modelBadge = card.querySelector('.model-badge');
-        return modelBadge?.textContent === currentState.model;
+        return modelBadge?.textContent === currentModel;
       });
     }
 
-    function updateDisplay(shouldScroll: boolean = true) {
-      const filteredCards = getFilteredCards();
-      const totalPages = Math.max(1, Math.ceil(filteredCards.length / itemsPerPage));
-
-      // Ensure current page is valid
-      if (currentState.page > totalPages) {
-        currentState.page = totalPages;
-      }
-
-      const start = (currentState.page - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-
-      // Hide all cards first
+    function resetDisplay() {
+      // Hide all cards
       cards.forEach(card => {
         card.style.display = 'none';
+        card.classList.remove('fade-in');
       });
 
-      // Show only filtered cards for current page
-      filteredCards.forEach((card, index) => {
-        if (index >= start && index < end) {
+      // Remove all dynamically inserted ad banners
+      const adBanners = grid.querySelectorAll('.ad-banner');
+      adBanners.forEach(ad => ad.remove());
+
+      // Reset state
+      visibleCount = 0;
+      hasMore = true;
+
+      // Load initial batch
+      loadMoreItems();
+    }
+
+    function loadMoreItems() {
+      if (isLoading || !hasMore) return;
+
+      isLoading = true;
+      if (loadingIndicator) {
+        loadingIndicator.style.display = 'flex';
+      }
+
+      // Simulate a slight delay for smoother UX
+      setTimeout(() => {
+        const filteredCards = getFilteredCards();
+        const start = visibleCount;
+        const end = Math.min(start + itemsPerBatch, filteredCards.length);
+
+        // If this is not the first batch, insert an ad banner before loading more
+        if (start > 0 && start < filteredCards.length) {
+          const adSlot = Math.floor(start / itemsPerBatch);
+          const adBanner = createAdBanner(adSlot);
+
+          // Find the last visible card and insert ad after it
+          const lastVisibleCard = filteredCards[start - 1];
+          if (lastVisibleCard && lastVisibleCard.parentNode) {
+            lastVisibleCard.parentNode.insertBefore(adBanner, lastVisibleCard.nextSibling);
+          }
+        }
+
+        // Show the next batch of cards with fade-in animation
+        for (let i = start; i < end; i++) {
+          const card = filteredCards[i];
           card.style.display = '';
+          // Stagger the fade-in animation
+          setTimeout(() => {
+            card.classList.add('fade-in');
+          }, (i - start) * 50);
+        }
+
+        visibleCount = end;
+        hasMore = visibleCount < filteredCards.length;
+
+        if (loadingIndicator) {
+          loadingIndicator.style.display = 'none';
+        }
+
+        isLoading = false;
+
+        // Update URL
+        updateURL();
+      }, 200);
+    }
+
+    function updateURL() {
+      const url = new URL(window.location.href);
+
+      if (currentModel === 'all') {
+        url.searchParams.delete('model');
+      } else {
+        url.searchParams.set('model', currentModel);
+      }
+
+      // Remove page param as we're using infinite scroll now
+      url.searchParams.delete('page');
+
+      window.history.replaceState({ model: currentModel }, '', url.toString());
+    }
+
+    function getModelFromURL(): string {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('model') || 'all';
+    }
+
+    // Initialize Intersection Observer for infinite scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !isLoading && hasMore) {
+          loadMoreItems();
         }
       });
+    }, {
+      root: null,
+      rootMargin: '200px',
+      threshold: 0
+    });
 
-      // Update pagination display
-      if (paginationInfo) paginationInfo.textContent = currentState.page.toString();
-      if (paginationTotal) paginationTotal.textContent = totalPages.toString();
-      if (prevBtn) prevBtn.disabled = currentState.page === 1;
-      if (nextBtn) nextBtn.disabled = currentState.page === totalPages;
-
-      // Update filter buttons
-      filterButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.model === currentState.model);
-      });
-
-      // Update URL
-      updateURL(currentState.model, currentState.page);
-
-      if (shouldScroll && grid) {
-        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    if (scrollSentinel) {
+      observer.observe(scrollSentinel);
     }
 
     // Filter button click handlers
     filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const model = btn.dataset.model || 'all';
-        if (model !== currentState.model) {
-          currentState.model = model;
-          currentState.page = 1; // Reset to page 1 when filter changes
-          updateDisplay();
+        if (model !== currentModel) {
+          currentModel = model;
+
+          // Update button states
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Reset and reload with new filter
+          resetDisplay();
+
+          // Scroll to grid
+          if (grid) {
+            grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
       });
     });
 
-    // Pagination button handlers
-    prevBtn?.addEventListener('click', () => {
-      if (currentState.page > 1) {
-        currentState.page--;
-        updateDisplay();
-      }
-    });
-
-    nextBtn?.addEventListener('click', () => {
-      const filteredCards = getFilteredCards();
-      const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
-      if (currentState.page < totalPages) {
-        currentState.page++;
-        updateDisplay();
-      }
-    });
-
     // Handle browser back/forward
     window.addEventListener('popstate', () => {
-      currentState = getStateFromURL();
-      updateDisplay(false);
+      const model = getModelFromURL();
+      if (model !== currentModel) {
+        currentModel = model;
+
+        // Update button states
+        filterButtons.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.model === currentModel);
+        });
+
+        resetDisplay();
+      }
     });
 
-    // Initial display
-    updateDisplay(false);
+    // Initialize from URL
+    currentModel = getModelFromURL();
+    filterButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.model === currentModel);
+    });
+
+    // Initial load
+    resetDisplay();
   });
 </script>
