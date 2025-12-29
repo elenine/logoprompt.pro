@@ -7,9 +7,14 @@ const GENERATIONS_DIR = path.join(process.cwd(), "generations");
 const OUTPUT_DIR = path.join(process.cwd(), "src/data/logos");
 const DRY_RUN = process.env.DRY_RUN === "true";
 
+// UploadThing API Token
+const UPLOADTHING_TOKEN =
+  process.env.UPLOADTHING_TOKEN ||
+  "eyJhcGlLZXkiOiJza19saXZlX2FkMjM1YjJhNDFjYmY1NmQ3MmNkOTA4YWY1ZWQyOTMwZDAxMGIyOTMzNzQzMTUzN2FhZTEzZDNjYzQzYmUwMjciLCJhcHBJZCI6ImdicWNndmF6N3oiLCJyZWdpb25zIjpbInNlYTEiXX0=";
+
 // Image optimization settings
 const MAX_DIMENSION = 800; // Max width/height in pixels
-const WEBP_QUALITY = 80; // WebP quality (0-100)
+const WEBP_QUALITY = 100; // WebP quality (0-100)
 
 // Lazy import for UploadThing (only when needed)
 let utapi: any = null;
@@ -18,7 +23,7 @@ async function getUploadThingApi() {
   if (!utapi && !DRY_RUN) {
     const { UTApi } = await import("uploadthing/server");
     utapi = new UTApi({
-      token: process.env.UPLOADTHING_TOKEN,
+      token: UPLOADTHING_TOKEN,
     });
   }
   return utapi;
@@ -68,6 +73,84 @@ interface LogosIndex {
   }[];
   totalLogos: number;
   lastUpdated: string;
+}
+
+/**
+ * Get the next available logo index by reading existing index.json
+ */
+function getNextLogoIndex(): number {
+  const indexPath = path.join(OUTPUT_DIR, "index.json");
+
+  if (!fs.existsSync(indexPath)) {
+    return 1;
+  }
+
+  try {
+    const indexContent = fs.readFileSync(indexPath, "utf-8");
+    const indexData: LogosIndex = JSON.parse(indexContent);
+
+    if (indexData.files.length === 0) {
+      return 1;
+    }
+
+    // Find the highest logo number from existing files
+    const maxIndex = indexData.files.reduce((max, file) => {
+      const match = file.path.match(/logo-(\d+)\.json/);
+      if (match) {
+        return Math.max(max, parseInt(match[1]));
+      }
+      return max;
+    }, 0);
+
+    return maxIndex + 1;
+  } catch (error) {
+    console.error("Error reading existing index.json:", error);
+    return 1;
+  }
+}
+
+/**
+ * Load existing index entries from index.json
+ */
+function loadExistingIndex(): LogosIndex {
+  const indexPath = path.join(OUTPUT_DIR, "index.json");
+
+  if (!fs.existsSync(indexPath)) {
+    return {
+      files: [],
+      totalLogos: 0,
+      lastUpdated: new Date().toISOString(),
+    };
+  }
+
+  try {
+    const indexContent = fs.readFileSync(indexPath, "utf-8");
+    return JSON.parse(indexContent);
+  } catch (error) {
+    console.error("Error loading existing index.json:", error);
+    return {
+      files: [],
+      totalLogos: 0,
+      lastUpdated: new Date().toISOString(),
+    };
+  }
+}
+
+/**
+ * Remove a processed folder from generations directory
+ */
+function removeProcessedFolder(folderPath: string): void {
+  if (DRY_RUN) {
+    console.log(`  [DRY RUN] Would remove: ${path.basename(folderPath)}`);
+    return;
+  }
+
+  try {
+    fs.rmSync(folderPath, { recursive: true, force: true });
+    console.log(`  🗑️  Removed: ${path.basename(folderPath)}`);
+  } catch (error) {
+    console.error(`  ⚠️  Failed to remove ${path.basename(folderPath)}:`, error);
+  }
 }
 
 /**
@@ -331,20 +414,13 @@ async function processFolder(
  */
 async function transformGenerations(): Promise<void> {
   console.log("=".repeat(60));
-  console.log("Logo Generations Transformer (Multi-File Mode)");
+  console.log("Logo Generations Transformer (Append Mode)");
   console.log("=".repeat(60));
 
   if (DRY_RUN) {
-    console.log("\n[DRY RUN MODE] - No files will be uploaded");
+    console.log("\n[DRY RUN MODE] - No files will be uploaded or deleted");
     console.log("Run without DRY_RUN=true to upload files\n");
   } else {
-    if (!process.env.UPLOADTHING_TOKEN) {
-      console.error(
-        "\nError: UPLOADTHING_TOKEN environment variable is required"
-      );
-      console.log("Set it with: export UPLOADTHING_TOKEN=your_token_here\n");
-      process.exit(1);
-    }
     console.log("\n[UPLOAD MODE] - Files will be uploaded to UploadThing");
     console.log(
       `[OPTIMIZATION] - Converting to WebP (max ${MAX_DIMENSION}px, quality ${WEBP_QUALITY}%)\n`
@@ -356,6 +432,13 @@ async function transformGenerations(): Promise<void> {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
+  // Load existing index to preserve entries and get next available index
+  const existingIndex = loadExistingIndex();
+  const startIndex = getNextLogoIndex();
+
+  console.log(`Existing logos: ${existingIndex.files.length} files, ${existingIndex.totalLogos} prompts`);
+  console.log(`Next logo index: ${startIndex}`);
+
   // Get all generation folders sorted by name (which includes timestamp)
   const folders = fs
     .readdirSync(GENERATIONS_DIR)
@@ -363,17 +446,24 @@ async function transformGenerations(): Promise<void> {
     .sort()
     .map((f) => path.join(GENERATIONS_DIR, f));
 
-  console.log(`Found ${folders.length} generation folders\n`);
+  if (folders.length === 0) {
+    console.log("\nNo new generation folders to process.");
+    return;
+  }
 
-  const indexEntries: LogosIndex["files"] = [];
-  let totalLogos = 0;
+  console.log(`\nFound ${folders.length} new generation folders to process\n`);
+
+  const newIndexEntries: LogosIndex["files"] = [];
+  let newLogosCount = 0;
+  let foldersCleanedUp = 0;
+  const indexPath = path.join(OUTPUT_DIR, "index.json");
 
   for (let i = 0; i < folders.length; i++) {
     const folder = folders[i];
-    const fileIndex = i + 1;
+    const fileIndex = startIndex + i;
     const folderName = path.basename(folder);
 
-    console.log(`\n[${fileIndex}/${folders.length}] Processing ${folderName}`);
+    console.log(`\n[${i + 1}/${folders.length}] Processing ${folderName}`);
 
     const logoFile = await processFolder(folder, fileIndex);
 
@@ -382,46 +472,57 @@ async function transformGenerations(): Promise<void> {
       const outputPath = path.join(OUTPUT_DIR, `logo-${fileIndex}.json`);
       fs.writeFileSync(outputPath, JSON.stringify(logoFile, null, 2));
 
-      indexEntries.push({
+      const newEntry = {
         id: logoFile.id,
         name: logoFile.name,
         path: `logo-${fileIndex}.json`,
         createdAt: logoFile.createdAt,
         logoCount: logoFile.logos.length,
-      });
+      };
 
-      totalLogos += logoFile.logos.length;
+      newIndexEntries.push(newEntry);
+      newLogosCount += logoFile.logos.length;
+
+      // Update index.json immediately after each successful folder
+      const allIndexEntries = [...existingIndex.files, ...newIndexEntries];
+      allIndexEntries.sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
+      const indexData: LogosIndex = {
+        files: allIndexEntries,
+        totalLogos: existingIndex.totalLogos + newLogosCount,
+        lastUpdated: new Date().toISOString(),
+      };
+      fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+
       console.log(`  ✓ Created logo-${fileIndex}.json (${logoFile.logos.length} prompts)`);
+
+      // Remove folder immediately after successful processing
+      removeProcessedFolder(folder);
+      foldersCleanedUp++;
     }
   }
 
-  // Sort index by creation date (newest first)
-  indexEntries.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
-
-  // Write index file
-  const indexData: LogosIndex = {
-    files: indexEntries,
-    totalLogos,
-    lastUpdated: new Date().toISOString(),
-  };
-
-  const indexPath = path.join(OUTPUT_DIR, "index.json");
-  fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
+  // Final totals
+  const totalLogos = existingIndex.totalLogos + newLogosCount;
+  const totalFiles = existingIndex.files.length + newIndexEntries.length;
 
   console.log("\n" + "=".repeat(60));
   console.log("Transformation Complete!");
   console.log("=".repeat(60));
   console.log(`\nStatistics:`);
-  console.log(`  Logo files created: ${indexEntries.length}`);
+  console.log(`  New logo files created: ${newIndexEntries.length}`);
+  console.log(`  New prompts added: ${newLogosCount}`);
+  console.log(`  Total logo files: ${totalFiles}`);
   console.log(`  Total prompts: ${totalLogos}`);
+  console.log(`  Folders cleaned up: ${foldersCleanedUp}`);
   console.log(`\nOutput directory: ${OUTPUT_DIR}`);
   console.log(`Index file: ${indexPath}`);
 
   if (DRY_RUN) {
-    console.log("\n[DRY RUN] No files were uploaded.");
-    console.log("To upload files, run: pnpm run transform");
+    console.log("\n[DRY RUN] No files were uploaded or deleted.");
+    console.log("To run for real, run: pnpm run transform");
   }
 }
 
