@@ -33,7 +33,7 @@ const { generation } = Astro.props;
           <circle cx="8.5" cy="8.5" r="1.5"></circle>
           <polyline points="21 15 16 10 5 21"></polyline>
         </svg>
-        <span>Copy Image URL</span>
+        <span>Copy Image</span>
       </button>
     </div>
 
@@ -167,10 +167,15 @@ const { generation } = Astro.props;
       copyImageBtn?.addEventListener('click', async (e) => {
         e.stopPropagation();
         try {
-          await navigator.clipboard.writeText(imageUrl);
+          const response = await fetch(imageUrl);
+          const blob = await response.blob();
+          const pngBlob = await convertToPng(blob);
+          await navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': pngBlob })
+          ]);
           showCopied(copyImageBtn as HTMLButtonElement, 'Copied!');
         } catch (err) {
-          console.error('Failed to copy image URL:', err);
+          console.error('Failed to copy image:', err);
         }
       });
     });
@@ -186,6 +191,32 @@ const { generation } = Astro.props;
           btn.classList.remove('copied');
         }, 2000);
       }
+    }
+
+    async function convertToPng(blob: Blob): Promise<Blob> {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject(new Error('Could not get canvas context'));
+            return;
+          }
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob((pngBlob) => {
+            if (pngBlob) {
+              resolve(pngBlob);
+            } else {
+              reject(new Error('Could not convert to PNG'));
+            }
+          }, 'image/png');
+        };
+        img.onerror = () => reject(new Error('Could not load image'));
+        img.src = URL.createObjectURL(blob);
+      });
     }
   });
 </script>
