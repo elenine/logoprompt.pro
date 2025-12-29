@@ -126,22 +126,8 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     }
   }
 
-  @keyframes gradientShift {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-
   .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    background-size: 200% 200%;
-    animation: gradientShift 4s ease infinite;
+    color: rgb(var(--accent));
   }
 
   .tagline {
@@ -210,7 +196,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, rgba(var(--accent), 0.2), rgba(var(--secondary), 0.2));
+    background: rgba(var(--accent), 0.15);
     border: 1px solid rgba(var(--accent), 0.3);
     border-radius: 12px;
     color: rgb(var(--accent-light));
@@ -219,7 +205,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
   }
 
   .steps li:hover .step-icon {
-    background: linear-gradient(135deg, rgba(var(--accent), 0.4), rgba(var(--secondary), 0.3));
+    background: rgba(var(--accent), 0.25);
     border-color: rgba(var(--accent-light), 0.5);
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(var(--accent), 0.3);
@@ -269,7 +255,7 @@ const models = [...new Set(generations.map(g => g.model))].sort();
     content: '';
     width: 4px;
     height: 1.25rem;
-    background: var(--accent-gradient);
+    background: rgb(var(--accent));
     border-radius: 2px;
   }
 

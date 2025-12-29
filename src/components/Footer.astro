@@ -79,10 +79,7 @@ const currentYear = new Date().getFullYear();
   }
 
   .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: rgb(var(--accent));
   }
 
   .footer-tagline {
@@ -112,7 +109,7 @@ const currentYear = new Date().getFullYear();
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--accent-gradient);
+    background: rgb(var(--accent));
     transition: width 0.3s ease;
     border-radius: 1px;
   }

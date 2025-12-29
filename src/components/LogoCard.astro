@@ -141,7 +141,7 @@ const promptPreview = generation.prompt.length > 80
     font-size: 0.8rem;
     font-weight: 500;
     color: white;
-    background: linear-gradient(135deg, rgba(var(--accent), 0.8), rgba(var(--secondary), 0.6));
+    background: rgba(var(--accent), 0.8);
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -152,9 +152,9 @@ const promptPreview = generation.prompt.length > 80
   }
 
   .copy-btn:hover {
-    background: linear-gradient(135deg, rgba(var(--accent), 1), rgba(var(--secondary), 0.8));
+    background: rgb(var(--accent));
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(var(--accent), 0.3);
+    box-shadow: 0 6px 20px rgba(var(--accent), 0.4);
   }
 
   .copy-btn.secondary {
