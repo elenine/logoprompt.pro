@@ -1,0 +1,34 @@
+{
+  "files": [
+    {
+      "id": "logo-1",
+      "name": "Collection Dec 24, 2025",
+      "path": "logo-1.json",
+      "createdAt": "2025-12-24",
+      "logoCount": 15
+    },
+    {
+      "id": "logo-2",
+      "name": "Collection Dec 24, 2025",
+      "path": "logo-2.json",
+      "createdAt": "2025-12-24",
+      "logoCount": 16
+    },
+    {
+      "id": "logo-3",
+      "name": "Collection Dec 24, 2025",
+      "path": "logo-3.json",
+      "createdAt": "2025-12-24",
+      "logoCount": 25
+    },
+    {
+      "id": "logo-4",
+      "name": "Collection Dec 24, 2025",
+      "path": "logo-4.json",
+      "createdAt": "2025-12-24",
+      "logoCount": 37
+    }
+  ],
+  "totalLogos": 93,
+  "lastUpdated": "2025-12-29T09:08:28.856Z"
+}

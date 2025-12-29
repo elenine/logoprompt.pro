@@ -2,24 +2,36 @@
 import Layout from '../layouts/Layout.astro';
 import LogoCard from '../components/LogoCard.astro';
 import ModelFilter from '../components/ModelFilter.astro';
-import logosData from '../data/logos.json';
-import type { LogoPrompt, LogoGeneration } from '../types/logo';
+import type { LogoFile, LogoGeneration } from '../types/logo';
 
-const logos = logosData.logos as LogoPrompt[];
+// Load all logo files dynamically using Vite's glob import
+const logoFiles = import.meta.glob('../data/logos/logo-*.json', { eager: true });
 
-// Flatten logos into individual generation cards
-const generations: LogoGeneration[] = logos.flatMap((logo) =>
-  logo.outputs.map((output) => ({
-    id: output.id,
-    prompt: logo.prompt,
-    model: output.model,
-    imageUrl: output.imageUrl,
-    generatedAt: output.generatedAt,
-  }))
-);
+// Combine all logos from all files
+const allLogos: LogoGeneration[] = [];
+
+for (const path in logoFiles) {
+  const file = logoFiles[path] as { default: LogoFile };
+  const logoFile = file.default;
+
+  // Flatten logos into individual generation cards
+  for (const logo of logoFile.logos) {
+    for (const output of logo.outputs) {
+      allLogos.push({
+        id: output.id,
+        prompt: logo.prompt,
+        model: output.model,
+        imageUrl: output.imageUrl,
+        generatedAt: output.generatedAt,
+      });
+    }
+  }
+}
 
 // Sort by generation date (newest first)
-generations.sort((a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime());
+const generations = allLogos.sort(
+  (a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime()
+);
 
 // Get unique models for filter
 const models = [...new Set(generations.map(g => g.model))].sort();

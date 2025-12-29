@@ -1,0 +1,304 @@
+{
+  "id": "logo-1",
+  "name": "Collection Dec 24, 2025",
+  "createdAt": "2025-12-24",
+  "logos": [
+    {
+      "id": "logo-1-001",
+      "prompt": "A modern logo design featuring the intertwined letters \"BV\" in a sleek, minimalist style with precise geometric construction. The capital \"B\" flows dynamically into the \"V\", creating a unified monogram that transitions from deep crimson red at the base to vibrant sunny yellow at the peaks through a smooth vertical gradient. Sharp, clean edges define the letterforms while a subtle inner glow creates dimensional depth, making the logo appear to float above the surface. The \"BV\" symbol is centrally positioned against a matte black background, outlined by a delicate thread of light that enhances its visibility and adds refined elegance to the overall composition.",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-001-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXo4NE8UFzqRQjTlfNhvA9GeaOHUV8LE7K6JIn",
+          "generatedAt": "2025-12-24T11:02:50.289Z"
+        },
+        {
+          "id": "logo-1-001-ideogram-1",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXGi4ntBss6vuxd0O1i3zJBFKAehC8SRI42Zmq",
+          "generatedAt": "2025-12-24T11:02:50.289Z"
+        },
+        {
+          "id": "logo-1-001-ideogram-2",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXZ0EZJvYFCJqUB9sMbKg4vcHOXSiIewu8QzaY",
+          "generatedAt": "2025-12-24T11:02:50.289Z"
+        },
+        {
+          "id": "logo-1-001-ideogram-3",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXxRrUY3kL2t3mNviDUZ6dgch78RH4qna1k9MW",
+          "generatedAt": "2025-12-24T11:02:50.289Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-002",
+      "prompt": "Create a unique and never-seen-before logo for a female-led digital marketing company called Verah Marketing. The symbol should NOT use the letter V. Design an elegant, modern and highly creative abstract icon that combines the ideas of:\n– a brain (representing strategy, inteligência e comportamento humano),\n– an open book (representing growth, aprendizado e direção),\n– subtle elements of marketing such as flow lines, connection nodes or upward motion.\n\nThe symbol should visually express personal and profissional growth, criatividade e evolução. Use a feminine, vibrant color palette inspired by soft gradients in pink, coral, orange and violet, similar to the reference image. The style must be minimalistic, futuristic, artistic and professional. Include the name ‘Verah Marketing’ in a clean, modern sans-serif font. High-quality vector logo, branding-ready, smooth lighting, soft curves, elegant composition, clean background.",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-002-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXsDAqP4QNBbtxc2TImyGjRz1MXVYHlo4iPEqn",
+          "generatedAt": "2025-12-24T11:02:23.116Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-003",
+      "prompt": "“Create a modern, minimal, and professional logo for a tech company called ‘Kunnba Studio.’ Focus on a geometric and abstract icon inspired by the letter ‘K,’ reflecting innovation, digital transformation, and creativity. Pair it with clean, sans-serif typography. Use smooth, balanced shapes with a flat/vector style, no 3D effects. Design in a premium, futuristic style suitable for a startup and corporate hybrid. Include a sophisticated color palette such as amber + charcoal gray or gold + dark graphite. Provide both light and dark versions, favicon/app icon variations, and horizontal & vertical layouts. Emphasize simplicity, memorability, and versatility.”",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-003-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXLm6Dw3JNafU8JBX0c2SzP6Dd3HYG59L7j4xZ",
+          "generatedAt": "2025-12-24T11:01:59.310Z"
+        },
+        {
+          "id": "logo-1-003-ideogram-1",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXSO0sVCvi1Z4ukTFjxy9wa37XfLlN6oKqDHmJ",
+          "generatedAt": "2025-12-24T11:01:59.310Z"
+        },
+        {
+          "id": "logo-1-003-ideogram-2",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXLoTlL7NJNafU8JBX0c2SzP6Dd3HYG59L7j4x",
+          "generatedAt": "2025-12-24T11:01:59.310Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-004",
+      "prompt": "modern logo for a webpage called \"VIRTUALCARD\". Just a play with the words. Play also with the symbol of a card., Typography",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-004-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXZfKCUsYFCJqUB9sMbKg4vcHOXSiIewu8QzaY",
+          "generatedAt": "2025-12-24T11:01:06.912Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-005",
+      "prompt": "Logo Design — “Bright Horizon”\n\nAbout the Programme:\nBright Horizon is a national initiative that helps at-risk youth connect to community-based support through different pathways. The goal of the program is to prevent at-risk youth from entering the criminal justice system.\n\nLogo Direction:\nWe want a logo that represents hope, growth, and new beginnings, while reflecting Turks and Caicos culture and identity. Think of imagery like sunrise, horizon, ocean waves, light, or pathways forward — but we’re open to fresh, creative interpretations.\n\nDesign Requirements:\n1. Modern, youthful, and inspiring look\n2. Must contain the words \"Bright Horizon\"\n3. Utilize the colors: Agua and Orange",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-005-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXP7Zzlal6zHoLnCfw7FyGq9RNc2QTDgZstV8i",
+          "generatedAt": "2025-12-24T11:00:33.099Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-006",
+      "prompt": "Create a modern, minimal, monogram-style logo in the same design style as a sleek abstract geometric mark. Use the letters F and N combined into one unified symbol. The shapes should be thick, rounded, smooth, and bold, similar to a continuous flowing stroke. The design should look abstract but clearly inspired by the forms of F and N merging together. Use an off-white cream color for the symbol on a solid black background. Style must match premium tech-brand aesthetics, clean curves, balance, symmetry, and visual simplicity.\"\n\n\nA modern monogram logo design featuring the letters CRF seamlessly merged into a single abstract geometric symbol. The letterforms are constructed from thick, rounded strokes that flow continuously into each other, creating smooth curves and bold negative spaces that maintain the essence of both letters while forming a unified mark. The symbol is rendered in a warm off-white cream color against a solid black background, emphasizing the clean lines and balanced proportions. The overall aesthetic embodies premium tech-brand sophistication with perfect symmetry, minimal visual noise, and elegant geometric harmony.",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-006-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXsj9R0rQNBbtxc2TImyGjRz1MXVYHlo4iPEqn",
+          "generatedAt": "2025-12-24T11:00:04.070Z"
+        },
+        {
+          "id": "logo-1-006-ideogram-1",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXsZxGpwQNBbtxc2TImyGjRz1MXVYHlo4iPEqn",
+          "generatedAt": "2025-12-24T11:00:04.070Z"
+        },
+        {
+          "id": "logo-1-006-ideogram-2",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXkgJp1Il7JtlMEikKIuD5SVAhHRzG2p60f1Fq",
+          "generatedAt": "2025-12-24T11:00:04.070Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-007",
+      "prompt": "A modern logo design featuring the word \"ika\" \" in\na smooth, interconnected rounded font, creating a sense of fluidity and gentle motion. The letters are bathed in a vibrant, seamless multi-color gradient that flows from a soft pink at the left to a rich orange, then transitioning to a lively green and finally settling into a calming blue. Beneath the text, three stylized, abstract leaves in complementary colors (pink, orange, and green) gently curl upward, adding a touch of organic elegance. The logo rests on a dark navy background, softly illuminated to evoke a friendly and bold digital brand identity.\nagainst a rich, deep navy blue background. The custom interconnected rounded font features a vibrant gradient transitioning from hot pink to bright orange, emerald green, and sky blue, subtly tilted inward with a soft diffused inner glow, drawing the eye to the center. Cascading from the right side of \"오ㅎㅖ경\" are stylized glossy leaf accents in varying shades of emerald and lemon yellow, elegantly overlapping the \"경\"s, adding a touch of organic flair. Soft, focused lighting emanates from behind the logo, creating a polished and sophisticated aesthetic with a gentle radial gradient to enhance visual depth.",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-007-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXd0P4GMzfEesCIRf6qt1MTnyWg3u8KJzPBxZU",
+          "generatedAt": "2025-12-24T10:59:44.703Z"
+        },
+        {
+          "id": "logo-1-007-ideogram-1",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX6xKh8qOhb015fauQ7rPV6UN3sFpAxKyJMewc",
+          "generatedAt": "2025-12-24T10:59:44.703Z"
+        },
+        {
+          "id": "logo-1-007-ideogram-2",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX2O6tESEPSegUK64IaqHbZLjEotFVBC3cPdh9",
+          "generatedAt": "2025-12-24T10:59:44.703Z"
+        },
+        {
+          "id": "logo-1-007-ideogram-3",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXUppLsUMzBqp5ePd9QhliI2TARMVvzOacCHEt",
+          "generatedAt": "2025-12-24T10:59:44.703Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-008",
+      "prompt": "A minimalist logo design featuring a bold, stylized black letter \"B\" rendered in a sleek, geometric sans-serif font with sharp angles and clean lines that convey strength and modernity. The letter \"B\" incorporates delicate gold filigree detailing along its outer edges, creating subtle ornamental flourishes that add an element of luxury and refinement without overwhelming the geometric structure. Beneath the \"B\", the brand name \"Bravix\" appears in elegant Garamond serif font in charcoal grey, perfectly centered and proportionally balanced below the letterform. The entire composition sits against a crisp, pure white background that enhances the logo's clarity and creates a premium, timeless appeal with strong contrast.",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-008-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXzaaCTCK1kDWwe0VBI9n8QEpgmJf5ShvoXxUO",
+          "generatedAt": "2025-12-24T10:59:16.081Z"
+        },
+        {
+          "id": "logo-1-008-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXYxG404D7Lt0Bn9pM5u3Xz6mwU2WxcdlFPSDY",
+          "generatedAt": "2025-12-24T10:59:16.081Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-009",
+      "prompt": "A modern logo design featuring the initials \"SUN\" enclosed within a sleek circular frame with futuristic styling. The letters are rendered in a bold, contemporary sans-serif typeface with subtle geometric modifications and gradient effects transitioning from deep cyan to electric purple. The circular border has a thin, luminous outline with small accent lines or dots that give it a high-tech, digital aesthetic. The overall design balances youthful energy with professional sophistication through clean lines, precise spacing, and a monochromatic background that emphasizes the vibrant letter treatments.",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-009-ideogram-1",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXZ2i3UCYFCJqUB9sMbKg4vcHOXSiIewu8QzaY",
+          "generatedAt": "2025-12-24T10:58:57.815Z"
+        },
+        {
+          "id": "logo-1-009-ideogram-2",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXH5DD7NStg6p2ljX5KzZh3ireQLDUqdmGwxNc",
+          "generatedAt": "2025-12-24T10:58:57.815Z"
+        },
+        {
+          "id": "logo-1-009-ideogram-3",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXVeLbdK9rukD0wTXM4QmP9FzO7B6vWZhgLfbe",
+          "generatedAt": "2025-12-24T10:58:57.815Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-010",
+      "prompt": "Create a clean, modern, and professional logo for a wellness and health supplements brand. The logo should feature a stylized tree with visible roots, symbolizing grounding, nature, vitality, and deep connection to the earth. Use a color palette inspired by natural earth tones — warm browns, soft greens, muted beiges, and clay-like colors. The overall style should feel organic, trustworthy, minimalist, and suitable for a premium supplement brand. Include balanced typography space but do not include any text in the logo. With the name kova",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-010-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXAtfxr5yytLfXGSJ8hKDox05wIgTY2FjbHNC6",
+          "generatedAt": "2025-12-24T10:58:36.229Z"
+        },
+        {
+          "id": "logo-1-010-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXlwWMQyi8D3VezAqRTLNm7fiZn4arQ8JKFbhB",
+          "generatedAt": "2025-12-24T10:58:36.229Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-011",
+      "prompt": "Modern bold logo design for “H1N”, inspired by Hindu spiritual symbolism. Include a sleek trident (trishul) element subtly integrated into the design, similar to the letter style of “HIN” spiritual logos. Use black or deep brown for the letters with a glowing gradient background inspired by a diya flame — smooth red, orange, and yellow blend. The style should feel powerful, modern, and divine, symbolizing unity and strength. No extra text or decorations, focus on “H1N”. In capital letter",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-011-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX6G3syQOhb015fauQ7rPV6UN3sFpAxKyJMewc",
+          "generatedAt": "2025-12-24T10:58:00.816Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-012",
+      "prompt": "Beautiful logo design with a combination of gold and black colors with a lion background for Khajeh",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-012-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXQ1AUcPLRJBXMAwzEtDl7Ibe5L3drkSUYPTyH",
+          "generatedAt": "2025-12-24T10:57:26.004Z"
+        },
+        {
+          "id": "logo-1-012-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXdMtHBRfEesCIRf6qt1MTnyWg3u8KJzPBxZUF",
+          "generatedAt": "2025-12-24T10:57:26.004Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-013",
+      "prompt": "A modern television channel logo design featuring the text \"LOTUS TV\" in bold, contemporary sans-serif lettering with vibrant gradient colors transitioning from deep magenta to golden yellow. The logo incorporates a stylized lotus flower symbol positioned to the left of the text, with layered petals rendered in the same gradient scheme, creating a sense of blooming energy and warmth. The lotus icon features subtle geometric styling similar to major Tamil television networks, with clean lines and a polished, broadcast-ready appearance. The entire logo sits against a sleek dark background with soft rim lighting that emphasizes the colorful elements and creates a premium, professional television branding aesthetic.",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-013-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXDnjTfnlVA7XfMgSnbKrNepHsQhoBtT1jO2Gi",
+          "generatedAt": "2025-12-24T10:56:50.849Z"
+        },
+        {
+          "id": "logo-1-013-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXGSVl4vss6vuxd0O1i3zJBFKAehC8SRI42Zmq",
+          "generatedAt": "2025-12-24T10:56:50.849Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-014",
+      "prompt": "A minimalist eSports logo design featuring the fierce, stylized head of a hawk with sharp, angular geometric shapes that convey power and aggression. The bird's narrow, intense eye glows with determination while symmetrical abstract patterns form the razor-sharp beak, layered feathers, and muscular chest using clean vector lines. The design incorporates a bold color palette of emerald green, bright yellow, vibrant orange, and electric blue with flat, solid shading and no gradients for maximum impact. The logo is perfectly centered on a deep black background, creating striking contrast and a premium, competitive aesthetic that embodies elite gaming team spirit.",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-014-gemini",
+          "model": "gemini-2.5-flash",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXgaXiUcdas0V9lryIuDFTnzWdOXjfwQUBKN4e",
+          "generatedAt": "2025-12-24T10:56:19.374Z"
+        },
+        {
+          "id": "logo-1-014-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfX6NSaU8Ohb015fauQ7rPV6UN3sFpAxKyJMewc",
+          "generatedAt": "2025-12-24T10:56:19.374Z"
+        }
+      ]
+    },
+    {
+      "id": "logo-1-015",
+      "prompt": "Make me an attractive logo for real state page on Facebook called AURA with attractive colors",
+      "createdAt": "2025-12-24",
+      "outputs": [
+        {
+          "id": "logo-1-015-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://gbqcgvaz7z.ufs.sh/f/AgfjiiyytLfXpZNIOdhPn6Xl4kCOi2h3It8L17JcEgWZsjFG",
+          "generatedAt": "2025-12-24T10:55:56.973Z"
+        }
+      ]
+    }
+  ]
+}

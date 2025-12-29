@@ -4,7 +4,7 @@ import sharp from "sharp";
 
 // Configuration
 const GENERATIONS_DIR = path.join(process.cwd(), "generations");
-const OUTPUT_FILE = path.join(process.cwd(), "src/data/logos.json");
+const OUTPUT_DIR = path.join(process.cwd(), "src/data/logos");
 const DRY_RUN = process.env.DRY_RUN === "true";
 
 // Image optimization settings
@@ -51,8 +51,23 @@ interface Logo {
   outputs: LogoOutput[];
 }
 
-interface LogosJson {
+interface LogoFile {
+  id: string;
+  name: string;
+  createdAt: string;
   logos: Logo[];
+}
+
+interface LogosIndex {
+  files: {
+    id: string;
+    name: string;
+    path: string;
+    createdAt: string;
+    logoCount: number;
+  }[];
+  totalLogos: number;
+  lastUpdated: string;
 }
 
 /**
@@ -66,6 +81,20 @@ function slugifyPrompt(prompt: string, maxLength = 40): string {
     .replace(/-+/g, "-") // Collapse multiple hyphens
     .substring(0, maxLength)
     .replace(/-+$/, ""); // Remove trailing hyphens
+}
+
+/**
+ * Extract a readable name from folder name
+ */
+function extractFolderName(folderName: string): string {
+  // Extract timestamp from lumina-project-1766574339509
+  const match = folderName.match(/lumina-project-(\d+)/);
+  if (match) {
+    const timestamp = parseInt(match[1]);
+    const date = new Date(timestamp);
+    return `Collection ${date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
+  }
+  return folderName;
 }
 
 /**
@@ -117,7 +146,12 @@ function findIdeogramImages(
  */
 async function optimizeImage(
   filePath: string
-): Promise<{ buffer: Buffer; filename: string; originalSize: number; optimizedSize: number }> {
+): Promise<{
+  buffer: Buffer;
+  filename: string;
+  originalSize: number;
+  optimizedSize: number;
+}> {
   const originalBuffer = fs.readFileSync(filePath);
   const originalSize = originalBuffer.length;
   const originalFilename = path.basename(filePath);
@@ -158,9 +192,12 @@ async function uploadFile(filePath: string): Promise<string | null> {
     }
 
     // Optimize the image
-    const { buffer, filename, originalSize, optimizedSize } = await optimizeImage(filePath);
+    const { buffer, filename, originalSize, optimizedSize } =
+      await optimizeImage(filePath);
     const savings = ((1 - optimizedSize / originalSize) * 100).toFixed(1);
-    console.log(`     (${(originalSize / 1024).toFixed(0)}KB → ${(optimizedSize / 1024).toFixed(0)}KB, -${savings}%)`);
+    console.log(
+      `     (${(originalSize / 1024).toFixed(0)}KB → ${(optimizedSize / 1024).toFixed(0)}KB, -${savings}%)`
+    );
 
     const blob = new Blob([buffer]);
     const file = new File([blob], filename, {
@@ -184,11 +221,117 @@ async function uploadFile(filePath: string): Promise<string | null> {
 }
 
 /**
- * Process all generation folders and transform to logos.json format
+ * Process a single generation folder
+ */
+async function processFolder(
+  folderPath: string,
+  fileIndex: number
+): Promise<LogoFile | null> {
+  const folderName = path.basename(folderPath);
+  const manifestPath = path.join(folderPath, "manifest.json");
+
+  if (!fs.existsSync(manifestPath)) {
+    console.log(`  No manifest.json found, skipping...`);
+    return null;
+  }
+
+  const manifestContent = fs.readFileSync(manifestPath, "utf-8");
+  const manifest: ManifestEntry[] = JSON.parse(manifestContent);
+
+  const logos: Logo[] = [];
+  let logoCounter = 1;
+
+  // Get folder creation date from first entry
+  const folderDate = manifest[0]?.iso_date?.split("T")[0] || new Date().toISOString().split("T")[0];
+
+  for (const entry of manifest) {
+    const outputs: LogoOutput[] = [];
+    const logoId = `logo-${fileIndex}-${String(logoCounter).padStart(3, "0")}`;
+    const createdAt = entry.iso_date.split("T")[0];
+
+    // Process Gemini creations from manifest
+    for (const creation of entry.creations) {
+      const imagePath = path.join(folderPath, creation.image_path);
+
+      if (fs.existsSync(imagePath)) {
+        console.log(`    -> Gemini: ${creation.image_path}`);
+        const imageUrl = await uploadFile(imagePath);
+
+        if (imageUrl) {
+          outputs.push({
+            id: `${logoId}-gemini`,
+            model: "gemini-2.5-flash",
+            imageUrl,
+            generatedAt: entry.iso_date,
+          });
+        }
+      } else {
+        // Try without 'images/' prefix (for older folder structure)
+        const altPath = path.join(folderPath, path.basename(creation.image_path));
+        if (fs.existsSync(altPath)) {
+          console.log(`    -> Gemini: ${path.basename(altPath)}`);
+          const imageUrl = await uploadFile(altPath);
+
+          if (imageUrl) {
+            outputs.push({
+              id: `${logoId}-gemini`,
+              model: "gemini-2.5-flash",
+              imageUrl,
+              generatedAt: entry.iso_date,
+            });
+          }
+        }
+      }
+    }
+
+    // Find and process matching Ideogram images
+    const ideogramImages = findIdeogramImages(folderPath, entry.prompt);
+
+    for (let i = 0; i < ideogramImages.length; i++) {
+      const ideogramImage = ideogramImages[i];
+      console.log(`    -> Ideogram: ${ideogramImage.filename}`);
+      const imageUrl = await uploadFile(ideogramImage.path);
+
+      if (imageUrl) {
+        outputs.push({
+          id: `${logoId}-ideogram${ideogramImages.length > 1 ? `-${i + 1}` : ""}`,
+          model: "ideogram",
+          imageUrl,
+          generatedAt: entry.iso_date,
+        });
+      }
+    }
+
+    // Only add logo if it has at least one output
+    if (outputs.length > 0) {
+      logos.push({
+        id: logoId,
+        prompt: entry.prompt,
+        createdAt,
+        outputs,
+      });
+      logoCounter++;
+    }
+  }
+
+  if (logos.length === 0) {
+    return null;
+  }
+
+  return {
+    id: `logo-${fileIndex}`,
+    name: extractFolderName(folderName),
+    createdAt: folderDate,
+    logos,
+  };
+}
+
+/**
+ * Process all generation folders and create separate logo files
  */
 async function transformGenerations(): Promise<void> {
   console.log("=".repeat(60));
-  console.log("Logo Generations Transformer");
+  console.log("Logo Generations Transformer (Multi-File Mode)");
   console.log("=".repeat(60));
 
   if (DRY_RUN) {
@@ -203,132 +346,78 @@ async function transformGenerations(): Promise<void> {
       process.exit(1);
     }
     console.log("\n[UPLOAD MODE] - Files will be uploaded to UploadThing");
-    console.log(`[OPTIMIZATION] - Converting to WebP (max ${MAX_DIMENSION}px, quality ${WEBP_QUALITY}%)\n`);
+    console.log(
+      `[OPTIMIZATION] - Converting to WebP (max ${MAX_DIMENSION}px, quality ${WEBP_QUALITY}%)\n`
+    );
   }
 
-  const logos: Logo[] = [];
-  let logoCounter = 1;
-  let totalGeminiImages = 0;
-  let totalIdeogramImages = 0;
+  // Ensure output directory exists
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  }
 
-  // Get all generation folders
+  // Get all generation folders sorted by name (which includes timestamp)
   const folders = fs
     .readdirSync(GENERATIONS_DIR)
     .filter((f) => f.startsWith("lumina-project-"))
+    .sort()
     .map((f) => path.join(GENERATIONS_DIR, f));
 
   console.log(`Found ${folders.length} generation folders\n`);
 
-  for (const folder of folders) {
-    const manifestPath = path.join(folder, "manifest.json");
+  const indexEntries: LogosIndex["files"] = [];
+  let totalLogos = 0;
 
-    if (!fs.existsSync(manifestPath)) {
-      console.log(`No manifest.json in ${folder}, skipping...`);
-      continue;
-    }
+  for (let i = 0; i < folders.length; i++) {
+    const folder = folders[i];
+    const fileIndex = i + 1;
+    const folderName = path.basename(folder);
 
-    const manifestContent = fs.readFileSync(manifestPath, "utf-8");
-    const manifest: ManifestEntry[] = JSON.parse(manifestContent);
+    console.log(`\n[${fileIndex}/${folders.length}] Processing ${folderName}`);
 
-    console.log(
-      `Processing ${manifest.length} entries from ${path.basename(folder)}`
-    );
+    const logoFile = await processFolder(folder, fileIndex);
 
-    for (const entry of manifest) {
-      const outputs: LogoOutput[] = [];
-      const logoId = `logo-${String(logoCounter).padStart(3, "0")}`;
-      const createdAt = entry.iso_date.split("T")[0];
+    if (logoFile) {
+      // Write individual logo file
+      const outputPath = path.join(OUTPUT_DIR, `logo-${fileIndex}.json`);
+      fs.writeFileSync(outputPath, JSON.stringify(logoFile, null, 2));
 
-      // Process Gemini creations from manifest
-      for (const creation of entry.creations) {
-        const imagePath = path.join(folder, creation.image_path);
+      indexEntries.push({
+        id: logoFile.id,
+        name: logoFile.name,
+        path: `logo-${fileIndex}.json`,
+        createdAt: logoFile.createdAt,
+        logoCount: logoFile.logos.length,
+      });
 
-        if (fs.existsSync(imagePath)) {
-          console.log(`  -> Gemini: ${creation.image_path}`);
-          const imageUrl = await uploadFile(imagePath);
-
-          if (imageUrl) {
-            totalGeminiImages++;
-            outputs.push({
-              id: `${logoId}-gemini`,
-              model: "gemini-2.5-flash",
-              imageUrl,
-              generatedAt: entry.iso_date,
-            });
-          }
-        } else {
-          // Try without 'images/' prefix (for older folder structure)
-          const altPath = path.join(
-            folder,
-            path.basename(creation.image_path)
-          );
-          if (fs.existsSync(altPath)) {
-            console.log(`  -> Gemini: ${path.basename(altPath)}`);
-            const imageUrl = await uploadFile(altPath);
-
-            if (imageUrl) {
-              totalGeminiImages++;
-              outputs.push({
-                id: `${logoId}-gemini`,
-                model: "gemini-2.5-flash",
-                imageUrl,
-                generatedAt: entry.iso_date,
-              });
-            }
-          }
-        }
-      }
-
-      // Find and process matching Ideogram images
-      const ideogramImages = findIdeogramImages(folder, entry.prompt);
-
-      for (let i = 0; i < ideogramImages.length; i++) {
-        const ideogramImage = ideogramImages[i];
-        console.log(`  -> Ideogram: ${ideogramImage.filename}`);
-        const imageUrl = await uploadFile(ideogramImage.path);
-
-        if (imageUrl) {
-          totalIdeogramImages++;
-          outputs.push({
-            id: `${logoId}-ideogram${ideogramImages.length > 1 ? `-${i + 1}` : ""}`,
-            model: "ideogram",
-            imageUrl,
-            generatedAt: entry.iso_date,
-          });
-        }
-      }
-
-      // Only add logo if it has at least one output
-      if (outputs.length > 0) {
-        logos.push({
-          id: logoId,
-          prompt: entry.prompt,
-          createdAt,
-          outputs,
-        });
-        logoCounter++;
-      }
+      totalLogos += logoFile.logos.length;
+      console.log(`  ✓ Created logo-${fileIndex}.json (${logoFile.logos.length} prompts)`);
     }
   }
 
-  // Sort by most recent first
-  logos.sort(
+  // Sort index by creation date (newest first)
+  indexEntries.sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
-  // Write to logos.json
-  const logosJson: LogosJson = { logos };
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(logosJson, null, 2));
+  // Write index file
+  const indexData: LogosIndex = {
+    files: indexEntries,
+    totalLogos,
+    lastUpdated: new Date().toISOString(),
+  };
+
+  const indexPath = path.join(OUTPUT_DIR, "index.json");
+  fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
 
   console.log("\n" + "=".repeat(60));
   console.log("Transformation Complete!");
   console.log("=".repeat(60));
   console.log(`\nStatistics:`);
-  console.log(`  Total prompts processed: ${logos.length}`);
-  console.log(`  Gemini images: ${totalGeminiImages}`);
-  console.log(`  Ideogram images: ${totalIdeogramImages}`);
-  console.log(`  Total images: ${totalGeminiImages + totalIdeogramImages}`);
-  console.log(`\nOutput written to: ${OUTPUT_FILE}`);
+  console.log(`  Logo files created: ${indexEntries.length}`);
+  console.log(`  Total prompts: ${totalLogos}`);
+  console.log(`\nOutput directory: ${OUTPUT_DIR}`);
+  console.log(`Index file: ${indexPath}`);
 
   if (DRY_RUN) {
     console.log("\n[DRY RUN] No files were uploaded.");
