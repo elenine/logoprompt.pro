@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact Us - LogoPrompt.pro">
+  <main class="legal-page">
+    <a href="/" class="back-link">&larr; Back to Home</a>
+
+    <h1>Contact Us</h1>
+
+    <section>
+      <h2>Get in Touch</h2>
+      <p>
+        We'd love to hear from you! Whether you have questions, feedback, partnership inquiries,
+        or just want to share how you're using LogoPrompt.pro, we're here to help.
+      </p>
+    </section>
+
+    <section>
+      <h2>Email Us</h2>
+      <p>
+        For all inquiries, please reach out to us at:
+      </p>
+      <p class="email-link">
+        <a href="mailto:info@elenine.com">info@elenine.com</a>
+      </p>
+      <p>
+        We aim to respond to all inquiries within 24-48 business hours.
+      </p>
+    </section>
+
+    <section>
+      <h2>What We Can Help With</h2>
+      <ul>
+        <li><strong>General Questions:</strong> Questions about our prompts, how to use them,
+        or which AI platforms work best.</li>
+        <li><strong>Technical Support:</strong> Issues with the website or accessing our content.</li>
+        <li><strong>Feedback & Suggestions:</strong> Ideas for new prompts, features, or improvements.</li>
+        <li><strong>Partnership Opportunities:</strong> Collaboration, sponsorship, or business inquiries.</li>
+        <li><strong>Press & Media:</strong> Interview requests, features, or media-related questions.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Follow Us</h2>
+      <p>
+        Stay updated with the latest prompts and AI design tips by following our journey.
+        We regularly share new content and insights about AI-powered design.
+      </p>
+    </section>
+
+    <section>
+      <h2>Quick Links</h2>
+      <p>
+        Before reaching out, you might find answers in our other pages:
+      </p>
+      <ul class="quick-links">
+        <li><a href="/about">About Us</a> - Learn more about our mission and team</li>
+        <li><a href="/privacy">Privacy Policy</a> - How we handle your data</li>
+        <li><a href="/terms">Terms & Conditions</a> - Our terms of service</li>
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .legal-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: rgb(var(--accent-light));
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: opacity 0.2s;
+  }
+
+  .back-link:hover {
+    opacity: 0.8;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 2rem;
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 0.75rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    margin: 0 0 1rem;
+  }
+
+  .email-link {
+    margin: 1rem 0;
+  }
+
+  .email-link a {
+    display: inline-block;
+    background: rgba(var(--accent), 0.1);
+    color: rgb(var(--accent-light));
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: 1px solid rgba(var(--accent), 0.3);
+    transition: all 0.2s;
+  }
+
+  .email-link a:hover {
+    background: rgba(var(--accent), 0.2);
+    border-color: rgba(var(--accent), 0.5);
+  }
+
+  ul {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    padding-left: 1.5rem;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  strong {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .quick-links {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .quick-links li {
+    margin-bottom: 0.75rem;
+  }
+
+  .quick-links a {
+    color: rgb(var(--accent-light));
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .quick-links a:hover {
+    opacity: 0.8;
+  }
+</style>
