@@ -8,7 +8,7 @@ interface Props {
 const { generation } = Astro.props;
 ---
 
-<article class="logo-card" data-prompt={generation.prompt} data-image-url={generation.imageUrl}>
+<article class="logo-card" data-prompt={generation.prompt} data-image-url={generation.imageUrl} data-model={generation.model}>
   <div class="logo-image">
     <img
       src={generation.imageUrl}
@@ -144,12 +144,60 @@ const { generation } = Astro.props;
 </style>
 
 <script>
+  import { SOCIAL_COPY_CONFIG } from '../constants/socialCopy';
+
   document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.logo-card');
+    const { storageKey } = SOCIAL_COPY_CONFIG;
+
+    // Check if search=true is in URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasSearchParam = urlParams.get('search') === 'true';
+
+    // If search=true in URL, persist to localStorage
+    if (hasSearchParam) {
+      try {
+        localStorage.setItem(storageKey, 'true');
+      } catch (e) {
+        // localStorage not available
+      }
+    }
+
+    // Check if social copy mode is enabled (from URL or localStorage)
+    let isSearchMode = hasSearchParam;
+    if (!isSearchMode) {
+      try {
+        isSearchMode = localStorage.getItem(storageKey) === 'true';
+      } catch (e) {
+        // localStorage not available
+      }
+    }
+
+    /**
+     * Formats prompt for social media sharing
+     */
+    function formatSocialCopy(prompt: string, model?: string): string {
+      const { hashtags, callToAction, siteUrl } = SOCIAL_COPY_CONFIG;
+
+      const allHashtags = [...hashtags];
+      if (model) {
+        const modelHashtag = `#${model.replace(/\s+/g, '')}`;
+        allHashtags.unshift(modelHashtag);
+      }
+
+      const hashtagsString = allHashtags.join(' ');
+
+      return `prompt: ${prompt}
+
+${hashtagsString}
+
+${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
+    }
 
     cards.forEach(card => {
       const prompt = card.getAttribute('data-prompt') || '';
       const imageUrl = card.getAttribute('data-image-url') || '';
+      const model = card.getAttribute('data-model') || '';
 
       const copyPromptBtn = card.querySelector('.copy-prompt-btn');
       const copyImageBtn = card.querySelector('.copy-image-btn');
@@ -157,7 +205,9 @@ const { generation } = Astro.props;
       copyPromptBtn?.addEventListener('click', async (e) => {
         e.stopPropagation();
         try {
-          await navigator.clipboard.writeText(prompt);
+          // Use social format when search=true, otherwise copy raw prompt
+          const textToCopy = isSearchMode ? formatSocialCopy(prompt, model) : prompt;
+          await navigator.clipboard.writeText(textToCopy);
           showCopied(copyPromptBtn as HTMLButtonElement, 'Copied!');
         } catch (err) {
           console.error('Failed to copy prompt:', err);
