@@ -20,8 +20,6 @@ export interface LogoPrompt {
   id: string;
   /** The prompt used to generate the logo */
   prompt: string;
-  /** Brief title/name for this logo concept */
-  title: string;
   /** Timestamp when this prompt was created */
   createdAt: string;
   /** Array of outputs from different AI models */
@@ -44,8 +42,6 @@ export interface LogoGeneration {
   id: string;
   /** The prompt used to generate the logo */
   prompt: string;
-  /** Brief title/name for this logo concept */
-  title: string;
   /** The AI model used to generate this output */
   model: string;
   /** URL to the generated image */

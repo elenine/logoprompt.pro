@@ -14,7 +14,6 @@ const generations: LogoGeneration[] = logos.flatMap((logo) =>
   logo.outputs.map((output) => ({
     id: output.id,
     prompt: logo.prompt,
-    title: logo.title,
     model: output.model,
     imageUrl: output.imageUrl,
     generatedAt: output.generatedAt,

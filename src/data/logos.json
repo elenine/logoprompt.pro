@@ -2,7 +2,6 @@
   "logos": [
     {
       "id": "logo-001",
-      "title": "TechFlow Startup",
       "prompt": "A minimalist tech startup logo featuring flowing lines that form the letter T, using gradient blue and purple colors, modern and clean design, suitable for a SaaS company",
       "createdAt": "2024-12-15",
       "outputs": [
@@ -28,7 +27,6 @@
     },
     {
       "id": "logo-002",
-      "title": "Green Earth Eco",
       "prompt": "An eco-friendly company logo with a stylized leaf integrated into a circular earth shape, green and brown earthy tones, organic and natural feeling",
       "createdAt": "2024-12-14",
       "outputs": [
@@ -48,7 +46,6 @@
     },
     {
       "id": "logo-003",
-      "title": "Apex Athletics",
       "prompt": "A dynamic sports brand logo with an abstract mountain peak or arrow pointing upward, bold and energetic, red and black color scheme, representing strength and achievement",
       "createdAt": "2024-12-13",
       "outputs": [
@@ -80,7 +77,6 @@
     },
     {
       "id": "logo-004",
-      "title": "Artisan Coffee Co",
       "prompt": "A vintage-style coffee shop logo with a steaming coffee cup, hand-drawn aesthetic, warm brown and cream colors, cozy and inviting atmosphere",
       "createdAt": "2024-12-12",
       "outputs": [
@@ -100,7 +96,6 @@
     },
     {
       "id": "logo-005",
-      "title": "Nova Finance",
       "prompt": "A professional financial services logo with abstract geometric shapes suggesting growth and stability, navy blue and gold colors, trustworthy and sophisticated",
       "createdAt": "2024-12-11",
       "outputs": [
@@ -126,7 +121,6 @@
     },
     {
       "id": "logo-006",
-      "title": "Pixel Play Games",
       "prompt": "A playful gaming studio logo with pixel art style elements, vibrant neon colors on dark background, fun and retro-modern gaming aesthetic",
       "createdAt": "2024-12-10",
       "outputs": [
@@ -146,7 +140,6 @@
     },
     {
       "id": "logo-007",
-      "title": "Harmony Wellness",
       "prompt": "A serene wellness and spa logo featuring a lotus flower with flowing water elements, soft purple and teal gradient, peaceful and calming energy",
       "createdAt": "2024-12-09",
       "outputs": [
@@ -172,7 +165,6 @@
     },
     {
       "id": "logo-008",
-      "title": "Rocket Launch Agency",
       "prompt": "A bold aerospace company logo with a stylized rocket launching through clouds, dynamic angles, metallic silver and deep space blue colors",
       "createdAt": "2024-12-08",
       "outputs": [
@@ -198,7 +190,6 @@
     },
     {
       "id": "logo-009",
-      "title": "Urban Threads",
       "prompt": "A trendy streetwear fashion brand logo with bold typography and urban graffiti influences, black and white with accent colors, edgy and youthful",
       "createdAt": "2024-12-07",
       "outputs": [
@@ -218,7 +209,6 @@
     },
     {
       "id": "logo-010",
-      "title": "Ocean Blue Marine",
       "prompt": "A nautical marine company logo featuring a stylized wave and anchor combination, deep ocean blue and white, professional yet adventurous",
       "createdAt": "2024-12-06",
       "outputs": [
@@ -244,7 +234,6 @@
     },
     {
       "id": "logo-011",
-      "title": "Bright Minds Academy",
       "prompt": "An educational institution logo with an open book transforming into a lightbulb, symbolizing knowledge and ideas, warm yellow and scholarly navy colors",
       "createdAt": "2024-12-05",
       "outputs": [
@@ -276,7 +265,6 @@
     },
     {
       "id": "logo-012",
-      "title": "Swift Delivery",
       "prompt": "A fast logistics and delivery service logo with a stylized arrow or bird in motion, suggesting speed and reliability, orange and dark gray colors",
       "createdAt": "2024-12-04",
       "outputs": [
@@ -296,7 +284,6 @@
     },
     {
       "id": "logo-013",
-      "title": "Crypto Vault",
       "prompt": "A cryptocurrency and blockchain company logo with interconnected geometric shapes forming a vault or shield, metallic gold and cyber blue, secure and futuristic",
       "createdAt": "2024-12-03",
       "outputs": [
@@ -322,7 +309,6 @@
     },
     {
       "id": "logo-014",
-      "title": "Paws & Claws Pet Care",
       "prompt": "A friendly pet care service logo featuring a playful dog and cat silhouette forming a heart shape, warm orange and soft green colors, loving and trustworthy",
       "createdAt": "2024-12-02",
       "outputs": [
@@ -348,7 +334,6 @@
     },
     {
       "id": "logo-015",
-      "title": "Summit Real Estate",
       "prompt": "A premium real estate company logo with a modern building silhouette integrated with a mountain peak, sophisticated charcoal and gold colors, luxury and aspiration",
       "createdAt": "2024-12-01",
       "outputs": [
@@ -368,7 +353,6 @@
     },
     {
       "id": "logo-016",
-      "title": "Melody Music Studio",
       "prompt": "A creative music production studio logo with sound waves forming a musical note, vibrant gradient from pink to purple, artistic and dynamic",
       "createdAt": "2024-11-30",
       "outputs": [
@@ -394,7 +378,6 @@
     },
     {
       "id": "logo-017",
-      "title": "Fresh Harvest Farms",
       "prompt": "An organic farm logo with a sun rising over rolling hills and a wheat stalk, earthy green and golden yellow colors, natural and wholesome",
       "createdAt": "2024-11-29",
       "outputs": [
@@ -420,7 +403,6 @@
     },
     {
       "id": "logo-018",
-      "title": "Digital Canvas Creative",
       "prompt": "A digital creative agency logo with a paintbrush creating digital pixels, blending traditional art with technology, rainbow gradient on dark background",
       "createdAt": "2024-11-28",
       "outputs": [
@@ -446,7 +428,6 @@
     },
     {
       "id": "logo-019",
-      "title": "CloudSync Solutions",
       "prompt": "A cloud computing company logo with interconnected cloud shapes and data flow lines, clean white and sky blue gradient, modern and reliable",
       "createdAt": "2024-11-27",
       "outputs": [
@@ -466,7 +447,6 @@
     },
     {
       "id": "logo-020",
-      "title": "Iron Forge Fitness",
       "prompt": "A hardcore gym and fitness brand logo with a stylized dumbbell or kettlebell forming a shield, industrial steel gray and fiery red, powerful and intense",
       "createdAt": "2024-11-26",
       "outputs": [
