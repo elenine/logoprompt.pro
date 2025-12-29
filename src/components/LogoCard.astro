@@ -230,9 +230,9 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
     const { storageKey } = SOCIAL_COPY_CONFIG;
     const { directAdUrl } = AD_CONFIG;
 
-    // Check if search=true is in URL params
+    // Check if search=true or share=true is in URL params
     const urlParams = new URLSearchParams(window.location.search);
-    const hasSearchParam = urlParams.get('search') === 'true';
+    const hasSearchParam = urlParams.get('search') === 'true' || urlParams.get('share') === 'true';
 
     // If search=true in URL, persist to localStorage
     if (hasSearchParam) {
@@ -267,7 +267,12 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
 
       const hashtagsString = allHashtags.join(' ');
 
+      // Include model name on separate line if available
+      const modelLine = model ? `model: ${model}` : '';
+
       return `prompt: ${prompt}
+
+${modelLine}
 
 ${hashtagsString}
 

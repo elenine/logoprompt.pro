@@ -99,7 +99,7 @@ export function shouldShowBannerAd(): boolean {
 /**
  * Generates a social media formatted copy text
  * @param prompt - The logo generation prompt
- * @param model - Optional model name to include as hashtag
+ * @param model - Optional model name to include as hashtag and label
  * @returns Formatted string for social media sharing
  */
 export function formatSocialCopy(prompt: string, model?: string): string {
@@ -115,7 +115,12 @@ export function formatSocialCopy(prompt: string, model?: string): string {
 
   const hashtagsString = allHashtags.join(' ');
 
+  // Include model name on separate line if available
+  const modelLine = model ? `model: ${model}` : '';
+
   return `prompt: ${prompt}
+
+${modelLine}
 
 ${hashtagsString}
 
@@ -128,8 +133,9 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
  * Format:
  * ---
  * prompt: [PROMPT TEXT]
+ * model: [MODEL NAME]
  *
- * #AILogo #LogoDesign #AIArt #LogoPrompt #AIGenerated #GraphicDesign #Branding #DesignInspiration
+ * #[Model] #AILogo #LogoDesign #AIArt #LogoPrompt #AIGenerated #GraphicDesign #Branding #DesignInspiration
  *
  * Want more prompts like this? Visit logoprompt.pro
  * ---
