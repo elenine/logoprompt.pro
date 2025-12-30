@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getDb } from '@/db';
 import { referralLink } from '@/db/schema-admin';
 import { eq, and, sql } from 'drizzle-orm';
+import { getEnv } from '@/lib/env';
 
 export const prerender = false;
 
@@ -19,14 +20,7 @@ export const GET: APIRoute = async (context) => {
     );
   }
 
-  const env = context.locals.runtime?.env;
-  if (!env?.DATABASE_URL) {
-    // If database not configured, return default
-    return new Response(
-      JSON.stringify({ url: DEFAULT_DIRECT_URL }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
+  const env = getEnv();
 
   try {
     const db = getDb(env.DATABASE_URL);

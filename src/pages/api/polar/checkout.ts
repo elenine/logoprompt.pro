@@ -2,19 +2,13 @@ import type { APIRoute } from 'astro';
 import { createPolar } from '@/lib/polar';
 import { SUBSCRIPTION_PLAN, isValidProductId } from '@/lib/subscription-config';
 import { hasActiveSubscription } from '@/lib/subscription';
+import { getEnv } from '@/lib/env';
 
 export const prerender = false;
 
 export const POST: APIRoute = async (context) => {
-  const env = context.locals.runtime?.env;
+  const env = getEnv();
   const user = context.locals.user;
-
-  if (!env) {
-    return new Response(JSON.stringify({ error: 'Server configuration error' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
 
   if (!user) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), {

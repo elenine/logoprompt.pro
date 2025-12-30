@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getDb } from '@/db';
 import { affiliatePayout, adminActivityLog } from '@/db/schema-admin';
 import { eq } from 'drizzle-orm';
+import { getEnv } from '@/lib/env';
 
 export const prerender = false;
 
@@ -14,13 +15,7 @@ export const GET: APIRoute = async (context) => {
     );
   }
 
-  const env = context.locals.runtime?.env;
-  if (!env?.DATABASE_URL) {
-    return new Response(
-      JSON.stringify({ error: 'Database not configured' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
+  const env = getEnv();
 
   try {
     const payoutId = context.params.id;
@@ -67,13 +62,7 @@ export const PATCH: APIRoute = async (context) => {
     );
   }
 
-  const env = context.locals.runtime?.env;
-  if (!env?.DATABASE_URL) {
-    return new Response(
-      JSON.stringify({ error: 'Database not configured' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
+  const env = getEnv();
 
   try {
     const payoutId = context.params.id;

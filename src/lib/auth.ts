@@ -43,7 +43,7 @@ export function createAuth(config: AuthConfig) {
     secret: config.secret,
     emailAndPassword: {
       enabled: true,
-      requireEmailVerification: true,
+      requireEmailVerification: false,
       sendResetPassword: async ({ user, url }) => {
         if (config.brevoApiKey) {
           await sendPasswordResetEmail(config.brevoApiKey, user.email, url);
@@ -56,7 +56,7 @@ export function createAuth(config: AuthConfig) {
           await sendVerificationEmail(config.brevoApiKey, user.email, url);
         }
       },
-      sendOnSignUp: true,
+      sendOnSignUp: false,
     },
     socialProviders: {
       google: {

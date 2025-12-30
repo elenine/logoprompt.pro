@@ -3,6 +3,7 @@ import { getDb } from '@/db';
 import { user, subscription } from '@/db/schema';
 import { affiliatePayout, affiliatePayoutSettings } from '@/db/schema-admin';
 import { eq, and, sql } from 'drizzle-orm';
+import { getEnv } from '@/lib/env';
 
 export const prerender = false;
 
@@ -20,13 +21,7 @@ export const POST: APIRoute = async (context) => {
     );
   }
 
-  const env = context.locals.runtime?.env;
-  if (!env?.DATABASE_URL) {
-    return new Response(
-      JSON.stringify({ error: 'Database not configured' }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
+  const env = getEnv();
 
   try {
     const db = getDb(env.DATABASE_URL);

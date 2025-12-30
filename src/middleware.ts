@@ -4,6 +4,7 @@ import { getUserSubscription } from '@/lib/subscription';
 import { getDb } from '@/db';
 import { user } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { getEnv } from '@/lib/env';
 
 // Routes that require authentication
 const protectedRoutes = ['/profile', '/subscription', '/affiliate'];
@@ -19,12 +20,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   context.locals.isAdmin = false;
   context.locals.isAffiliate = false;
 
-  const env = context.locals.runtime?.env;
-
-  // Skip auth for static assets and non-protected routes in prerender
-  if (!env) {
-    return next();
-  }
+  const env = getEnv();
 
   try {
     const auth = getAuthFromEnv(env);

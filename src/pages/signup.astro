@@ -146,8 +146,11 @@ if (session) {
         throw new Error(result.error.message || 'Sign up failed');
       }
 
-      // Redirect to check email page
-      window.location.href = '/check-email?email=' + encodeURIComponent(email);
+      // Save referral code if exists
+      await saveReferralCode();
+
+      // Redirect to profile (user is now logged in)
+      window.location.href = '/profile';
     } catch (error: any) {
       errorDiv.textContent = error.message || 'Sign up failed. Please try again.';
       errorDiv.style.display = 'block';

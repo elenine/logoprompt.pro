@@ -3,15 +3,12 @@ import { validateEvent, WebhookVerificationError } from '@polar-sh/sdk/webhooks'
 import { upsertSubscription, updateSubscriptionStatus } from '@/lib/subscription';
 import { mapPolarStatus } from '@/lib/polar';
 import { isValidProductId } from '@/lib/subscription-config';
+import { getEnv } from '@/lib/env';
 
 export const prerender = false;
 
 export const POST: APIRoute = async (context) => {
-  const env = context.locals.runtime?.env;
-
-  if (!env) {
-    return new Response('Server configuration error', { status: 500 });
-  }
+  const env = getEnv();
 
   const webhookSecret = env.POLAR_WEBHOOK_SECRET;
   if (!webhookSecret) {

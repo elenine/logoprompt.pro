@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getDb } from '@/db';
 import { user } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { getEnv } from '@/lib/env';
 
 export const prerender = false;
 
@@ -26,14 +27,7 @@ export const POST: APIRoute = async (context) => {
       );
     }
 
-    const env = context.locals.runtime?.env;
-    if (!env?.DATABASE_URL) {
-      return new Response(
-        JSON.stringify({ error: 'Database not configured' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
+    const env = getEnv();
     const db = getDb(env.DATABASE_URL);
 
     // Check if user already has a referral code saved

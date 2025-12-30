@@ -1,16 +1,13 @@
 import type { APIRoute } from 'astro';
 import { createPolar } from '@/lib/polar';
 import { getUserSubscription } from '@/lib/subscription';
+import { getEnv } from '@/lib/env';
 
 export const prerender = false;
 
 export const GET: APIRoute = async (context) => {
-  const env = context.locals.runtime?.env;
+  const env = getEnv();
   const user = context.locals.user;
-
-  if (!env) {
-    return new Response('Server configuration error', { status: 500 });
-  }
 
   if (!user) {
     return context.redirect('/login?redirect=/subscription');
