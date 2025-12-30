@@ -53,5 +53,7 @@ declare namespace App {
       cancelAtPeriodEnd: boolean;
     } | null;
     isSubscribed: boolean;
+    isAdmin: boolean;
+    isAffiliate: boolean;
   }
 }

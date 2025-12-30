@@ -224,15 +224,22 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
 
 <script>
   import { SOCIAL_COPY_CONFIG, shouldShowDirectAd } from '../constants/socialCopy';
-  import { initReferralTracking } from '../constants/referral';
+  import { initReferralTracking, initReferralTrackingSync } from '../constants/referral';
+  import { DEFAULT_DIRECT_URL } from '../constants/referralLinks';
 
   document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.logo-card');
     const { storageKey } = SOCIAL_COPY_CONFIG;
 
-    // Initialize referral tracking and get the appropriate direct ad URL
-    // This checks for ?ref= param, stores in cookie (30 days), and returns correct URL
-    const directAdUrl = initReferralTracking();
+    // Initialize referral tracking - sync version saves cookie immediately
+    // Start with default URL, then fetch actual URL from database async
+    initReferralTrackingSync();
+    let directAdUrl = DEFAULT_DIRECT_URL;
+
+    // Fetch the actual URL from database (async, updates when ready)
+    initReferralTracking().then(url => {
+      directAdUrl = url;
+    });
 
     // Check if search=true or share=true is in URL params
     const urlParams = new URLSearchParams(window.location.search);

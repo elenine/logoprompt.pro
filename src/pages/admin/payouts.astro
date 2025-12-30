@@ -1,0 +1,653 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = false;
+
+if (!Astro.locals.isAdmin) {
+  return Astro.redirect('/');
+}
+---
+
+<Layout title="Payout Management - Admin" description="Manage affiliate payouts">
+  <main class="admin-page">
+    <div class="admin-container">
+      <header class="page-header">
+        <div class="header-left">
+          <a href="/admin" class="back-btn">&larr; Back</a>
+          <h1>Payout Management</h1>
+        </div>
+        <div class="status-tabs" id="status-tabs">
+          <button class="tab active" data-status="all">All</button>
+          <button class="tab" data-status="pending">Pending <span class="count" id="count-pending">0</span></button>
+          <button class="tab" data-status="processing">Processing <span class="count" id="count-processing">0</span></button>
+          <button class="tab" data-status="completed">Completed</button>
+          <button class="tab" data-status="cancelled">Cancelled</button>
+        </div>
+      </header>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Affiliate</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Details</th>
+              <th>Requested</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="payouts-tbody">
+            <tr>
+              <td colspan="7" class="loading-state">Loading payouts...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </main>
+
+  <!-- Process Payout Modal -->
+  <div id="process-modal" class="modal" style="display: none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <h2>Process Payout</h2>
+      <div id="payout-details" class="payout-info"></div>
+      <form id="process-form">
+        <input type="hidden" id="process-payout-id" />
+
+        <div class="form-group">
+          <label for="process-status">Status</label>
+          <select id="process-status">
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="process-reference">Transaction Reference</label>
+          <input type="text" id="process-reference" placeholder="PayPal/Bank reference" />
+        </div>
+
+        <div class="form-group">
+          <label for="process-notes">Admin Notes</label>
+          <textarea id="process-notes" rows="3" placeholder="Optional notes"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-process">Cancel</button>
+          <button type="submit" class="btn-primary">Update Payout</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  interface Payout {
+    id: string;
+    amount: string;
+    currency: string;
+    status: string;
+    payoutMethod: string;
+    payoutDetails: Record<string, string>;
+    transactionReference: string | null;
+    affiliateNotes: string | null;
+    adminNotes: string | null;
+    requestedAt: string;
+    processedAt: string | null;
+    affiliateId: string;
+    affiliateName: string;
+    affiliateEmail: string;
+  }
+
+  let currentStatus = 'all';
+  let currentPage = 1;
+
+  function createTextElement(tag: string, text: string, className?: string): HTMLElement {
+    const el = document.createElement(tag);
+    el.textContent = text;
+    if (className) el.className = className;
+    return el;
+  }
+
+  async function loadPayouts(page = 1, status = 'all') {
+    const tbody = document.getElementById('payouts-tbody')!;
+    tbody.textContent = '';
+    const loadingRow = document.createElement('tr');
+    const loadingCell = document.createElement('td');
+    loadingCell.colSpan = 7;
+    loadingCell.className = 'loading-state';
+    loadingCell.textContent = 'Loading payouts...';
+    loadingRow.appendChild(loadingCell);
+    tbody.appendChild(loadingRow);
+
+    try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: '20',
+        status,
+      });
+
+      const response = await fetch(`/api/admin/payouts?${params}`);
+      if (!response.ok) throw new Error('Failed to load payouts');
+
+      const data = await response.json();
+      renderPayouts(data.payouts);
+      updateCounts(data.counts);
+      renderPagination(data.pagination);
+    } catch (error) {
+      console.error('Load payouts error:', error);
+      tbody.textContent = '';
+      const errorRow = document.createElement('tr');
+      const errorCell = document.createElement('td');
+      errorCell.colSpan = 7;
+      errorCell.className = 'error-state';
+      errorCell.textContent = 'Failed to load payouts';
+      errorRow.appendChild(errorCell);
+      tbody.appendChild(errorRow);
+    }
+  }
+
+  function renderPayouts(payouts: Payout[]) {
+    const tbody = document.getElementById('payouts-tbody')!;
+    tbody.textContent = '';
+
+    if (payouts.length === 0) {
+      const emptyRow = document.createElement('tr');
+      const emptyCell = document.createElement('td');
+      emptyCell.colSpan = 7;
+      emptyCell.className = 'empty-state';
+      emptyCell.textContent = 'No payouts found';
+      emptyRow.appendChild(emptyCell);
+      tbody.appendChild(emptyRow);
+      return;
+    }
+
+    payouts.forEach(payout => {
+      const tr = document.createElement('tr');
+
+      // Affiliate
+      const affiliateCell = document.createElement('td');
+      const affiliateInfo = document.createElement('div');
+      affiliateInfo.className = 'user-info';
+      affiliateInfo.appendChild(createTextElement('strong', payout.affiliateName || 'Unknown'));
+      affiliateInfo.appendChild(createTextElement('span', payout.affiliateEmail || ''));
+      affiliateCell.appendChild(affiliateInfo);
+      tr.appendChild(affiliateCell);
+
+      // Amount
+      const amountCell = document.createElement('td');
+      amountCell.className = 'amount';
+      amountCell.textContent = `$${parseFloat(payout.amount).toFixed(2)}`;
+      tr.appendChild(amountCell);
+
+      // Method
+      const methodCell = document.createElement('td');
+      const methodBadge = document.createElement('span');
+      methodBadge.className = `method-badge ${payout.payoutMethod}`;
+      methodBadge.textContent = payout.payoutMethod === 'paypal' ? 'PayPal' : 'Bank Transfer';
+      methodCell.appendChild(methodBadge);
+      tr.appendChild(methodCell);
+
+      // Details
+      const detailsCell = document.createElement('td');
+      const details = payout.payoutDetails as Record<string, string>;
+      if (payout.payoutMethod === 'paypal') {
+        detailsCell.textContent = details.paypalEmail || '-';
+      } else {
+        detailsCell.textContent = details.bankName ? `${details.bankName} - ${details.bankAccountNumber}` : '-';
+      }
+      tr.appendChild(detailsCell);
+
+      // Requested
+      const requestedCell = document.createElement('td');
+      requestedCell.textContent = new Date(payout.requestedAt).toLocaleDateString();
+      tr.appendChild(requestedCell);
+
+      // Status
+      const statusCell = document.createElement('td');
+      const statusBadge = document.createElement('span');
+      statusBadge.className = `status-badge status-${payout.status}`;
+      statusBadge.textContent = payout.status.charAt(0).toUpperCase() + payout.status.slice(1);
+      statusCell.appendChild(statusBadge);
+      tr.appendChild(statusCell);
+
+      // Actions
+      const actionsCell = document.createElement('td');
+      if (payout.status === 'pending' || payout.status === 'processing') {
+        const processBtn = document.createElement('button');
+        processBtn.className = 'action-btn';
+        processBtn.textContent = 'Process';
+        processBtn.addEventListener('click', () => openProcessModal(payout));
+        actionsCell.appendChild(processBtn);
+      } else {
+        actionsCell.textContent = '-';
+      }
+      tr.appendChild(actionsCell);
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  function updateCounts(counts: Record<string, number>) {
+    const pendingEl = document.getElementById('count-pending');
+    const processingEl = document.getElementById('count-processing');
+    if (pendingEl) pendingEl.textContent = counts.pending?.toString() || '0';
+    if (processingEl) processingEl.textContent = counts.processing?.toString() || '0';
+  }
+
+  function renderPagination(pagination: { page: number; totalPages: number }) {
+    const container = document.getElementById('pagination')!;
+    container.textContent = '';
+
+    if (pagination.totalPages <= 1) return;
+
+    const prevBtn = document.createElement('button');
+    prevBtn.textContent = 'Previous';
+    prevBtn.disabled = pagination.page === 1;
+    prevBtn.addEventListener('click', () => {
+      currentPage = pagination.page - 1;
+      loadPayouts(currentPage, currentStatus);
+    });
+    container.appendChild(prevBtn);
+
+    const pageInfo = document.createElement('span');
+    pageInfo.textContent = `Page ${pagination.page} of ${pagination.totalPages}`;
+    container.appendChild(pageInfo);
+
+    const nextBtn = document.createElement('button');
+    nextBtn.textContent = 'Next';
+    nextBtn.disabled = pagination.page === pagination.totalPages;
+    nextBtn.addEventListener('click', () => {
+      currentPage = pagination.page + 1;
+      loadPayouts(currentPage, currentStatus);
+    });
+    container.appendChild(nextBtn);
+  }
+
+  function openProcessModal(payout: Payout) {
+    (document.getElementById('process-payout-id') as HTMLInputElement).value = payout.id;
+    (document.getElementById('process-status') as HTMLSelectElement).value = payout.status === 'pending' ? 'processing' : 'completed';
+    (document.getElementById('process-reference') as HTMLInputElement).value = payout.transactionReference || '';
+    (document.getElementById('process-notes') as HTMLTextAreaElement).value = payout.adminNotes || '';
+
+    // Show payout details using safe DOM methods
+    const detailsEl = document.getElementById('payout-details')!;
+    detailsEl.textContent = '';
+
+    // Amount
+    const amountP = document.createElement('p');
+    const amountLabel = document.createElement('strong');
+    amountLabel.textContent = 'Amount: ';
+    amountP.appendChild(amountLabel);
+    amountP.appendChild(document.createTextNode(`$${parseFloat(payout.amount).toFixed(2)}`));
+    detailsEl.appendChild(amountP);
+
+    // Method
+    const methodP = document.createElement('p');
+    const methodLabel = document.createElement('strong');
+    methodLabel.textContent = 'Method: ';
+    methodP.appendChild(methodLabel);
+    methodP.appendChild(document.createTextNode(payout.payoutMethod === 'paypal' ? 'PayPal' : 'Bank Transfer'));
+    detailsEl.appendChild(methodP);
+
+    const details = payout.payoutDetails as Record<string, string>;
+    if (payout.payoutMethod === 'paypal') {
+      const emailP = document.createElement('p');
+      const emailLabel = document.createElement('strong');
+      emailLabel.textContent = 'PayPal Email: ';
+      emailP.appendChild(emailLabel);
+      emailP.appendChild(document.createTextNode(details.paypalEmail || '-'));
+      detailsEl.appendChild(emailP);
+    } else {
+      const bankP = document.createElement('p');
+      const bankLabel = document.createElement('strong');
+      bankLabel.textContent = 'Bank: ';
+      bankP.appendChild(bankLabel);
+      bankP.appendChild(document.createTextNode(details.bankName || '-'));
+      detailsEl.appendChild(bankP);
+
+      const accountP = document.createElement('p');
+      const accountLabel = document.createElement('strong');
+      accountLabel.textContent = 'Account: ';
+      accountP.appendChild(accountLabel);
+      accountP.appendChild(document.createTextNode(details.bankAccountNumber || '-'));
+      detailsEl.appendChild(accountP);
+
+      const nameP = document.createElement('p');
+      const nameLabel = document.createElement('strong');
+      nameLabel.textContent = 'Name: ';
+      nameP.appendChild(nameLabel);
+      nameP.appendChild(document.createTextNode(details.bankAccountName || '-'));
+      detailsEl.appendChild(nameP);
+    }
+
+    document.getElementById('process-modal')!.style.display = 'flex';
+  }
+
+  function closeProcessModal() {
+    document.getElementById('process-modal')!.style.display = 'none';
+  }
+
+  // Status tabs
+  document.querySelectorAll('.status-tabs .tab').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      document.querySelectorAll('.status-tabs .tab').forEach(t => t.classList.remove('active'));
+      (e.target as HTMLElement).classList.add('active');
+      currentStatus = (e.target as HTMLElement).dataset.status || 'all';
+      currentPage = 1;
+      loadPayouts(currentPage, currentStatus);
+    });
+  });
+
+  document.getElementById('cancel-process')?.addEventListener('click', closeProcessModal);
+  document.querySelector('.modal-backdrop')?.addEventListener('click', closeProcessModal);
+
+  document.getElementById('process-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const payoutId = (document.getElementById('process-payout-id') as HTMLInputElement).value;
+    const status = (document.getElementById('process-status') as HTMLSelectElement).value;
+    const transactionReference = (document.getElementById('process-reference') as HTMLInputElement).value;
+    const adminNotes = (document.getElementById('process-notes') as HTMLTextAreaElement).value;
+
+    try {
+      const response = await fetch(`/api/admin/payouts/${payoutId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          status,
+          transactionReference: transactionReference || null,
+          adminNotes: adminNotes || null,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to update payout');
+      }
+
+      closeProcessModal();
+      loadPayouts(currentPage, currentStatus);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update payout';
+      alert(errorMessage);
+    }
+  });
+
+  // Initial load
+  loadPayouts();
+</script>
+
+<style>
+  .admin-page {
+    min-height: calc(100vh - 200px);
+    padding: 2rem 1rem;
+  }
+
+  .admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .back-btn {
+    color: rgb(var(--text-secondary));
+    text-decoration: none;
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: rgb(var(--text-primary));
+  }
+
+  .status-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 0.5rem 1rem;
+    border: 1px solid rgb(var(--card-border));
+    background: rgb(var(--bg-primary));
+    color: rgb(var(--text-secondary));
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+  .tab.active {
+    background: rgb(var(--accent));
+    color: white;
+    border-color: rgb(var(--accent));
+  }
+
+  .tab .count {
+    background: rgba(255,255,255,0.2);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+  }
+
+  .table-container {
+    background: rgb(var(--bg-primary));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgb(var(--card-border));
+  }
+
+  .data-table th {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgb(var(--text-muted));
+    text-transform: uppercase;
+    background: rgb(var(--bg-secondary));
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .user-info span {
+    color: rgb(var(--text-muted));
+    font-size: 0.85rem;
+  }
+
+  .amount {
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+  }
+
+  .method-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .method-badge.paypal { background: rgba(0, 123, 255, 0.1); color: #007bff; }
+  .method-badge.bank_transfer { background: rgba(40, 167, 69, 0.1); color: #28a745; }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .status-pending { background: rgba(255, 193, 7, 0.1); color: #ffc107; }
+  .status-processing { background: rgba(0, 123, 255, 0.1); color: #007bff; }
+  .status-completed { background: rgba(40, 167, 69, 0.1); color: #28a745; }
+  .status-cancelled { background: rgba(108, 117, 125, 0.1); color: #6c757d; }
+  .status-failed { background: rgba(220, 53, 69, 0.1); color: #dc3545; }
+
+  .action-btn {
+    padding: 0.4rem 0.75rem;
+    background: rgb(var(--accent));
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .loading-state,
+  .error-state,
+  .empty-state {
+    text-align: center;
+    padding: 2rem !important;
+    color: rgb(var(--text-muted));
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .pagination button {
+    padding: 0.5rem 1rem;
+    border: 1px solid rgb(var(--card-border));
+    background: rgb(var(--bg-primary));
+    color: rgb(var(--text-primary));
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Modal */
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+    position: relative;
+    background: rgb(var(--bg-primary));
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    width: 100%;
+    max-width: 450px;
+    margin: 1rem;
+  }
+
+  .modal-content h2 {
+    margin: 0 0 1rem;
+    color: rgb(var(--text-primary));
+  }
+
+  .payout-info {
+    background: rgb(var(--bg-secondary));
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+  }
+
+  .payout-info p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: rgb(var(--text-secondary));
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgb(var(--text-primary));
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-sm);
+    background: rgb(var(--bg-primary));
+    color: rgb(var(--text-primary));
+    font-family: inherit;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn-secondary,
+  .btn-primary {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .btn-secondary {
+    background: rgb(var(--bg-secondary));
+    color: rgb(var(--text-primary));
+    border: 1px solid rgb(var(--card-border));
+  }
+
+  .btn-primary {
+    background: rgb(var(--accent));
+    color: white;
+  }
+</style>

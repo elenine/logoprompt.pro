@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, pgEnum, jsonb, numeric } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, boolean, pgEnum, jsonb } from 'drizzle-orm/pg-core';
 
 // Subscription status enum
 export const subscriptionStatusEnum = pgEnum('subscription_status', [
@@ -8,13 +8,6 @@ export const subscriptionStatusEnum = pgEnum('subscription_status', [
   'paused',
 ]);
 
-// Payout status enum
-export const payoutStatusEnum = pgEnum('payout_status', [
-  'pending',
-  'completed',
-  'cancelled',
-]);
-
 // User table - stores user profile information
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -22,10 +15,12 @@ export const user = pgTable('user', {
   email: text('email').notNull().unique(),
   emailVerified: boolean('email_verified').notNull().default(false),
   image: text('image'),
-  // Referral system fields
-  referredBy: text('referred_by'),           // Referral code user signed up with
-  isInfluencer: boolean('is_influencer').notNull().default(false),  // Manually set for influencers
-  referralCode: text('referral_code').unique(),  // Unique code for influencers
+  // Admin & Affiliate fields
+  isAdmin: boolean('is_admin').notNull().default(false),
+  isAffiliate: boolean('is_affiliate').notNull().default(false),
+  referralCode: text('referral_code').unique(),  // Unique code for affiliates
+  // Referral tracking - which affiliate referred this user
+  referredBy: text('referred_by'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
@@ -94,17 +89,4 @@ export const subscription = pgTable('subscription', {
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
-// Influencer payout table - tracks payout history for influencers
-export const influencerPayout = pgTable('influencer_payout', {
-  id: text('id').primaryKey(),
-  influencerId: text('influencer_id')
-    .notNull()
-    .references(() => user.id, { onDelete: 'cascade' }),
-  amount: numeric('amount', { precision: 10, scale: 2 }).notNull(),  // Amount in USD
-  status: payoutStatusEnum('status').notNull().default('pending'),
-  requestedAt: timestamp('requested_at').notNull().defaultNow(),
-  completedAt: timestamp('completed_at'),
-  notes: text('notes'),  // Admin notes for the payout
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-});
+// Note: Affiliate/Influencer payout tables are in schema-admin.ts

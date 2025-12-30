@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getDb } from '@/db';
-import { user, subscription, influencerPayout } from '@/db/schema';
+import { user, subscription } from '@/db/schema';
+import { affiliatePayout, affiliatePayoutSettings } from '@/db/schema-admin';
 import { eq, and, sql } from 'drizzle-orm';
 
 export const prerender = false;
@@ -11,10 +12,10 @@ const EARNING_PER_SUBSCRIBER = 0.5;
 export const GET: APIRoute = async (context) => {
   const currentUser = context.locals.user;
 
-  if (!currentUser) {
+  if (!currentUser || !context.locals.isAffiliate) {
     return new Response(
       JSON.stringify({ error: 'Unauthorized' }),
-      { status: 401, headers: { 'Content-Type': 'application/json' } }
+      { status: 403, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
@@ -29,26 +30,23 @@ export const GET: APIRoute = async (context) => {
   try {
     const db = getDb(env.DATABASE_URL);
 
-    // Check if user is an influencer
-    const influencer = await db
-      .select({
-        isInfluencer: user.isInfluencer,
-        referralCode: user.referralCode,
-      })
+    // Get affiliate's referral code
+    const affiliate = await db
+      .select({ referralCode: user.referralCode })
       .from(user)
       .where(eq(user.id, currentUser.id))
       .limit(1);
 
-    if (!influencer[0]?.isInfluencer || !influencer[0]?.referralCode) {
+    if (!affiliate[0]?.referralCode) {
       return new Response(
-        JSON.stringify({ error: 'Not an influencer' }),
-        { status: 403, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: 'No referral code assigned' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    const referralCode = influencer[0].referralCode;
+    const referralCode = affiliate[0].referralCode;
 
-    // Get all users referred by this influencer
+    // Get all users referred by this affiliate
     const referredUsers = await db
       .select({
         id: user.id,
@@ -102,41 +100,37 @@ export const GET: APIRoute = async (context) => {
     // Count active subscribers
     const activeSubscribers = referralList.filter((r) => r.isSubscribed).length;
 
-    // Get completed payouts
-    const completedPayouts = await db
+    // Get payout totals
+    const payoutTotals = await db
       .select({
-        totalPaid: sql<string>`COALESCE(SUM(${influencerPayout.amount}), 0)`,
+        status: affiliatePayout.status,
+        total: sql<string>`COALESCE(SUM(${affiliatePayout.amount}), 0)`,
       })
-      .from(influencerPayout)
-      .where(
-        and(
-          eq(influencerPayout.influencerId, currentUser.id),
-          eq(influencerPayout.status, 'completed')
-        )
-      );
+      .from(affiliatePayout)
+      .where(eq(affiliatePayout.affiliateId, currentUser.id))
+      .groupBy(affiliatePayout.status);
 
-    // Get pending payouts
-    const pendingPayouts = await db
-      .select({
-        totalPending: sql<string>`COALESCE(SUM(${influencerPayout.amount}), 0)`,
-      })
-      .from(influencerPayout)
-      .where(
-        and(
-          eq(influencerPayout.influencerId, currentUser.id),
-          eq(influencerPayout.status, 'pending')
-        )
-      );
+    const totalPaidOut = parseFloat(
+      payoutTotals.find((p) => p.status === 'completed')?.total || '0'
+    );
+    const totalPending = parseFloat(
+      payoutTotals.find((p) => p.status === 'pending')?.total || '0'
+    ) + parseFloat(
+      payoutTotals.find((p) => p.status === 'processing')?.total || '0'
+    );
 
-    const totalPaidOut = parseFloat(completedPayouts[0]?.totalPaid || '0');
-    const totalPending = parseFloat(pendingPayouts[0]?.totalPending || '0');
-
-    // Calculate total earned (active subscribers * rate)
-    // This is a simplified calculation - in production you'd track monthly earnings
+    // Calculate total earned
     const totalEarned = activeSubscribers * EARNING_PER_SUBSCRIBER;
-
-    // Available balance = total earned - paid out - pending
     const availableBalance = Math.max(0, totalEarned - totalPaidOut - totalPending);
+
+    // Check if payout settings are configured
+    const payoutSettings = await db
+      .select()
+      .from(affiliatePayoutSettings)
+      .where(eq(affiliatePayoutSettings.userId, currentUser.id))
+      .limit(1);
+
+    const hasPayoutSettings = !!payoutSettings[0]?.paypalEmail || !!payoutSettings[0]?.bankAccountNumber;
 
     return new Response(
       JSON.stringify({
@@ -148,12 +142,13 @@ export const GET: APIRoute = async (context) => {
         totalPaidOut,
         pendingPayout: totalPending,
         availableBalance,
+        hasPayoutSettings,
         referrals: referralList,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Influencer stats error:', error);
+    console.error('Affiliate stats error:', error);
     return new Response(
       JSON.stringify({ error: 'Failed to fetch stats' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }

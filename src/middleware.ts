@@ -1,8 +1,14 @@
 import { defineMiddleware } from 'astro:middleware';
 import { getAuthFromEnv } from '@/lib/auth';
 import { getUserSubscription } from '@/lib/subscription';
+import { getDb } from '@/db';
+import { user } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
-const protectedRoutes = ['/profile', '/subscription', '/influencer'];
+// Routes that require authentication
+const protectedRoutes = ['/profile', '/subscription', '/affiliate'];
+// Routes that require admin access
+const adminRoutes = ['/admin'];
 
 export const onRequest = defineMiddleware(async (context, next) => {
   // Initialize auth and subscription state to null
@@ -10,6 +16,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
   context.locals.user = null;
   context.locals.subscription = null;
   context.locals.isSubscribed = false;
+  context.locals.isAdmin = false;
+  context.locals.isAffiliate = false;
 
   const env = context.locals.runtime?.env;
 
@@ -28,9 +36,27 @@ export const onRequest = defineMiddleware(async (context, next) => {
     context.locals.session = session;
     context.locals.user = session?.user ?? null;
 
-    // Get subscription status if user is authenticated
+    // Get user details and subscription status if user is authenticated
     if (session?.user?.id) {
+      const db = getDb(env.DATABASE_URL);
+
       try {
+        // Get user admin/affiliate status
+        const userDetails = await db
+          .select({
+            isAdmin: user.isAdmin,
+            isAffiliate: user.isAffiliate,
+          })
+          .from(user)
+          .where(eq(user.id, session.user.id))
+          .limit(1);
+
+        if (userDetails[0]) {
+          context.locals.isAdmin = userDetails[0].isAdmin;
+          context.locals.isAffiliate = userDetails[0].isAffiliate;
+        }
+
+        // Get subscription status
         const sub = await getUserSubscription(env.DATABASE_URL, session.user.id);
         if (sub) {
           const isActive =
@@ -46,7 +72,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
           context.locals.isSubscribed = isActive;
         }
       } catch (subError) {
-        console.error('Subscription check error:', subError);
+        console.error('User/Subscription check error:', subError);
       }
     }
   } catch (error) {
@@ -55,14 +81,23 @@ export const onRequest = defineMiddleware(async (context, next) => {
     context.locals.user = null;
   }
 
-  // Protect routes
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    context.url.pathname.startsWith(route)
-  );
+  const pathname = context.url.pathname;
 
+  // Check admin routes - require both auth and admin status
+  const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
+  if (isAdminRoute) {
+    if (!context.locals.session) {
+      return context.redirect(`/login?redirect=${encodeURIComponent(pathname)}`);
+    }
+    if (!context.locals.isAdmin) {
+      return context.redirect('/');
+    }
+  }
+
+  // Check protected routes - require auth only
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
   if (isProtectedRoute && !context.locals.session) {
-    const redirectUrl = `/login?redirect=${encodeURIComponent(context.url.pathname)}`;
-    return context.redirect(redirectUrl);
+    return context.redirect(`/login?redirect=${encodeURIComponent(pathname)}`);
   }
 
   return next();

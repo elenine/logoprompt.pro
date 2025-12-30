@@ -1,14 +1,16 @@
 /**
  * Referral System Utilities
- * Handles referral tracking via cookies
+ * Handles referral tracking via cookies and fetches URLs from database
  */
 
 import {
-  REFERRAL_LINKS,
   DEFAULT_DIRECT_URL,
   REFERRAL_COOKIE_NAME,
   REFERRAL_EXPIRY_DAYS,
 } from './referralLinks';
+
+// Cache for direct ad URLs
+const urlCache = new Map<string, string>();
 
 /**
  * Set referral cookie with 30-day expiry
@@ -36,21 +38,43 @@ export function getReferralCode(): string | null {
 }
 
 /**
- * Get direct ad URL based on referral code
+ * Fetch direct ad URL from API based on referral code
  * Falls back to default URL if no referral or invalid referral
  */
-export function getDirectAdUrl(refCode?: string | null): string {
-  if (refCode && REFERRAL_LINKS[refCode]) {
-    return REFERRAL_LINKS[refCode];
+export async function getDirectAdUrl(refCode?: string | null): Promise<string> {
+  // If no ref code, return default
+  if (!refCode) {
+    return DEFAULT_DIRECT_URL;
   }
-  return DEFAULT_DIRECT_URL;
+
+  // Check cache first
+  if (urlCache.has(refCode)) {
+    return urlCache.get(refCode)!;
+  }
+
+  try {
+    const response = await fetch(`/api/referral/get-url?ref=${encodeURIComponent(refCode)}`);
+    if (!response.ok) {
+      return DEFAULT_DIRECT_URL;
+    }
+    const data = await response.json();
+    const url = data.url || DEFAULT_DIRECT_URL;
+
+    // Cache the result
+    urlCache.set(refCode, url);
+
+    return url;
+  } catch (error) {
+    console.error('Failed to fetch referral URL:', error);
+    return DEFAULT_DIRECT_URL;
+  }
 }
 
 /**
- * Initialize referral tracking from URL param
+ * Initialize referral tracking from URL param (async version)
  * Call this on page load to capture ref param and store in cookie
  */
-export function initReferralTracking(): string {
+export async function initReferralTracking(): Promise<string> {
   if (typeof window === 'undefined') return DEFAULT_DIRECT_URL;
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -59,10 +83,26 @@ export function initReferralTracking(): string {
   // If ref param exists, store it in cookie
   if (refParam) {
     setReferralCookie(refParam);
-    return getDirectAdUrl(refParam);
+    return await getDirectAdUrl(refParam);
   }
 
   // Otherwise check existing cookie
   const existingRef = getReferralCode();
-  return getDirectAdUrl(existingRef);
+  return await getDirectAdUrl(existingRef);
+}
+
+/**
+ * Sync version that returns default URL immediately
+ * Use initReferralTracking() for async version
+ */
+export function initReferralTrackingSync(): void {
+  if (typeof window === 'undefined') return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const refParam = urlParams.get('ref');
+
+  // If ref param exists, store it in cookie
+  if (refParam) {
+    setReferralCookie(refParam);
+  }
 }
