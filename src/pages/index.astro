@@ -95,6 +95,40 @@ const models = [...new Set(generations.map(g => g.model))].sort();
       </ol>
     </section>
 
+    <section class="pro-banner" id="pro-banner">
+      <div class="pro-banner-content">
+        <div class="pro-banner-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <div class="pro-banner-text">
+          <span class="pro-banner-title">Go Pro</span>
+          <span class="pro-banner-subtitle">Remove all ads for a distraction-free experience</span>
+        </div>
+        <a href="/subscription" class="pro-banner-btn">
+          Subscribe
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </section>
+
+    <script>
+      // Hide pro banner for subscribed users
+      (async function() {
+        try {
+          const response = await fetch('/api/user/subscription-status');
+          if (response.ok) {
+            const data = await response.json();
+            if (data.isSubscribed) {
+              const banner = document.getElementById('pro-banner');
+              if (banner) banner.style.display = 'none';
+            }
+          }
+        } catch (e) {
+          // Silently fail - show banner by default
+        }
+      })();
+    </script>
+
     <section class="logos-section">
       <ModelFilter models={models} />
       <div class="logos-grid">
@@ -311,6 +345,88 @@ const models = [...new Set(generations.map(g => g.model))].sort();
 
     .stat-divider {
       display: none;
+    }
+  }
+
+  /* Pro Banner */
+  .pro-banner {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, rgba(var(--accent), 0.08) 0%, rgba(var(--accent), 0.02) 100%);
+    border: 1px solid rgba(var(--accent), 0.2);
+    border-radius: var(--radius-lg);
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+  }
+
+  .pro-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .pro-banner-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgb(var(--accent));
+    border-radius: var(--radius-md);
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .pro-banner-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .pro-banner-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: rgb(var(--text-primary));
+  }
+
+  .pro-banner-subtitle {
+    font-size: 0.8rem;
+    color: rgb(var(--text-secondary));
+  }
+
+  .pro-banner-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    background: rgb(var(--accent));
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  .pro-banner-btn:hover {
+    background: rgb(var(--accent-hover));
+  }
+
+  @media (max-width: 600px) {
+    .pro-banner-content {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .pro-banner-text {
+      align-items: center;
+    }
+
+    .pro-banner-btn {
+      width: 100%;
+      justify-content: center;
     }
   }
 
