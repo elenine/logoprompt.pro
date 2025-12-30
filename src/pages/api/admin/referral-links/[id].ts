@@ -74,7 +74,7 @@ export const PATCH: APIRoute = async (context) => {
     }
 
     const body = await context.request.json();
-    const { directAdUrl, affiliateId, description, isActive } = body;
+    const { directAdUrl, affiliateId, description, isActive, isVerified } = body;
 
     const db = getDb(env.DATABASE_URL);
 
@@ -100,6 +100,7 @@ export const PATCH: APIRoute = async (context) => {
     if (affiliateId !== undefined) updateData.affiliateId = affiliateId || null;
     if (description !== undefined) updateData.description = description;
     if (typeof isActive === 'boolean') updateData.isActive = isActive;
+    if (typeof isVerified === 'boolean') updateData.isVerified = isVerified;
 
     await db
       .update(referralLink)

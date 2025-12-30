@@ -29,6 +29,8 @@ export const referralLink = pgTable('referral_link', {
   // If null, this is the default/fallback link
   affiliateId: text('affiliate_id').references(() => user.id, { onDelete: 'set null' }),
   isActive: boolean('is_active').notNull().default(true),
+  // Verification status - only verified links are applicable
+  isVerified: boolean('is_verified').notNull().default(false),
   description: text('description'), // Optional description for admin reference
   clickCount: numeric('click_count', { precision: 10, scale: 0 }).default('0'),
   createdAt: timestamp('created_at').notNull().defaultNow(),

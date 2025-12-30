@@ -27,13 +27,14 @@ if (!Astro.locals.isAdmin) {
               <th>Direct Ad URL</th>
               <th>Affiliate</th>
               <th>Status</th>
+              <th>Verified</th>
               <th>Clicks</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody id="links-tbody">
             <tr>
-              <td colspan="6" class="loading-state">Loading links...</td>
+              <td colspan="7" class="loading-state">Loading links...</td>
             </tr>
           </tbody>
         </table>
@@ -104,6 +105,7 @@ if (!Astro.locals.isAdmin) {
     affiliateName: string | null;
     affiliateEmail: string | null;
     isActive: boolean;
+    isVerified: boolean;
     description: string | null;
     clickCount: string;
     createdAt: string;
@@ -114,7 +116,7 @@ if (!Astro.locals.isAdmin) {
     tbody.textContent = '';
     const loadingRow = document.createElement('tr');
     const loadingCell = document.createElement('td');
-    loadingCell.colSpan = 6;
+    loadingCell.colSpan = 7;
     loadingCell.className = 'loading-state';
     loadingCell.textContent = 'Loading links...';
     loadingRow.appendChild(loadingCell);
@@ -131,7 +133,7 @@ if (!Astro.locals.isAdmin) {
       tbody.textContent = '';
       const errorRow = document.createElement('tr');
       const errorCell = document.createElement('td');
-      errorCell.colSpan = 6;
+      errorCell.colSpan = 7;
       errorCell.className = 'error-state';
       errorCell.textContent = 'Failed to load links';
       errorRow.appendChild(errorCell);
@@ -146,7 +148,7 @@ if (!Astro.locals.isAdmin) {
     if (links.length === 0) {
       const emptyRow = document.createElement('tr');
       const emptyCell = document.createElement('td');
-      emptyCell.colSpan = 6;
+      emptyCell.colSpan = 7;
       emptyCell.className = 'empty-state';
       emptyCell.textContent = 'No referral links yet. Add one to get started.';
       emptyRow.appendChild(emptyCell);
@@ -209,6 +211,14 @@ if (!Astro.locals.isAdmin) {
       statusCell.appendChild(statusBadge);
       tr.appendChild(statusCell);
 
+      // Verified
+      const verifiedCell = document.createElement('td');
+      const verifiedBadge = document.createElement('span');
+      verifiedBadge.className = `status-badge ${link.isVerified ? 'verified' : 'unverified'}`;
+      verifiedBadge.textContent = link.isVerified ? 'Verified' : 'Pending';
+      verifiedCell.appendChild(verifiedBadge);
+      tr.appendChild(verifiedCell);
+
       // Clicks
       const clicksCell = document.createElement('td');
       clicksCell.textContent = link.clickCount || '0';
@@ -217,6 +227,13 @@ if (!Astro.locals.isAdmin) {
       // Actions
       const actionsCell = document.createElement('td');
       actionsCell.className = 'actions-cell';
+
+      // Verify/Unverify button
+      const verifyBtn = document.createElement('button');
+      verifyBtn.className = `action-btn ${link.isVerified ? 'warning' : 'success'}`;
+      verifyBtn.textContent = link.isVerified ? 'Unverify' : 'Verify';
+      verifyBtn.addEventListener('click', () => toggleVerification(link.id, !link.isVerified));
+      actionsCell.appendChild(verifyBtn);
 
       const editBtn = document.createElement('button');
       editBtn.className = 'action-btn';
@@ -269,6 +286,26 @@ if (!Astro.locals.isAdmin) {
 
   function closeDeleteModal() {
     document.getElementById('delete-modal')!.style.display = 'none';
+  }
+
+  async function toggleVerification(linkId: string, isVerified: boolean) {
+    try {
+      const response = await fetch(`/api/admin/referral-links/${linkId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isVerified }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to update verification status');
+      }
+
+      loadLinks();
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update verification status';
+      alert(errorMessage);
+    }
   }
 
   // Event listeners
@@ -477,6 +514,8 @@ if (!Astro.locals.isAdmin) {
 
   .status-badge.active { background: rgba(40, 167, 69, 0.1); color: #28a745; }
   .status-badge.inactive { background: rgba(108, 117, 125, 0.1); color: #6c757d; }
+  .status-badge.verified { background: rgba(0, 123, 255, 0.1); color: #007bff; }
+  .status-badge.unverified { background: rgba(255, 193, 7, 0.1); color: #e0a800; }
 
   .actions-cell {
     display: flex;
@@ -495,6 +534,15 @@ if (!Astro.locals.isAdmin) {
 
   .action-btn.danger {
     background: #dc3545;
+  }
+
+  .action-btn.success {
+    background: #28a745;
+  }
+
+  .action-btn.warning {
+    background: #ffc107;
+    color: #212529;
   }
 
   .loading-state,

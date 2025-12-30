@@ -25,19 +25,21 @@ export const GET: APIRoute = async (context) => {
   try {
     const db = getDb(env.DATABASE_URL);
 
-    // Find the referral link
+    // Find the referral link (must be active AND verified)
     const link = await db
       .select({
         id: referralLink.id,
         directAdUrl: referralLink.directAdUrl,
         isActive: referralLink.isActive,
+        isVerified: referralLink.isVerified,
         clickCount: referralLink.clickCount,
       })
       .from(referralLink)
       .where(
         and(
           eq(referralLink.referralCode, refCode),
-          eq(referralLink.isActive, true)
+          eq(referralLink.isActive, true),
+          eq(referralLink.isVerified, true)
         )
       )
       .limit(1);
