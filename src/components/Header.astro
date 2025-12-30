@@ -1,4 +1,6 @@
 ---
+const user = Astro.locals?.user;
+
 const navLinks = [
   { href: '/', label: 'Gallery' },
   { href: '/about', label: 'About' },
@@ -20,6 +22,21 @@ const navLinks = [
       ))}
     </div>
 
+    <div class="auth-section">
+      {user ? (
+        <a href="/profile" class="user-btn">
+          {user.image ? (
+            <img src={user.image} alt="" class="user-avatar" />
+          ) : (
+            <span class="user-avatar-placeholder">{user.name?.charAt(0).toUpperCase() || 'U'}</span>
+          )}
+          <span class="user-name">{user.name?.split(' ')[0] || 'Profile'}</span>
+        </a>
+      ) : (
+        <a href="/login" class="signin-btn">Sign In</a>
+      )}
+    </div>
+
     <button class="mobile-menu-btn" type="button" aria-label="Toggle menu">
       <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="3" y1="6" x2="21" y2="6" />
@@ -37,6 +54,20 @@ const navLinks = [
     {navLinks.map(link => (
       <a href={link.href} class="mobile-link">{link.label}</a>
     ))}
+    <div class="mobile-auth">
+      {user ? (
+        <a href="/profile" class="mobile-link user-mobile">
+          {user.image ? (
+            <img src={user.image} alt="" class="mobile-avatar" />
+          ) : (
+            <span class="mobile-avatar-placeholder">{user.name?.charAt(0).toUpperCase() || 'U'}</span>
+          )}
+          <span>Profile</span>
+        </a>
+      ) : (
+        <a href="/login" class="mobile-link signin-mobile">Sign In</a>
+      )}
+    </div>
   </div>
 </header>
 
@@ -183,12 +214,116 @@ const navLinks = [
     background: rgb(var(--accent-light));
   }
 
+  /* Auth section styles */
+  .auth-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .signin-btn {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: white;
+    background: rgb(var(--accent));
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--transition-fast);
+  }
+
+  .signin-btn:hover {
+    background: rgb(var(--accent-hover));
+  }
+
+  .user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.75rem 0.375rem 0.375rem;
+    background: rgb(var(--bg-secondary));
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: background var(--transition-fast);
+  }
+
+  .user-btn:hover {
+    background: rgb(var(--bg-tertiary));
+  }
+
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+
+  .user-avatar-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: rgba(var(--accent), 0.1);
+    color: rgb(var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .user-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(var(--text-primary));
+  }
+
+  /* Mobile auth styles */
+  .mobile-auth {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgb(var(--card-border));
+  }
+
+  .user-mobile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .mobile-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+
+  .mobile-avatar-placeholder {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background: rgba(var(--accent), 0.1);
+    color: rgb(var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .signin-mobile {
+    color: rgb(var(--accent));
+    background: rgba(var(--accent), 0.1);
+  }
+
   @media (max-width: 640px) {
     .nav-container {
       padding: 0.875rem 1rem;
     }
 
     .nav-links {
+      display: none;
+    }
+
+    .auth-section {
       display: none;
     }
 

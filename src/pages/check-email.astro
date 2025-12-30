@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = false;
+
+const email = Astro.url.searchParams.get('email');
+---
+
+<Layout title="Check Your Email - LogoPrompt.pro" description="Verify your email to complete registration">
+  <main class="auth-page">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+        </div>
+
+        <h1>Check Your Email</h1>
+
+        <p class="message">
+          We've sent a verification email to
+          {email ? <strong>{email}</strong> : 'your email address'}.
+        </p>
+
+        <p class="instructions">
+          Click the link in the email to verify your account and complete registration.
+        </p>
+
+        <div class="tips">
+          <p class="tip-title">Didn't receive the email?</p>
+          <ul>
+            <li>Check your spam or junk folder</li>
+            <li>Make sure you entered the correct email</li>
+            <li>Wait a few minutes and try again</li>
+          </ul>
+        </div>
+
+        <div class="actions">
+          <a href="/login" class="secondary-btn">Back to Login</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .auth-page {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .auth-container {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .auth-card {
+    background: rgb(var(--bg-primary));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+  }
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    color: rgb(var(--accent));
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    color: rgb(var(--text-primary));
+  }
+
+  .message {
+    color: rgb(var(--text-secondary));
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .message strong {
+    color: rgb(var(--text-primary));
+  }
+
+  .instructions {
+    color: rgb(var(--text-tertiary));
+    font-size: 0.95rem;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .tips {
+    background: rgb(var(--bg-secondary));
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
+
+  .tip-title {
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .tips ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: rgb(var(--text-secondary));
+    font-size: 0.875rem;
+  }
+
+  .tips li {
+    margin: 0.25rem 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .secondary-btn {
+    width: 100%;
+    padding: 0.875rem;
+    background: rgb(var(--bg-secondary));
+    color: rgb(var(--text-primary));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .secondary-btn:hover {
+    background: rgb(var(--bg-tertiary));
+    border-color: rgb(var(--card-hover-border));
+  }
+</style>

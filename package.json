@@ -9,17 +9,27 @@
     "preview": "astro preview",
     "astro": "astro",
     "transform": "npx tsx scripts/transform-generations.ts",
-    "transform:dry": "DRY_RUN=true npx tsx scripts/transform-generations.ts"
+    "transform:dry": "DRY_RUN=true npx tsx scripts/transform-generations.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/sitemap": "^3.6.0",
+    "@neondatabase/serverless": "^1.0.2",
     "astro": "^5.1.1",
+    "better-auth": "^1.4.9",
+    "drizzle-orm": "^0.45.1",
     "sharp": "^0.34.5",
     "uploadthing": "^7.4.4"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "dotenv": "^16.4.7",
+    "drizzle-kit": "^0.31.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "wrangler": "^4.0.0"
   }
 }

@@ -1,0 +1,9 @@
+name = "logoprompt-pro"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+SITE_URL = "https://logoprompt.pro"
+
+# Environment variables should be set in Cloudflare dashboard or .dev.vars for local dev
+# DATABASE_URL, BETTER_AUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BREVO_API_KEY
