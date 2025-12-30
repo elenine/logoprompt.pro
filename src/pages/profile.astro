@@ -5,6 +5,8 @@ export const prerender = false;
 
 const user = Astro.locals.user;
 const session = Astro.locals.session;
+const subscription = Astro.locals.subscription;
+const isSubscribed = Astro.locals.isSubscribed;
 
 // This page is protected by middleware, but double-check
 if (!user) {
@@ -47,6 +49,29 @@ if (!user) {
             <span class="label">Member Since</span>
             <span class="value">{new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
           </div>
+        </div>
+
+        <div class="profile-section subscription-section">
+          <h2>Subscription</h2>
+          {isSubscribed ? (
+            <div class="subscription-active">
+              <div class="subscription-badge">Pro</div>
+              <div class="subscription-info">
+                <p class="subscription-status">Active subscription</p>
+                {subscription?.currentPeriodEnd && (
+                  <p class="subscription-renew">
+                    {subscription.cancelAtPeriodEnd ? 'Expires' : 'Renews'} on {new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </p>
+                )}
+              </div>
+              <a href="/subscription" class="manage-link">Manage</a>
+            </div>
+          ) : (
+            <div class="subscription-inactive">
+              <p>You're on the free plan with ads.</p>
+              <a href="/subscription" class="upgrade-btn">Upgrade to Pro</a>
+            </div>
+          )}
         </div>
 
         <div class="profile-actions">
@@ -234,6 +259,81 @@ if (!user) {
     cursor: not-allowed;
   }
 
+  .subscription-section {
+    background: rgb(var(--bg-secondary));
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+  }
+
+  .subscription-active {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .subscription-badge {
+    background: rgb(var(--accent));
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .subscription-info {
+    flex: 1;
+  }
+
+  .subscription-status {
+    font-weight: 500;
+    color: rgb(var(--text-primary));
+    margin: 0;
+  }
+
+  .subscription-renew {
+    font-size: 0.8rem;
+    color: rgb(var(--text-tertiary));
+    margin: 0.25rem 0 0;
+  }
+
+  .manage-link {
+    color: rgb(var(--accent));
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .manage-link:hover {
+    text-decoration: underline;
+  }
+
+  .subscription-inactive {
+    text-align: center;
+  }
+
+  .subscription-inactive p {
+    color: rgb(var(--text-secondary));
+    margin: 0 0 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .upgrade-btn {
+    display: inline-block;
+    background: rgb(var(--accent));
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background var(--transition-fast);
+  }
+
+  .upgrade-btn:hover {
+    background: rgb(var(--accent-hover));
+  }
+
   @media (max-width: 480px) {
     .profile-header {
       flex-direction: column;
@@ -242,6 +342,11 @@ if (!user) {
 
     .profile-actions {
       flex-direction: column;
+    }
+
+    .subscription-active {
+      flex-direction: column;
+      text-align: center;
     }
   }
 </style>

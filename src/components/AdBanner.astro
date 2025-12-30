@@ -7,7 +7,10 @@ interface Props {
 
 const { slot = 1 } = Astro.props;
 const { bannerAd } = AD_CONFIG;
-const showBanner = shouldShowBannerAd();
+
+// Check if user is subscribed (Pro users don't see ads)
+const isSubscribed = Astro.locals?.isSubscribed ?? false;
+const showBanner = shouldShowBannerAd() && !isSubscribed;
 ---
 
 {showBanner && (

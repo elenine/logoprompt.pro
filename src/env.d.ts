@@ -10,6 +10,8 @@ interface Env {
   GOOGLE_CLIENT_SECRET: string;
   BREVO_API_KEY: string;
   SITE_URL: string;
+  POLAR_ACCESS_TOKEN: string;
+  POLAR_WEBHOOK_SECRET: string;
 }
 
 declare namespace App {
@@ -44,5 +46,12 @@ declare namespace App {
       createdAt: Date;
       updatedAt: Date;
     } | null;
+    subscription: {
+      id: string;
+      status: 'active' | 'cancelled' | 'expired' | 'paused';
+      currentPeriodEnd: Date | null;
+      cancelAtPeriodEnd: boolean;
+    } | null;
+    isSubscribed: boolean;
   }
 }
