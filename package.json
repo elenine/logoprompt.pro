@@ -12,7 +12,11 @@
     "transform:dry": "DRY_RUN=true npx tsx scripts/transform-generations.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "admin:create": "npx tsx scripts/create-admin.ts create",
+    "admin:promote": "npx tsx scripts/create-admin.ts promote",
+    "admin:demote": "npx tsx scripts/create-admin.ts demote",
+    "admin:list": "npx tsx scripts/create-admin.ts list"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.12",
