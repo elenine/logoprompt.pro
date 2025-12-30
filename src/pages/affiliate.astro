@@ -48,6 +48,31 @@ if (!user) {
               </button>
             </div>
           </div>
+          <!-- Direct Link Verification Status -->
+          <div id="direct-link-status" class="direct-link-status" style="display: none;">
+            <div id="direct-link-verified" class="status-banner verified" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Your direct link is verified and active</span>
+            </div>
+            <div id="direct-link-pending" class="status-banner pending" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Your direct link is pending verification by admin</span>
+            </div>
+            <div id="direct-link-none" class="status-banner none" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>No direct link configured. Contact admin to set up your direct link.</span>
+            </div>
+          </div>
         </header>
 
         <!-- Stats Cards -->
@@ -242,6 +267,12 @@ if (!user) {
     subscriptionStatus: string;
   }
 
+  interface DirectLinkInfo {
+    url: string;
+    isVerified: boolean;
+    isActive: boolean;
+  }
+
   interface ReferralStats {
     referralCode: string;
     totalReferrals: number;
@@ -253,6 +284,7 @@ if (!user) {
     availableBalance: number;
     hasPayoutSettings: boolean;
     referrals: Referral[];
+    directLink: DirectLinkInfo | null;
   }
 
   interface PayoutSettings {
@@ -366,6 +398,31 @@ if (!user) {
       // Set referral link
       const referralLink = `${window.location.origin}?ref=${stats.referralCode}`;
       (document.getElementById('referral-link') as HTMLInputElement).value = referralLink;
+
+      // Display direct link verification status
+      const directLinkStatus = document.getElementById('direct-link-status');
+      const directLinkVerified = document.getElementById('direct-link-verified');
+      const directLinkPending = document.getElementById('direct-link-pending');
+      const directLinkNone = document.getElementById('direct-link-none');
+
+      if (directLinkStatus) {
+        directLinkStatus.style.display = 'block';
+        if (stats.directLink) {
+          if (stats.directLink.isVerified && stats.directLink.isActive) {
+            directLinkVerified!.style.display = 'flex';
+            directLinkPending!.style.display = 'none';
+            directLinkNone!.style.display = 'none';
+          } else {
+            directLinkVerified!.style.display = 'none';
+            directLinkPending!.style.display = 'flex';
+            directLinkNone!.style.display = 'none';
+          }
+        } else {
+          directLinkVerified!.style.display = 'none';
+          directLinkPending!.style.display = 'none';
+          directLinkNone!.style.display = 'flex';
+        }
+      }
 
       // Update payout button state
       updatePayoutButton();
@@ -707,6 +764,43 @@ if (!user) {
 
   .copy-btn.copied {
     background: #16a34a;
+  }
+
+  /* Direct Link Status */
+  .direct-link-status {
+    margin-top: 1rem;
+  }
+
+  .status-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .status-banner.verified {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+  }
+
+  .status-banner.pending {
+    background: rgba(255, 193, 7, 0.1);
+    color: #e0a800;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+  }
+
+  .status-banner.none {
+    background: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+    border: 1px solid rgba(108, 117, 125, 0.3);
+  }
+
+  .status-banner svg {
+    flex-shrink: 0;
   }
 
   .stats-grid {

@@ -30,6 +30,7 @@ export const GET: APIRoute = async (context) => {
         affiliateName: user.name,
         affiliateEmail: user.email,
         isActive: referralLink.isActive,
+        isVerified: referralLink.isVerified,
         description: referralLink.description,
         clickCount: referralLink.clickCount,
         createdAt: referralLink.createdAt,
@@ -98,6 +99,7 @@ export const POST: APIRoute = async (context) => {
       affiliateId: affiliateId || null,
       description: description || null,
       isActive: isActive !== false,
+      isVerified: false, // New links are not verified by default
     });
 
     // Log admin action

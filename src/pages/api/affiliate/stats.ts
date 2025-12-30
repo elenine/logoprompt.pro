@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getDb } from '@/db';
 import { user, subscription } from '@/db/schema';
-import { affiliatePayout, affiliatePayoutSettings } from '@/db/schema-admin';
+import { affiliatePayout, affiliatePayoutSettings, referralLink } from '@/db/schema-admin';
 import { eq, and, sql } from 'drizzle-orm';
 import { getEnv } from '@/lib/env';
 
@@ -127,6 +127,19 @@ export const GET: APIRoute = async (context) => {
 
     const hasPayoutSettings = !!payoutSettings[0]?.paypalEmail || !!payoutSettings[0]?.bankAccountNumber;
 
+    // Get referral link verification status
+    const referralLinkData = await db
+      .select({
+        isVerified: referralLink.isVerified,
+        isActive: referralLink.isActive,
+        directAdUrl: referralLink.directAdUrl,
+      })
+      .from(referralLink)
+      .where(eq(referralLink.referralCode, referralCode))
+      .limit(1);
+
+    const linkInfo = referralLinkData[0] || null;
+
     return new Response(
       JSON.stringify({
         referralCode,
@@ -139,6 +152,11 @@ export const GET: APIRoute = async (context) => {
         availableBalance,
         hasPayoutSettings,
         referrals: referralList,
+        directLink: linkInfo ? {
+          url: linkInfo.directAdUrl,
+          isVerified: linkInfo.isVerified,
+          isActive: linkInfo.isActive,
+        } : null,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
