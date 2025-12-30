@@ -71,6 +71,23 @@ if (session) {
 
 <script>
   import { authClient } from '../lib/auth-client';
+  import { getReferralCode } from '../constants/referral';
+
+  // Save referral code after successful auth
+  async function saveReferralCode() {
+    const refCode = getReferralCode();
+    if (refCode) {
+      try {
+        await fetch('/api/user/save-referral', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ referralCode: refCode }),
+        });
+      } catch (e) {
+        console.error('Failed to save referral:', e);
+      }
+    }
+  }
 
   // Google sign in
   document.getElementById('google-signin')?.addEventListener('click', async () => {
@@ -80,9 +97,15 @@ if (session) {
     if (span) span.textContent = 'Signing in...';
 
     try {
+      // Store referral in sessionStorage to save after redirect
+      const refCode = getReferralCode();
+      if (refCode) {
+        sessionStorage.setItem('pending_referral', refCode);
+      }
+
       await authClient.signIn.social({
         provider: 'google',
-        callbackURL: '/profile',
+        callbackURL: '/profile?from=signup',
         errorCallbackURL: '/login?error=auth_failed',
       });
     } catch (error) {

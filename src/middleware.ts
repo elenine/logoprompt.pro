@@ -2,7 +2,7 @@ import { defineMiddleware } from 'astro:middleware';
 import { getAuthFromEnv } from '@/lib/auth';
 import { getUserSubscription } from '@/lib/subscription';
 
-const protectedRoutes = ['/profile', '/subscription'];
+const protectedRoutes = ['/profile', '/subscription', '/influencer'];
 
 export const onRequest = defineMiddleware(async (context, next) => {
   // Initialize auth and subscription state to null

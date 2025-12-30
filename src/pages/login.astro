@@ -79,6 +79,7 @@ const error = Astro.url.searchParams.get('error');
 
 <script>
   import { authClient } from '../lib/auth-client';
+  import { getReferralCode } from '../constants/referral';
 
   // Google sign in
   document.getElementById('google-signin')?.addEventListener('click', async () => {
@@ -88,6 +89,12 @@ const error = Astro.url.searchParams.get('error');
     if (span) span.textContent = 'Signing in...';
 
     try {
+      // Store referral in sessionStorage to save after redirect
+      const refCode = getReferralCode();
+      if (refCode) {
+        sessionStorage.setItem('pending_referral', refCode);
+      }
+
       const urlParams = new URLSearchParams(window.location.search);
       const redirectUrl = urlParams.get('redirect') || '/profile';
 
@@ -130,6 +137,20 @@ const error = Astro.url.searchParams.get('error');
 
       if (result.error) {
         throw new Error(result.error.message || 'Sign in failed');
+      }
+
+      // Save referral code if present
+      const refCode = getReferralCode();
+      if (refCode) {
+        try {
+          await fetch('/api/user/save-referral', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ referralCode: refCode }),
+          });
+        } catch (e) {
+          console.error('Failed to save referral:', e);
+        }
       }
 
       const urlParams = new URLSearchParams(window.location.search);
