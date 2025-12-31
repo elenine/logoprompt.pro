@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getDb } from '@/db';
 import { user, subscription } from '@/db/schema';
-import { desc, like, or, sql } from 'drizzle-orm';
+import { desc, like, or, sql, eq } from 'drizzle-orm';
 import { getEnv } from '@/lib/env';
 
 export const prerender = false;
@@ -22,7 +22,7 @@ export const GET: APIRoute = async (context) => {
     const page = parseInt(url.searchParams.get('page') || '1');
     const limit = parseInt(url.searchParams.get('limit') || '20');
     const search = url.searchParams.get('search') || '';
-    const filter = url.searchParams.get('filter') || 'all'; // all, affiliates, admins
+    const filter = url.searchParams.get('filter') || 'all'; // all, admins, subscribed
 
     const offset = (page - 1) * limit;
     const db = getDb(env.DATABASE_URL);
@@ -45,9 +45,6 @@ export const GET: APIRoute = async (context) => {
         emailVerified: user.emailVerified,
         image: user.image,
         isAdmin: user.isAdmin,
-        isAffiliate: user.isAffiliate,
-        referralCode: user.referralCode,
-        referredBy: user.referredBy,
         createdAt: user.createdAt,
         subscriptionStatus: subscription.status,
       })
@@ -59,17 +56,17 @@ export const GET: APIRoute = async (context) => {
 
     // Apply filter
     let users;
-    if (filter === 'affiliates') {
-      users = await usersQuery.where(
-        whereClause
-          ? sql`${user.isAffiliate} = true AND (${whereClause})`
-          : sql`${user.isAffiliate} = true`
-      );
-    } else if (filter === 'admins') {
+    if (filter === 'admins') {
       users = await usersQuery.where(
         whereClause
           ? sql`${user.isAdmin} = true AND (${whereClause})`
           : sql`${user.isAdmin} = true`
+      );
+    } else if (filter === 'subscribed') {
+      users = await usersQuery.where(
+        whereClause
+          ? sql`${subscription.status} = 'active' AND (${whereClause})`
+          : sql`${subscription.status} = 'active'`
       );
     } else {
       users = whereClause
@@ -83,9 +80,17 @@ export const GET: APIRoute = async (context) => {
       .from(user);
     const total = Number(countResult[0]?.count || 0);
 
+    // Get active subscriptions count
+    const activeSubsResult = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(subscription)
+      .where(eq(subscription.status, 'active'));
+    const activeSubscriptions = Number(activeSubsResult[0]?.count || 0);
+
     return new Response(
       JSON.stringify({
         users,
+        activeSubscriptions,
         pagination: {
           page,
           limit,

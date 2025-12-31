@@ -160,7 +160,6 @@ async function main() {
         email: args.email,
         emailVerified: true, // Admin users are pre-verified
         isAdmin: true,
-        isAffiliate: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       });

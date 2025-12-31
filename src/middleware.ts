@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm';
 import { getEnv } from '@/lib/env';
 
 // Routes that require authentication
-const protectedRoutes = ['/profile', '/subscription', '/affiliate'];
+const protectedRoutes = ['/profile', '/subscription'];
 // Routes that require admin access
 const adminRoutes = ['/admin'];
 
@@ -18,7 +18,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
   context.locals.subscription = null;
   context.locals.isSubscribed = false;
   context.locals.isAdmin = false;
-  context.locals.isAffiliate = false;
 
   const env = getEnv();
 
@@ -37,11 +36,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
       const db = getDb(env.DATABASE_URL);
 
       try {
-        // Get user admin/affiliate status
+        // Get user admin status
         const userDetails = await db
           .select({
             isAdmin: user.isAdmin,
-            isAffiliate: user.isAffiliate,
           })
           .from(user)
           .where(eq(user.id, session.user.id))
@@ -49,7 +47,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
         if (userDetails[0]) {
           context.locals.isAdmin = userDetails[0].isAdmin;
-          context.locals.isAffiliate = userDetails[0].isAffiliate;
         }
 
         // Get subscription status

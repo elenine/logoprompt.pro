@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getDb } from '@/db';
 import { user } from '@/db/schema';
-import { adminActivityLog } from '@/db/schema-admin';
 import { eq } from 'drizzle-orm';
 import { getEnv } from '@/lib/env';
 
@@ -54,7 +53,7 @@ export const GET: APIRoute = async (context) => {
   }
 };
 
-// PATCH - Update user (make affiliate, set referral code, make admin)
+// PATCH - Update user (make admin)
 export const PATCH: APIRoute = async (context) => {
   if (!context.locals.isAdmin) {
     return new Response(
@@ -75,7 +74,7 @@ export const PATCH: APIRoute = async (context) => {
     }
 
     const body = await context.request.json();
-    const { isAffiliate, isAdmin, referralCode } = body;
+    const { isAdmin } = body;
 
     const db = getDb(env.DATABASE_URL);
 
@@ -95,39 +94,14 @@ export const PATCH: APIRoute = async (context) => {
 
     // Build update object
     const updateData: Partial<{
-      isAffiliate: boolean;
       isAdmin: boolean;
-      referralCode: string | null;
       updatedAt: Date;
     }> = {
       updatedAt: new Date(),
     };
 
-    if (typeof isAffiliate === 'boolean') {
-      updateData.isAffiliate = isAffiliate;
-    }
-
     if (typeof isAdmin === 'boolean') {
       updateData.isAdmin = isAdmin;
-    }
-
-    if (referralCode !== undefined) {
-      // Check if referral code is already taken by another user
-      if (referralCode) {
-        const existingCode = await db
-          .select({ id: user.id })
-          .from(user)
-          .where(eq(user.referralCode, referralCode))
-          .limit(1);
-
-        if (existingCode[0] && existingCode[0].id !== userId) {
-          return new Response(
-            JSON.stringify({ error: 'Referral code already in use' }),
-            { status: 400, headers: { 'Content-Type': 'application/json' } }
-          );
-        }
-      }
-      updateData.referralCode = referralCode || null;
     }
 
     // Update user
@@ -135,20 +109,6 @@ export const PATCH: APIRoute = async (context) => {
       .update(user)
       .set(updateData)
       .where(eq(user.id, userId));
-
-    // Log admin action
-    const adminUser = context.locals.user;
-    if (adminUser) {
-      await db.insert(adminActivityLog).values({
-        id: crypto.randomUUID(),
-        adminId: adminUser.id,
-        action: 'update_user',
-        targetType: 'user',
-        targetId: userId,
-        details: updateData,
-        ipAddress: context.request.headers.get('x-forwarded-for') || null,
-      });
-    }
 
     return new Response(
       JSON.stringify({ success: true, message: 'User updated' }),

@@ -15,12 +15,8 @@ export const user = pgTable('user', {
   email: text('email').notNull().unique(),
   emailVerified: boolean('email_verified').notNull().default(false),
   image: text('image'),
-  // Admin & Affiliate fields
+  // Admin field
   isAdmin: boolean('is_admin').notNull().default(false),
-  isAffiliate: boolean('is_affiliate').notNull().default(false),
-  referralCode: text('referral_code').unique(),  // Unique code for affiliates
-  // Referral tracking - which affiliate referred this user
-  referredBy: text('referred_by'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
@@ -88,5 +84,3 @@ export const subscription = pgTable('subscription', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
-
-// Note: Affiliate/Influencer payout tables are in schema-admin.ts

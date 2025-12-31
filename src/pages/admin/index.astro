@@ -35,43 +35,17 @@ if (!user || !Astro.locals.isAdmin) {
         </div>
 
         <div class="stat-card loading">
-          <div class="stat-icon affiliates">
+          <div class="stat-icon subscriptions">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <line x1="19" y1="8" x2="19" y2="14"></line>
-              <line x1="22" y1="11" x2="16" y2="11"></line>
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
           </div>
           <div class="stat-content">
-            <span class="stat-value" id="total-affiliates">-</span>
-            <span class="stat-label">Affiliates</span>
-          </div>
-        </div>
-
-        <div class="stat-card loading">
-          <div class="stat-icon payouts">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="1" x2="12" y2="23"></line>
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
-          </div>
-          <div class="stat-content">
-            <span class="stat-value" id="pending-payouts">-</span>
-            <span class="stat-label">Pending Payouts</span>
-          </div>
-        </div>
-
-        <div class="stat-card loading">
-          <div class="stat-icon links">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-            </svg>
-          </div>
-          <div class="stat-content">
-            <span class="stat-value" id="total-links">-</span>
-            <span class="stat-label">Referral Links</span>
+            <span class="stat-value" id="active-subscriptions">-</span>
+            <span class="stat-label">Active Subscriptions</span>
           </div>
         </div>
       </div>
@@ -87,29 +61,7 @@ if (!user || !Astro.locals.isAdmin) {
             </svg>
           </div>
           <h2>User Management</h2>
-          <p>View all users, make affiliates, set referral codes</p>
-        </a>
-
-        <a href="/admin/payouts" class="nav-card">
-          <div class="nav-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="1" x2="12" y2="23"></line>
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
-          </div>
-          <h2>Payout Management</h2>
-          <p>Process affiliate payout requests</p>
-        </a>
-
-        <a href="/admin/referral-links" class="nav-card">
-          <div class="nav-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-            </svg>
-          </div>
-          <h2>Referral Links</h2>
-          <p>Manage affiliate referral links and ad URLs</p>
+          <p>View all users and their subscriptions</p>
         </a>
       </nav>
 
@@ -128,27 +80,7 @@ if (!user || !Astro.locals.isAdmin) {
       if (usersRes.ok) {
         const usersData = await usersRes.json();
         document.getElementById('total-users')!.textContent = usersData.pagination.total.toString();
-      }
-
-      // Fetch affiliates count
-      const affiliatesRes = await fetch('/api/admin/users?filter=affiliates&limit=1');
-      if (affiliatesRes.ok) {
-        const affiliatesData = await affiliatesRes.json();
-        document.getElementById('total-affiliates')!.textContent = affiliatesData.users.length.toString();
-      }
-
-      // Fetch pending payouts
-      const payoutsRes = await fetch('/api/admin/payouts?status=pending&limit=1');
-      if (payoutsRes.ok) {
-        const payoutsData = await payoutsRes.json();
-        document.getElementById('pending-payouts')!.textContent = payoutsData.counts.pending.toString();
-      }
-
-      // Fetch referral links
-      const linksRes = await fetch('/api/admin/referral-links');
-      if (linksRes.ok) {
-        const linksData = await linksRes.json();
-        document.getElementById('total-links')!.textContent = linksData.links.length.toString();
+        document.getElementById('active-subscriptions')!.textContent = usersData.activeSubscriptions?.toString() || '0';
       }
 
       // Remove loading class
@@ -222,9 +154,7 @@ if (!user || !Astro.locals.isAdmin) {
   }
 
   .stat-icon.users { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-  .stat-icon.affiliates { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-  .stat-icon.payouts { background: rgba(249, 115, 22, 0.1); color: #f97316; }
-  .stat-icon.links { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+  .stat-icon.subscriptions { background: rgba(16, 185, 129, 0.1); color: #10b981; }
 
   .stat-content {
     display: flex;

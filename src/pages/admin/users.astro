@@ -20,8 +20,8 @@ if (!Astro.locals.isAdmin) {
           <input type="text" id="search-input" placeholder="Search users..." class="search-input" />
           <select id="filter-select" class="filter-select">
             <option value="all">All Users</option>
-            <option value="affiliates">Affiliates Only</option>
             <option value="admins">Admins Only</option>
+            <option value="subscribed">Subscribed Only</option>
           </select>
         </div>
       </header>
@@ -32,15 +32,14 @@ if (!Astro.locals.isAdmin) {
             <tr>
               <th>User</th>
               <th>Status</th>
-              <th>Referral Code</th>
-              <th>Referred By</th>
+              <th>Subscription</th>
               <th>Joined</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody id="users-tbody">
             <tr>
-              <td colspan="6" class="loading-state">Loading users...</td>
+              <td colspan="5" class="loading-state">Loading users...</td>
             </tr>
           </tbody>
         </table>
@@ -68,19 +67,6 @@ if (!Astro.locals.isAdmin) {
           <input type="email" id="edit-email" readonly class="readonly-input" />
         </div>
 
-        <div class="form-group">
-          <label for="edit-referral-code">Referral Code</label>
-          <input type="text" id="edit-referral-code" placeholder="e.g., partner1" />
-          <small>Unique code for affiliate links</small>
-        </div>
-
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" id="edit-is-affiliate" />
-            <span>Is Affiliate</span>
-          </label>
-        </div>
-
         <div class="form-group checkbox-group">
           <label>
             <input type="checkbox" id="edit-is-admin" />
@@ -103,9 +89,6 @@ if (!Astro.locals.isAdmin) {
     name: string;
     email: string;
     isAdmin: boolean;
-    isAffiliate: boolean;
-    referralCode: string | null;
-    referredBy: string | null;
     subscriptionStatus: string | null;
     createdAt: string;
   }
@@ -119,7 +102,7 @@ if (!Astro.locals.isAdmin) {
     tbody.textContent = '';
     const loadingRow = document.createElement('tr');
     const loadingCell = document.createElement('td');
-    loadingCell.colSpan = 6;
+    loadingCell.colSpan = 5;
     loadingCell.className = 'loading-state';
     loadingCell.textContent = 'Loading users...';
     loadingRow.appendChild(loadingCell);
@@ -144,7 +127,7 @@ if (!Astro.locals.isAdmin) {
       tbody.textContent = '';
       const errorRow = document.createElement('tr');
       const errorCell = document.createElement('td');
-      errorCell.colSpan = 6;
+      errorCell.colSpan = 5;
       errorCell.className = 'error-state';
       errorCell.textContent = 'Failed to load users';
       errorRow.appendChild(errorCell);
@@ -159,7 +142,7 @@ if (!Astro.locals.isAdmin) {
     if (users.length === 0) {
       const emptyRow = document.createElement('tr');
       const emptyCell = document.createElement('td');
-      emptyCell.colSpan = 6;
+      emptyCell.colSpan = 5;
       emptyCell.className = 'empty-state';
       emptyCell.textContent = 'No users found';
       emptyRow.appendChild(emptyCell);
@@ -191,35 +174,28 @@ if (!Astro.locals.isAdmin) {
         adminBadge.textContent = 'Admin';
         statusCell.appendChild(adminBadge);
       }
-      if (user.isAffiliate) {
-        const affiliateBadge = document.createElement('span');
-        affiliateBadge.className = 'badge badge-affiliate';
-        affiliateBadge.textContent = 'Affiliate';
-        statusCell.appendChild(affiliateBadge);
+      if (!user.isAdmin) {
+        const userBadge = document.createElement('span');
+        userBadge.className = 'badge badge-user';
+        userBadge.textContent = 'User';
+        statusCell.appendChild(userBadge);
       }
+      tr.appendChild(statusCell);
+
+      // Subscription status
+      const subCell = document.createElement('td');
       if (user.subscriptionStatus === 'active') {
         const subBadge = document.createElement('span');
         subBadge.className = 'badge badge-subscribed';
         subBadge.textContent = 'Pro';
-        statusCell.appendChild(subBadge);
-      }
-      if (!user.isAdmin && !user.isAffiliate && user.subscriptionStatus !== 'active') {
+        subCell.appendChild(subBadge);
+      } else {
         const freeBadge = document.createElement('span');
         freeBadge.className = 'badge badge-free';
         freeBadge.textContent = 'Free';
-        statusCell.appendChild(freeBadge);
+        subCell.appendChild(freeBadge);
       }
-      tr.appendChild(statusCell);
-
-      // Referral code
-      const codeCell = document.createElement('td');
-      codeCell.textContent = user.referralCode || '-';
-      tr.appendChild(codeCell);
-
-      // Referred by
-      const refByCell = document.createElement('td');
-      refByCell.textContent = user.referredBy || '-';
-      tr.appendChild(refByCell);
+      tr.appendChild(subCell);
 
       // Joined date
       const dateCell = document.createElement('td');
@@ -276,8 +252,6 @@ if (!Astro.locals.isAdmin) {
     (document.getElementById('edit-user-id') as HTMLInputElement).value = user.id;
     (document.getElementById('edit-name') as HTMLInputElement).value = user.name;
     (document.getElementById('edit-email') as HTMLInputElement).value = user.email;
-    (document.getElementById('edit-referral-code') as HTMLInputElement).value = user.referralCode || '';
-    (document.getElementById('edit-is-affiliate') as HTMLInputElement).checked = user.isAffiliate;
     (document.getElementById('edit-is-admin') as HTMLInputElement).checked = user.isAdmin;
 
     document.getElementById('edit-modal')!.style.display = 'flex';
@@ -309,19 +283,13 @@ if (!Astro.locals.isAdmin) {
     e.preventDefault();
 
     const userId = (document.getElementById('edit-user-id') as HTMLInputElement).value;
-    const referralCode = (document.getElementById('edit-referral-code') as HTMLInputElement).value;
-    const isAffiliate = (document.getElementById('edit-is-affiliate') as HTMLInputElement).checked;
     const isAdmin = (document.getElementById('edit-is-admin') as HTMLInputElement).checked;
 
     try {
       const response = await fetch(`/api/admin/users/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          referralCode: referralCode || null,
-          isAffiliate,
-          isAdmin,
-        }),
+        body: JSON.stringify({ isAdmin }),
       });
 
       if (!response.ok) {
@@ -455,7 +423,7 @@ if (!Astro.locals.isAdmin) {
   }
 
   .badge-admin { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-  .badge-affiliate { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+  .badge-user { background: rgba(var(--text-muted), 0.1); color: rgb(var(--text-muted)); }
   .badge-subscribed { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
   .badge-free { background: rgba(var(--text-muted), 0.1); color: rgb(var(--text-muted)); }
 
@@ -563,13 +531,6 @@ if (!Astro.locals.isAdmin) {
   .readonly-input {
     background: rgb(var(--bg-secondary)) !important;
     color: rgb(var(--text-muted)) !important;
-  }
-
-  .form-group small {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 0.8rem;
-    color: rgb(var(--text-muted));
   }
 
   .checkbox-group label {

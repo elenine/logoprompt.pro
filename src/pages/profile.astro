@@ -87,27 +87,6 @@ if (!user) {
 
 <script>
   import { authClient } from '../lib/auth-client';
-  import { getReferralCode } from '../constants/referral';
-
-  // Save pending referral after OAuth redirect
-  (async function savePendingReferral() {
-    const pendingRef = sessionStorage.getItem('pending_referral');
-    const cookieRef = getReferralCode();
-    const refCode = pendingRef || cookieRef;
-
-    if (refCode) {
-      sessionStorage.removeItem('pending_referral');
-      try {
-        await fetch('/api/user/save-referral', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ referralCode: refCode }),
-        });
-      } catch (e) {
-        console.error('Failed to save referral:', e);
-      }
-    }
-  })();
 
   document.getElementById('signout-btn')?.addEventListener('click', async () => {
     const button = document.getElementById('signout-btn') as HTMLButtonElement;

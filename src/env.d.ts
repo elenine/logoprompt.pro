@@ -40,6 +40,5 @@ declare namespace App {
     } | null;
     isSubscribed: boolean;
     isAdmin: boolean;
-    isAffiliate: boolean;
   }
 }
