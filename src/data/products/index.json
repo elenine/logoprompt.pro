@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "id": "product-1",
+      "name": "Products Dec 24, 2025",
+      "path": "product-1.json",
+      "createdAt": "2025-12-24",
+      "productCount": 25
+    },
+    {
+      "id": "product-2",
+      "name": "Products Dec 24, 2025",
+      "path": "product-2.json",
+      "createdAt": "2025-12-24",
+      "productCount": 37
+    }
+  ],
+  "totalProducts": 62,
+  "lastUpdated": "2025-12-31T08:27:18.019Z"
+}

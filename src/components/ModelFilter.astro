@@ -1,36 +1,71 @@
 ---
 interface Props {
   models: string[];
+  gridSelector?: string;
+  cardSelector?: string;
 }
 
-const { models } = Astro.props;
+const {
+  models,
+  gridSelector = '.logos-grid',
+  cardSelector = '.logo-card'
+} = Astro.props;
+
+const columnOptions = [2, 3, 4, 5, 6];
 ---
 
-<div class="model-filter">
-  <div class="filter-header">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-    </svg>
-    <span class="filter-label">Filter by Model</span>
-  </div>
-  <div class="filter-buttons">
-    <button class="filter-btn active" data-model="all">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-      </svg>
-      <span>All Models</span>
-      <span class="count" data-count="all"></span>
-    </button>
-    {models.map((model) => (
-      <button class="filter-btn" data-model={model}>
-        <span class="model-icon"></span>
-        <span>{model}</span>
-        <span class="count" data-count={model}></span>
-      </button>
-    ))}
+<div class="model-filter" data-grid-selector={gridSelector} data-card-selector={cardSelector}>
+  <div class="filter-row">
+    <div class="filter-group">
+      <div class="filter-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+        </svg>
+        <span class="filter-label">Filter by Model</span>
+      </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-model="all">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>All Models</span>
+          <span class="count" data-count="all"></span>
+        </button>
+        {models.map((model) => (
+          <button class="filter-btn" data-model={model}>
+            <span class="model-icon"></span>
+            <span>{model}</span>
+            <span class="count" data-count={model}></span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="filter-group grid-layout-group">
+      <div class="filter-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span class="filter-label">Grid Layout</span>
+      </div>
+      <div class="grid-layout-buttons">
+        {columnOptions.map((cols) => (
+          <button
+            class={`grid-btn ${cols === 6 ? 'active' : ''}`}
+            data-columns={cols}
+            title={`${cols} columns`}
+          >
+            {cols}
+          </button>
+        ))}
+      </div>
+    </div>
   </div>
 </div>
 
@@ -45,6 +80,24 @@ const { models } = Astro.props;
     border-radius: var(--radius-lg);
     margin-bottom: 2rem;
     box-shadow: var(--shadow-sm);
+  }
+
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .grid-layout-group {
+    flex-shrink: 0;
   }
 
   .filter-header {
@@ -140,6 +193,58 @@ const { models } = Astro.props;
     background: rgba(255, 255, 255, 0.25);
   }
 
+  /* Grid Layout Buttons */
+  .grid-layout-buttons {
+    display: flex;
+    gap: 0.25rem;
+    background: rgb(var(--bg-tertiary));
+    padding: 0.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgb(var(--card-border));
+  }
+
+  .grid-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgb(var(--text-secondary));
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .grid-btn:hover {
+    background: rgb(var(--accent-light));
+    color: rgb(var(--accent-dark));
+  }
+
+  .grid-btn.active {
+    background: rgb(var(--accent));
+    color: white;
+    box-shadow: 0 1px 4px rgba(var(--accent), 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .filter-row {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .grid-layout-group {
+      width: 100%;
+    }
+
+    .grid-layout-buttons {
+      width: fit-content;
+    }
+  }
+
   @media (max-width: 640px) {
     .model-filter {
       padding: 1rem;
@@ -156,6 +261,11 @@ const { models } = Astro.props;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
+    .grid-btn {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
   }
 </style>
 
@@ -163,9 +273,14 @@ const { models } = Astro.props;
   import { AD_CONFIG, shouldShowBannerAd } from '../constants/socialCopy';
 
   document.addEventListener('DOMContentLoaded', () => {
+    const modelFilter = document.querySelector('.model-filter') as HTMLElement;
+    const gridSelector = modelFilter?.dataset.gridSelector || '.logos-grid';
+    const cardSelector = modelFilter?.dataset.cardSelector || '.logo-card';
+
     const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLButtonElement>;
-    const grid = document.querySelector('.logos-grid') as HTMLElement;
-    const cards = Array.from(grid?.querySelectorAll('.logo-card') || []) as HTMLElement[];
+    const gridButtons = document.querySelectorAll('.grid-btn') as NodeListOf<HTMLButtonElement>;
+    const grid = document.querySelector(gridSelector) as HTMLElement;
+    const cards = Array.from(grid?.querySelectorAll(cardSelector) || []) as HTMLElement[];
     const loadingIndicator = document.querySelector('.loading-indicator') as HTMLElement;
     const scrollSentinel = document.querySelector('.scroll-sentinel') as HTMLElement;
 
@@ -175,6 +290,42 @@ const { models } = Astro.props;
     let visibleCount = 0;
     let isLoading = false;
     let hasMore = true;
+
+    // Grid column management
+    const GRID_COLUMNS_KEY = 'logoprompt-grid-columns';
+    const DEFAULT_COLUMNS = 6;
+
+    function getStoredColumns(): number {
+      const stored = localStorage.getItem(GRID_COLUMNS_KEY);
+      if (stored) {
+        const parsed = parseInt(stored, 10);
+        if (parsed >= 2 && parsed <= 6) return parsed;
+      }
+      return DEFAULT_COLUMNS;
+    }
+
+    function setGridColumns(columns: number) {
+      localStorage.setItem(GRID_COLUMNS_KEY, columns.toString());
+      if (grid) {
+        grid.style.setProperty('--grid-columns', columns.toString());
+      }
+      // Update active state
+      gridButtons.forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.columns || '4', 10) === columns);
+      });
+    }
+
+    // Initialize grid columns from localStorage
+    const initialColumns = getStoredColumns();
+    setGridColumns(initialColumns);
+
+    // Grid button click handlers
+    gridButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const columns = parseInt(btn.dataset.columns || '4', 10);
+        setGridColumns(columns);
+      });
+    });
 
     // Update count badges
     function updateCounts() {

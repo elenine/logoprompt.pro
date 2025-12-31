@@ -10,6 +10,8 @@
     "astro": "astro",
     "transform": "npx tsx scripts/transform-generations.ts",
     "transform:dry": "DRY_RUN=true npx tsx scripts/transform-generations.ts",
+    "transform:products": "npx tsx scripts/transform-product-generations.ts",
+    "transform:products:dry": "DRY_RUN=true npx tsx scripts/transform-product-generations.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",

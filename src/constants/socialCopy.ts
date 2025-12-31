@@ -37,24 +37,26 @@ export const SOCIAL_COPY_CONFIG = {
  */
 export const AD_CONFIG = {
   /** Master switch to enable/disable all advertisements */
-  showAdvertisement: false,
+  showAdvertisement: true,
 
   /** Show direct URL advertisement (opens on copy actions) */
-  showDirectAd: false,
+  showDirectAd: true,
 
   /** Show banner advertisements */
   showBannerAd: true,
 
   /** Direct advertisement URL (opens on copy actions) */
-  directAdUrl: 'https://otieu.com/4/9338001',
+  directAdUrl: 'https://publishoccur.com/p9djddyx9b?key=e66de2e88ddcac3038ea9158b805f474',
+
+  /** SessionStorage key for tracking click count */
+  clickCountKey: 'logoprompt_ad_click_count',
 
   /**
-   * Randomness factor for showing direct ad URL
-   * Value of 10 means 1 in 10 chance (10%)
-   * Value of 5 means 1 in 5 chance (20%)
-   * Value of 1 means always show (100%)
+   * Show ad on every Nth click
+   * Value of 2 means show on every 2nd click (2nd, 4th, 6th...)
+   * Value of 3 means show on every 3rd click (3rd, 6th, 9th...)
    */
-  randomFactor: 10,
+  showAdOnEveryNthClick: 5,
 
   /** Banner ad configuration */
   bannerAd: {
@@ -77,7 +79,8 @@ export function isMobileDevice(): boolean {
 }
 
 /**
- * Check if direct ad should be shown based on random factor
+ * Check if direct ad should be shown based on click count
+ * Shows ad on every Nth click (configurable via showAdOnEveryNthClick)
  * @returns true if ad should be shown
  */
 export function shouldShowDirectAd(): boolean {
@@ -85,7 +88,17 @@ export function shouldShowDirectAd(): boolean {
   if (!AD_CONFIG.showDirectAd) return false;
   // Don't show direct ads on mobile devices
   if (isMobileDevice()) return false;
-  return Math.floor(Math.random() * AD_CONFIG.randomFactor) === 0;
+  if (typeof window === 'undefined') return false;
+
+  // Get current click count from sessionStorage
+  const currentCount = parseInt(sessionStorage.getItem(AD_CONFIG.clickCountKey) || '0', 10);
+  // Increment the count
+  const newCount = currentCount + 1;
+  // Save the new count
+  sessionStorage.setItem(AD_CONFIG.clickCountKey, newCount.toString());
+
+  // Show ad on every Nth click based on config
+  return newCount % AD_CONFIG.showAdOnEveryNthClick === 0;
 }
 
 /**

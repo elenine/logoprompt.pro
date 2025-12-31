@@ -1,4 +1,5 @@
-// Environment variable helper for Vercel deployment
+// Environment variable helper for local development and deployment
+import 'dotenv/config';
 
 export interface Env {
   DATABASE_URL: string;
