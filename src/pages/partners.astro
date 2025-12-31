@@ -1,0 +1,518 @@
+---
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+
+const benefits = [
+  {
+    icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    title: 'Earn Commission',
+    description: 'Get rewarded for every user who visits through your unique referral link. The more traffic you send, the more you earn.'
+  },
+  {
+    icon: 'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
+    title: 'Custom Referral Link',
+    description: 'Get your own branded referral code that\'s easy to share and remember. Track your impact with a personalized URL.'
+  },
+  {
+    icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+    title: 'Performance Tracking',
+    description: 'We track all visits from your referral link so you can see the impact of your promotion efforts.'
+  }
+];
+
+const steps = [
+  {
+    number: '1',
+    title: 'Apply to Partner',
+    description: 'Contact us with your platform details and audience information.'
+  },
+  {
+    number: '2',
+    title: 'Get Your Link',
+    description: 'Receive your unique referral code and personalized link.'
+  },
+  {
+    number: '3',
+    title: 'Share & Promote',
+    description: 'Share LogoPrompt.pro with your audience using your referral link.'
+  },
+  {
+    number: '4',
+    title: 'Earn Rewards',
+    description: 'Get paid for the traffic and engagement you generate.'
+  }
+];
+---
+
+<Layout title="Partner Program - LogoPrompt.pro">
+  <main class="page-content">
+    <a href="/" class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back to Gallery
+    </a>
+
+    <header class="page-header">
+      <h1>Partner <span class="text-gradient">Program</span></h1>
+      <p class="subtitle">Join our referral program and earn by sharing LogoPrompt.pro</p>
+    </header>
+
+    <section class="mission-section">
+      <div class="mission-card">
+        <div class="mission-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h2>Become a Partner</h2>
+        <p>
+          Are you a content creator, blogger, YouTuber, or influencer in the design, AI, or creative space?
+          Partner with LogoPrompt.pro and earn by sharing our AI logo prompt gallery with your audience.
+          We provide you with a unique referral link that tracks all visitors from your platform.
+        </p>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <h2 class="section-title">Partner Benefits</h2>
+      <p class="section-description">
+        Join our growing network of partners and enjoy exclusive benefits designed to reward your promotional efforts.
+      </p>
+      <div class="features-grid">
+        {benefits.map(benefit => (
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d={benefit.icon}></path>
+              </svg>
+            </div>
+            <h3>{benefit.title}</h3>
+            <p>{benefit.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-description">
+        Getting started as a partner is simple. Follow these steps to begin earning.
+      </p>
+      <div class="steps-grid">
+        {steps.map(step => (
+          <div class="step-card">
+            <div class="step-number">{step.number}</div>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Who Can Partner With Us?</h2>
+      <p>
+        We welcome partnerships with a variety of content creators and platforms:
+      </p>
+      <ul class="partner-list">
+        <li><strong>Design Bloggers</strong> - Share logo design tips and resources with your readers</li>
+        <li><strong>YouTube Creators</strong> - Create tutorials about AI image generation and logo design</li>
+        <li><strong>Social Media Influencers</strong> - Showcase AI-generated logos to your followers</li>
+        <li><strong>Newsletter Writers</strong> - Feature LogoPrompt.pro in your design or AI newsletters</li>
+        <li><strong>Podcast Hosts</strong> - Discuss AI creativity tools with your listeners</li>
+        <li><strong>Online Communities</strong> - Share with design and AI enthusiast groups</li>
+      </ul>
+    </section>
+
+    <section class="content-section example-section">
+      <h2>Your Referral Link</h2>
+      <p>
+        Once approved, you'll receive a unique referral code. Your referral link will look like this:
+      </p>
+      <div class="link-example">
+        <code>https://logoprompt.pro?ref=<span class="highlight">yourcode</span></code>
+      </div>
+      <p class="link-note">
+        When visitors click your link, we track them using a 30-day cookie. Any activity from these visitors
+        is attributed to your referral.
+      </p>
+    </section>
+
+    <section class="cta-section">
+      <h2>Ready to Partner?</h2>
+      <p>Contact us to apply for our partner program and get your unique referral link.</p>
+      <a href="/contact" class="cta-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        Contact Us to Apply
+      </a>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .page-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgb(var(--text-secondary));
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 2.5rem;
+    transition: all var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: rgb(var(--accent));
+    transform: translateX(-4px);
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin: 0 0 1rem;
+    letter-spacing: -0.02em;
+    color: rgb(var(--text-primary));
+  }
+
+  .text-gradient {
+    color: rgb(var(--accent));
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: rgb(var(--text-secondary));
+    margin: 0;
+  }
+
+  /* Mission Section */
+  .mission-section {
+    margin-bottom: 4rem;
+  }
+
+  .mission-card {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgb(var(--card-bg));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mission-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: rgb(var(--accent-light));
+    border: 1px solid rgba(var(--accent), 0.2);
+    border-radius: var(--radius-lg);
+    color: rgb(var(--accent));
+    margin-bottom: 1.5rem;
+  }
+
+  .mission-card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: rgb(var(--text-primary));
+  }
+
+  .mission-card p {
+    font-size: 1.05rem;
+    color: rgb(var(--text-secondary));
+    line-height: 1.7;
+    margin: 0;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  /* Features Section */
+  .features-section {
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: rgb(var(--text-primary));
+    margin: 0 0 0.5rem;
+    text-align: center;
+  }
+
+  .section-description {
+    text-align: center;
+    color: rgb(var(--text-secondary));
+    margin: 0 0 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .feature-card {
+    padding: 1.5rem;
+    background: rgb(var(--card-bg));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--accent), 0.3);
+    box-shadow: var(--shadow-md);
+  }
+
+  .feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgb(var(--accent-light));
+    border-radius: var(--radius-md);
+    color: rgb(var(--accent));
+    margin-bottom: 1rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+    margin: 0 0 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: 0.875rem;
+    color: rgb(var(--text-secondary));
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* How It Works Section */
+  .how-it-works {
+    margin-bottom: 4rem;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .step-card {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: rgb(var(--card-bg));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgb(var(--accent));
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+  }
+
+  .step-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+    margin: 0 0 0.5rem;
+  }
+
+  .step-card p {
+    font-size: 0.8rem;
+    color: rgb(var(--text-secondary));
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Content Sections */
+  .content-section {
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: rgb(var(--card-bg));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .content-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+    margin: 0 0 1rem;
+  }
+
+  .content-section p {
+    color: rgb(var(--text-secondary));
+    line-height: 1.7;
+    margin: 0 0 1rem;
+  }
+
+  .content-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .partner-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+  }
+
+  .partner-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgb(var(--card-border));
+    color: rgb(var(--text-secondary));
+    font-size: 0.95rem;
+  }
+
+  .partner-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .partner-list li strong {
+    color: rgb(var(--text-primary));
+  }
+
+  /* Example Section */
+  .example-section {
+    text-align: center;
+  }
+
+  .link-example {
+    background: rgb(var(--bg-secondary));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    display: inline-block;
+  }
+
+  .link-example code {
+    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+    font-size: 1rem;
+    color: rgb(var(--text-primary));
+  }
+
+  .link-example .highlight {
+    color: rgb(var(--accent));
+    font-weight: 600;
+  }
+
+  .link-note {
+    font-size: 0.9rem;
+    color: rgb(var(--text-tertiary));
+    margin: 0;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgb(var(--accent-light));
+    border: 1px solid rgba(var(--accent), 0.2);
+    border-radius: var(--radius-xl);
+    margin-top: 3rem;
+  }
+
+  .cta-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgb(var(--text-primary));
+    margin: 0 0 0.5rem;
+  }
+
+  .cta-section p {
+    color: rgb(var(--text-secondary));
+    margin: 0 0 1.5rem;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: rgb(var(--accent));
+    border: none;
+    border-radius: var(--radius-sm);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .cta-button:hover {
+    background: rgb(var(--accent-hover));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(var(--accent), 0.3);
+  }
+
+  @media (max-width: 900px) {
+    .steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .mission-card,
+    .content-section,
+    .cta-section {
+      padding: 2rem 1.5rem;
+    }
+
+    .link-example {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+</style>
