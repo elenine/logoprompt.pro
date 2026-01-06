@@ -1,0 +1,352 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = false;
+
+const user = Astro.locals.user;
+const session = Astro.locals.session;
+const subscription = Astro.locals.subscription;
+const isSubscribed = Astro.locals.isSubscribed;
+
+// This page is protected by middleware, but double-check
+if (!user) {
+  return Astro.redirect('/login');
+}
+---
+
+<Layout title="Profile - LogoPrompt.pro" description="Your LogoPrompt.pro profile">
+  <main class="profile-page">
+    <div class="profile-container">
+      <div class="profile-card">
+        <div class="profile-header">
+          {user.image ? (
+            <img src={user.image} alt={user.name} class="avatar" />
+          ) : (
+            <div class="avatar-placeholder">
+              {user.name?.charAt(0).toUpperCase() || 'U'}
+            </div>
+          )}
+          <div class="profile-info">
+            <h1>{user.name}</h1>
+            <p class="email">{user.email}</p>
+            {!user.emailVerified && (
+              <span class="unverified-badge">Email not verified</span>
+            )}
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <h2>Account Details</h2>
+          <div class="detail-row">
+            <span class="label">Email</span>
+            <span class="value">{user.email}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Email Verified</span>
+            <span class="value">{user.emailVerified ? 'Yes' : 'No'}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Member Since</span>
+            <span class="value">{new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          </div>
+        </div>
+
+        <div class="profile-section subscription-section">
+          <h2>Subscription</h2>
+          {isSubscribed ? (
+            <div class="subscription-active">
+              <div class="subscription-badge">Pro</div>
+              <div class="subscription-info">
+                <p class="subscription-status">Active subscription</p>
+                {subscription?.currentPeriodEnd && (
+                  <p class="subscription-renew">
+                    {subscription.cancelAtPeriodEnd ? 'Expires' : 'Renews'} on {new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </p>
+                )}
+              </div>
+              <a href="/subscription" class="manage-link">Manage</a>
+            </div>
+          ) : (
+            <div class="subscription-inactive">
+              <p>You're on the free plan with ads.</p>
+              <a href="/subscription" class="upgrade-btn">Upgrade to Pro</a>
+            </div>
+          )}
+        </div>
+
+        <div class="profile-actions">
+          <a href="/" class="secondary-btn">Browse Gallery</a>
+          <button id="signout-btn" class="signout-btn" type="button">
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { authClient } from '../lib/auth-client';
+
+  document.getElementById('signout-btn')?.addEventListener('click', async () => {
+    const button = document.getElementById('signout-btn') as HTMLButtonElement;
+    button.disabled = true;
+    button.textContent = 'Signing out...';
+
+    try {
+      await authClient.signOut();
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Sign out error:', error);
+      button.disabled = false;
+      button.textContent = 'Sign Out';
+    }
+  });
+</script>
+
+<style>
+  .profile-page {
+    min-height: calc(100vh - 200px);
+    padding: 2rem 1rem;
+  }
+
+  .profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .profile-card {
+    background: rgb(var(--bg-primary));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+  }
+
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgb(var(--card-border));
+    margin-bottom: 1.5rem;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+
+  .avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    background: rgba(var(--accent), 0.1);
+    color: rgb(var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .profile-info {
+    flex: 1;
+  }
+
+  .profile-info h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
+    color: rgb(var(--text-primary));
+  }
+
+  .email {
+    color: rgb(var(--text-secondary));
+    margin: 0;
+  }
+
+  .unverified-badge {
+    display: inline-block;
+    background: rgba(251, 191, 36, 0.15);
+    color: #b45309;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+  }
+
+  .profile-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-section h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+    margin: 0 0 1rem 0;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgb(var(--bg-tertiary));
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    color: rgb(var(--text-tertiary));
+    font-size: 0.9rem;
+  }
+
+  .value {
+    color: rgb(var(--text-primary));
+    font-weight: 500;
+  }
+
+  .profile-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .secondary-btn {
+    flex: 1;
+    padding: 0.875rem;
+    background: rgb(var(--bg-secondary));
+    color: rgb(var(--text-primary));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .secondary-btn:hover {
+    background: rgb(var(--bg-tertiary));
+    border-color: rgb(var(--card-hover-border));
+  }
+
+  .signout-btn {
+    flex: 1;
+    padding: 0.875rem;
+    background: rgb(var(--accent));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+  }
+
+  .signout-btn:hover:not(:disabled) {
+    background: rgb(var(--accent-hover));
+  }
+
+  .signout-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .subscription-section {
+    background: rgb(var(--bg-secondary));
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+  }
+
+  .subscription-active {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .subscription-badge {
+    background: rgb(var(--accent));
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .subscription-info {
+    flex: 1;
+  }
+
+  .subscription-status {
+    font-weight: 500;
+    color: rgb(var(--text-primary));
+    margin: 0;
+  }
+
+  .subscription-renew {
+    font-size: 0.8rem;
+    color: rgb(var(--text-tertiary));
+    margin: 0.25rem 0 0;
+  }
+
+  .manage-link {
+    color: rgb(var(--accent));
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .manage-link:hover {
+    text-decoration: underline;
+  }
+
+  .subscription-inactive {
+    text-align: center;
+  }
+
+  .subscription-inactive p {
+    color: rgb(var(--text-secondary));
+    margin: 0 0 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .upgrade-btn {
+    display: inline-block;
+    background: rgb(var(--accent));
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background var(--transition-fast);
+  }
+
+  .upgrade-btn:hover {
+    background: rgb(var(--accent-hover));
+  }
+
+  @media (max-width: 480px) {
+    .profile-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .profile-actions {
+      flex-direction: column;
+    }
+
+    .subscription-active {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,180 @@
+---
+export const prerender = true;
+
+const title = "You're Offline - LogoPrompt Pro";
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #13151a 0%, #1f2937 100%);
+      color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .offline-container {
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .offline-icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 2rem;
+      background: rgba(220, 38, 38, 0.1);
+      border: 2px solid rgba(220, 38, 38, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .offline-icon svg {
+      width: 60px;
+      height: 60px;
+      color: #dc2626;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #9ca3af;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .retry-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      background: #dc2626;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .retry-button:hover {
+      background: #b91c1c;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+    }
+
+    .retry-button:active {
+      transform: translateY(0);
+    }
+
+    .retry-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .status-info {
+      margin-top: 2rem;
+      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-size: 0.875rem;
+      color: #9ca3af;
+      text-align: left;
+    }
+
+    .status-info strong {
+      color: #f9fafb;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .status-info ul {
+      margin: 0;
+      padding-left: 1.5rem;
+      list-style: disc;
+    }
+
+    .status-info li {
+      margin: 0.5rem 0;
+      color: #9ca3af;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .offline-icon {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="offline-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+        <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+        <line x1="12" y1="20" x2="12.01" y2="20"></line>
+      </svg>
+    </div>
+
+    <h1>You're Offline</h1>
+    <p>It looks like you've lost your internet connection. Check your network settings and try again.</p>
+
+    <button class="retry-button" onclick="window.location.reload()">
+      <svg class="retry-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <polyline points="1 20 1 14 7 14"></polyline>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+      </svg>
+      Retry Connection
+    </button>
+
+    <div class="status-info">
+      <strong>While offline, you can:</strong>
+      <ul>
+        <li>View previously loaded pages</li>
+        <li>Access cached content</li>
+      </ul>
+      <br>
+      Once you're back online, all features will be available again.
+    </div>
+  </div>
+</body>
+</html>

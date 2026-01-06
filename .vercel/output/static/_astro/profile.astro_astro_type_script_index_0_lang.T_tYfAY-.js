@@ -1,0 +1,1 @@
+import{a as e}from"./auth-client.aU-CXMHq.js";document.getElementById("signout-btn")?.addEventListener("click",async()=>{const t=document.getElementById("signout-btn");t.disabled=!0,t.textContent="Signing out...";try{await e.signOut(),window.location.href="/"}catch(n){console.error("Sign out error:",n),t.disabled=!1,t.textContent="Sign Out"}});

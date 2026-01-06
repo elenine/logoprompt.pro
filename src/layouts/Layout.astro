@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import OfflineIndicator from '../components/OfflineIndicator.astro';
 
 interface Props {
   title: string;
@@ -43,6 +44,9 @@ const siteName = "LogoPrompt.pro";
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -62,6 +66,13 @@ const siteName = "LogoPrompt.pro";
     <!-- Additional SEO -->
     <meta name="theme-color" content="#13151a" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- iOS PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="LogoPrompt" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -103,9 +114,21 @@ const siteName = "LogoPrompt.pro";
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2092470205166235" crossorigin="anonymous"></script>
   </head>
   <body>
+    <OfflineIndicator />
     <Header />
     <slot />
     <Footer />
+
+    <!-- PWA Service Worker Registration -->
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/pwa-sw.js', { scope: '/' })
+            .then(reg => console.log('PWA SW registered:', reg.scope))
+            .catch(err => console.error('PWA SW registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>
 

@@ -64,3 +64,11 @@ export function initReferralTracking(): string {
   const existingRef = getReferralCode();
   return getDirectAdUrl(existingRef);
 }
+
+/**
+ * Synchronous alias for initReferralTracking
+ * Saves cookie immediately
+ */
+export function initReferralTrackingSync(): void {
+  initReferralTracking();
+}

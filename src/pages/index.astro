@@ -5,6 +5,7 @@ import Layout from '../layouts/Layout.astro';
 import LogoCard from '../components/LogoCard.astro';
 import ModelFilter from '../components/ModelFilter.astro';
 import GalleryTabs from '../components/GalleryTabs.astro';
+import InstallPrompt from '../components/InstallPrompt.astro';
 import type { LogoFile, LogoGeneration } from '../types/logo';
 import type { ProductFile } from '../types/product';
 import type { FlyerFile } from '../types/flyer';
@@ -192,6 +193,8 @@ const logoCardCount = generations.length;
       <div class="scroll-sentinel"></div>
     </section>
   </main>
+
+  <InstallPrompt />
 </Layout>
 
 <style>

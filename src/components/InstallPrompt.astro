@@ -1,0 +1,264 @@
+---
+// Install prompt component for PWA
+---
+
+<div id="install-prompt" class="install-prompt">
+  <div class="install-prompt-content">
+    <div class="install-prompt-left">
+      <div class="install-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+      </div>
+      <div class="install-text">
+        <span class="install-title">Install LogoPrompt Pro</span>
+        <span class="install-subtitle">Add to your home screen for quick access</span>
+      </div>
+    </div>
+    <div class="install-prompt-buttons">
+      <button id="install-button" class="install-btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Install App
+      </button>
+      <button id="dismiss-button" class="install-btn-dismiss" aria-label="Dismiss install prompt">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let deferredPrompt: any;
+  const installPrompt = document.getElementById('install-prompt');
+  const installButton = document.getElementById('install-button');
+  const dismissButton = document.getElementById('dismiss-button');
+
+  // Listen for beforeinstallprompt event
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent default mini-infobar
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // Check if user previously dismissed
+    const dismissed = localStorage.getItem('pwa-install-dismissed');
+    if (!dismissed && installPrompt) {
+      // Show custom install prompt
+      installPrompt.style.display = 'block';
+
+      // Animate in
+      setTimeout(() => {
+        installPrompt.classList.add('show');
+      }, 100);
+    }
+  });
+
+  // Install button click
+  if (installButton) {
+    installButton.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+
+      // Show native install prompt
+      deferredPrompt.prompt();
+
+      // Wait for user response
+      const { outcome } = await deferredPrompt.userChoice;
+
+      if (outcome === 'accepted') {
+        console.log('User accepted PWA install');
+      } else {
+        console.log('User dismissed PWA install');
+      }
+
+      // Hide custom prompt
+      if (installPrompt) {
+        installPrompt.classList.remove('show');
+        setTimeout(() => {
+          installPrompt.style.display = 'none';
+        }, 300);
+      }
+
+      deferredPrompt = null;
+    });
+  }
+
+  // Dismiss button click
+  if (dismissButton) {
+    dismissButton.addEventListener('click', () => {
+      // Hide prompt
+      if (installPrompt) {
+        installPrompt.classList.remove('show');
+        setTimeout(() => {
+          installPrompt.style.display = 'none';
+        }, 300);
+      }
+
+      // Remember dismissal (for session)
+      localStorage.setItem('pwa-install-dismissed', 'true');
+    });
+  }
+
+  // Hide prompt after successful install
+  window.addEventListener('appinstalled', () => {
+    if (installPrompt) {
+      installPrompt.style.display = 'none';
+    }
+    console.log('PWA installed successfully');
+  });
+</script>
+
+<style>
+  .install-prompt {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    max-width: 600px;
+    width: calc(100% - 2rem);
+    z-index: 1000;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: none;
+  }
+
+  .install-prompt.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  .install-prompt-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgb(var(--bg-primary));
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .install-prompt-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+  }
+
+  .install-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgb(var(--accent-light));
+    border-radius: var(--radius-md);
+    color: rgb(var(--accent));
+    flex-shrink: 0;
+  }
+
+  .install-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .install-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgb(var(--text-primary));
+  }
+
+  .install-subtitle {
+    font-size: 0.8rem;
+    color: rgb(var(--text-secondary));
+  }
+
+  .install-prompt-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .install-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    background: rgb(var(--accent));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .install-btn-primary:hover {
+    background: rgb(var(--accent-hover));
+    transform: translateY(-1px);
+  }
+
+  .install-btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .install-btn-dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid rgb(var(--card-border));
+    border-radius: var(--radius-md);
+    color: rgb(var(--text-tertiary));
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  .install-btn-dismiss:hover {
+    background: rgb(var(--bg-tertiary));
+    border-color: rgb(var(--card-hover-border));
+  }
+
+  .install-btn-dismiss:active {
+    transform: scale(0.95);
+  }
+
+  @media (max-width: 600px) {
+    .install-prompt {
+      bottom: 0.5rem;
+      width: calc(100% - 1rem);
+    }
+
+    .install-prompt-content {
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+    }
+
+    .install-prompt-left {
+      width: 100%;
+    }
+
+    .install-prompt-buttons {
+      width: 100%;
+    }
+
+    .install-btn-primary {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+</style>
