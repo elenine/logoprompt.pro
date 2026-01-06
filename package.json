@@ -12,6 +12,8 @@
     "transform:dry": "DRY_RUN=true npx tsx scripts/transform-generations.ts",
     "transform:products": "npx tsx scripts/transform-product-generations.ts",
     "transform:products:dry": "DRY_RUN=true npx tsx scripts/transform-product-generations.ts",
+    "transform:creatives": "npx tsx scripts/transform-creative-generations.ts",
+    "transform:creatives:dry": "DRY_RUN=true npx tsx scripts/transform-creative-generations.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
