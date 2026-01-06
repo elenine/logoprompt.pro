@@ -33,7 +33,7 @@ const navLinks = [
           <span class="user-name">{user.name?.split(' ')[0] || 'Profile'}</span>
         </a>
       ) : (
-        <a href="/login" class="signin-btn">Sign In</a>
+        <span class="signin-btn signin-btn-disabled">Sign In</span>
       )}
     </div>
 
@@ -65,7 +65,7 @@ const navLinks = [
           <span>Profile</span>
         </a>
       ) : (
-        <a href="/login" class="mobile-link signin-mobile">Sign In</a>
+        <span class="mobile-link signin-mobile signin-btn-disabled">Sign In</span>
       )}
     </div>
   </div>
@@ -235,6 +235,12 @@ const navLinks = [
     background: rgb(var(--accent-hover));
   }
 
+  .signin-btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
   .user-btn {
     display: flex;
     align-items: center;
@@ -312,6 +318,12 @@ const navLinks = [
   .signin-mobile {
     color: rgb(var(--accent));
     background: rgba(var(--accent), 0.1);
+  }
+
+  .signin-mobile.signin-btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   @media (max-width: 640px) {
