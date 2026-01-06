@@ -5,6 +5,8 @@ import Layout from '../layouts/Layout.astro';
 import PeopleCard from '../components/PeopleCard.astro';
 import ModelFilter from '../components/ModelFilter.astro';
 import GalleryTabs from '../components/GalleryTabs.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedGalleries from '../components/RelatedGalleries.astro';
 import type { PeopleFile, PeopleGeneration } from '../types/people';
 import type { LogoFile } from '../types/logo';
 import type { ProductFile } from '../types/product';
@@ -88,8 +90,13 @@ const peopleCardCount = generations.length;
 <Layout
   title="AI People Prompts - Free Prompts for Ideogram & Gemini | LogoPrompt Pro"
   description="AI portrait and people prompts for stunning character designs. Generate realistic or stylized human images with Ideogram, Gemini, or Midjourney. Copy and create."
+  image="https://logoprompt.pro/og/og-people.png"
 >
   <main>
+    <Breadcrumb items={[
+      { label: 'Home', href: '/' },
+      { label: 'People Prompts' }
+    ]} />
     <header class="hero">
       <div class="hero-glow"></div>
       <div class="hero-content">
@@ -165,6 +172,8 @@ const peopleCardCount = generations.length;
         </div>
       )}
     </section>
+
+    <RelatedGalleries currentGallery="people" />
   </main>
 </Layout>
 

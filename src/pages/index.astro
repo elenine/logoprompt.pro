@@ -6,6 +6,8 @@ import LogoCard from '../components/LogoCard.astro';
 import ModelFilter from '../components/ModelFilter.astro';
 import GalleryTabs from '../components/GalleryTabs.astro';
 import InstallPrompt from '../components/InstallPrompt.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedGalleries from '../components/RelatedGalleries.astro';
 import type { LogoFile, LogoGeneration } from '../types/logo';
 import type { ProductFile } from '../types/product';
 import type { NatureFile } from '../types/nature';
@@ -89,8 +91,13 @@ const logoCardCount = generations.length;
 <Layout
   title="AI Logo Prompts - Free Prompts for Ideogram & Gemini | LogoPrompt Pro"
   description="Browse 100+ free AI logo prompts. Copy and paste into Ideogram, Google Gemini, or Midjourney to generate stunning logo designs. New prompts added weekly."
+  image="https://logoprompt.pro/og/og-logos.png"
 >
   <main>
+    <Breadcrumb items={[
+      { label: 'Home', href: '/' },
+      { label: 'Logo Prompts' }
+    ]} />
     <header class="hero">
       <div class="hero-glow"></div>
       <div class="hero-content">
@@ -184,6 +191,8 @@ const logoCardCount = generations.length;
       <!-- Scroll sentinel for intersection observer -->
       <div class="scroll-sentinel"></div>
     </section>
+
+    <RelatedGalleries currentGallery="logos" />
   </main>
 
   <InstallPrompt />

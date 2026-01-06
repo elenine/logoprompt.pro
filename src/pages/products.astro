@@ -5,6 +5,8 @@ import Layout from '../layouts/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import ModelFilter from '../components/ModelFilter.astro';
 import GalleryTabs from '../components/GalleryTabs.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import RelatedGalleries from '../components/RelatedGalleries.astro';
 import type { ProductFile, ProductGeneration } from '../types/product';
 import type { LogoFile } from '../types/logo';
 import type { NatureFile } from '../types/nature';
@@ -88,8 +90,13 @@ const productCardCount = generations.length;
 <Layout
   title="AI Product Prompts - Free Prompts for Ideogram & Gemini | LogoPrompt Pro"
   description="Free AI product photography prompts for e-commerce and marketing. Generate professional product shots with Ideogram, Gemini, or Midjourney. Copy, paste, create."
+  image="https://logoprompt.pro/og/og-products.png"
 >
   <main>
+    <Breadcrumb items={[
+      { label: 'Home', href: '/' },
+      { label: 'Product Prompts' }
+    ]} />
     <header class="hero">
       <div class="hero-glow"></div>
       <div class="hero-content">
@@ -203,6 +210,8 @@ const productCardCount = generations.length;
         </div>
       )}
     </section>
+
+    <RelatedGalleries currentGallery="products" />
   </main>
 </Layout>
 
