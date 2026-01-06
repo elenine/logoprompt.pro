@@ -21,7 +21,7 @@
     "admin:list": "npx tsx scripts/create-admin.ts list"
   },
   "dependencies": {
-    "@astrojs/vercel": "^8.1.4",
+    "@astrojs/netlify": "^6.0.0",
     "@astrojs/sitemap": "^3.6.0",
     "@neondatabase/serverless": "^1.0.2",
     "@polar-sh/sdk": "^0.42.1",

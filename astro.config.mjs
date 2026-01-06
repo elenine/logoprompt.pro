@@ -1,13 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
+import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://logoprompt.pro',
   output: 'server',
-  adapter: vercel(),
+  adapter: netlify(),
   integrations: [
     sitemap({
       changefreq: 'weekly',
