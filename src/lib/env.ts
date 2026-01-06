@@ -1,5 +1,6 @@
 // Environment variable helper for local development and deployment
-import 'dotenv/config';
+// Note: For local dev, ensure .env file exists at project root
+// For production, environment variables are provided by the hosting platform
 
 export interface Env {
   DATABASE_URL: string;

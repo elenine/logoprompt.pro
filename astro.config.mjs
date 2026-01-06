@@ -7,7 +7,9 @@ import netlify from '@astrojs/netlify';
 export default defineConfig({
   site: 'https://logoprompt.pro',
   output: 'server',
-  adapter: netlify(),
+  adapter: netlify({
+    edgeMiddleware: true
+  }),
   integrations: [
     sitemap({
       changefreq: 'weekly',

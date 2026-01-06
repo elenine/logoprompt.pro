@@ -62,3 +62,6 @@ temp/
 
 # Auto Claude data directory
 .auto-claude/
+
+# Local Netlify folder
+.netlify
