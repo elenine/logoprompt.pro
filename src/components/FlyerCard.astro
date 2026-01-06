@@ -257,15 +257,8 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
     const cards = document.querySelectorAll('.flyer-card');
     const { storageKey } = SOCIAL_COPY_CONFIG;
 
-    // Initialize referral tracking - sync version saves cookie immediately
-    // Start with default URL, then fetch actual URL from database async
-    initReferralTrackingSync();
-    let directAdUrl = DEFAULT_DIRECT_URL;
-
-    // Fetch the actual URL from database (async, updates when ready)
-    initReferralTracking().then(url => {
-      directAdUrl = url;
-    });
+    // Initialize referral tracking - this returns the URL directly (not a Promise)
+    let directAdUrl = initReferralTracking();
 
     // Check if search=true or share=true is in URL params
     const urlParams = new URLSearchParams(window.location.search);
