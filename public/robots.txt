@@ -3,6 +3,19 @@
 User-agent: *
 Allow: /
 
+# Disallow private/admin pages
+Disallow: /admin/
+Disallow: /profile
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /subscription/success
+Disallow: /offline
+
+# Disallow API routes
+Disallow: /api/
+
 # Sitemap
 Sitemap: https://logoprompt.pro/sitemap-index.xml
 
