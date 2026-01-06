@@ -44,8 +44,8 @@ const siteName = "LogoPrompt.pro";
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <!-- PWA Manifest - Production Only -->
+    {import.meta.env.PROD && <link rel="manifest" href="/manifest.webmanifest" />}
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -119,14 +119,23 @@ const siteName = "LogoPrompt.pro";
     <slot />
     <Footer />
 
-    <!-- PWA Service Worker Registration -->
-    <script is:inline>
-      if ('serviceWorker' in navigator) {
+    <!-- PWA Service Worker Registration - Production Only -->
+    <script is:inline define:vars={{ isProd: import.meta.env.PROD }}>
+      if (isProd && 'serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/pwa-sw.js', { scope: '/' })
             .then(reg => console.log('PWA SW registered:', reg.scope))
             .catch(err => console.error('PWA SW registration failed:', err));
         });
+      } else if (!isProd) {
+        // Unregister any existing service workers in development
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(registrations => {
+            registrations.forEach(reg => {
+              reg.unregister().then(() => console.log('PWA SW unregistered in dev mode'));
+            });
+          });
+        }
       }
     </script>
   </body>

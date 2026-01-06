@@ -85,26 +85,6 @@ const logoCardCount = generations.length;
           <span class="hero-title-line">Discover stunning</span>
           <span class="hero-title-gradient">AI logo prompts</span>
         </h1>
-        <p class="tagline">
-          Explore our curated collection of AI-generated logo concepts, updated every week. Copy prompts instantly
-          and create unique brand identities with Ideogram, Gemini, and more.
-        </p>
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-value">{generations.length}</span>
-            <span class="stat-label">Logos</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-value">{models.length}</span>
-            <span class="stat-label">AI Models</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-value">Free</span>
-            <span class="stat-label">To Use</span>
-          </div>
-        </div>
       </div>
     </header>
 
@@ -263,55 +243,6 @@ const logoCardCount = generations.length;
     }
   }
 
-  .tagline {
-    font-size: 1rem;
-    color: rgb(var(--text-secondary));
-    max-width: 550px;
-    margin: 0 auto 1.25rem;
-    line-height: 1.6;
-    animation: fadeInUp 0.6s ease-out 0.2s both;
-  }
-
-  .hero-stats {
-    display: inline-flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 0.75rem 1.5rem;
-    background: rgb(var(--bg-primary));
-    border: 1px solid rgb(var(--card-border));
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    animation: fadeInUp 0.6s ease-out 0.3s both;
-  }
-
-  .stat {
-    text-align: center;
-  }
-
-  .stat-value {
-    display: block;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: rgb(var(--accent));
-    line-height: 1;
-  }
-
-  .stat-label {
-    display: block;
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: rgb(var(--text-tertiary));
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 0.2rem;
-  }
-
-  .stat-divider {
-    width: 1px;
-    height: 28px;
-    background: rgb(var(--card-border));
-  }
-
   /* How to Use Section */
   .how-to-use {
     max-width: 700px;
@@ -375,17 +306,6 @@ const logoCardCount = generations.length;
 
     .hero {
       padding: 1.5rem 0 2rem;
-    }
-
-    .hero-stats {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.75rem;
-      padding: 0.75rem;
-    }
-
-    .stat-divider {
-      display: none;
     }
   }
 
