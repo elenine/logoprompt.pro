@@ -15,7 +15,7 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
 });
 ---
 
-<article class="product-card" data-prompt={generation.prompt} data-image-url={generation.imageUrl} data-model={generation.model}>
+<article class="product-card" data-prompt={generation.prompt} data-image-url={generation.imageUrl} data-model={generation.model} data-id={generation.id}>
   <div class="card-image-wrapper">
     <img
       src={generation.imageUrl}
@@ -27,6 +27,12 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
       <span class="badge-dot"></span>
       {generation.model}
     </span>
+    <div class="copied-indicator">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span>Copied</span>
+    </div>
   </div>
 
   <div class="card-content">
@@ -124,6 +130,31 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
     background: rgb(var(--accent));
     border-radius: 50%;
     box-shadow: 0 0 8px rgb(var(--accent));
+  }
+
+  .copied-indicator {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    background: #16a34a;
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-full);
+    color: white;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);
+  }
+
+  .product-card.has-copied-prompt .copied-indicator {
+    display: inline-flex;
+  }
+
+  .copied-indicator svg {
+    flex-shrink: 0;
   }
 
   /* Content Section */
@@ -256,6 +287,7 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
   document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.product-card');
     const { storageKey } = SOCIAL_COPY_CONFIG;
+    const COPIED_ITEMS_KEY = 'logoprompt_copied_items';
 
     // Initialize referral tracking - this returns the URL directly (not a Promise)
     let directAdUrl = initReferralTracking();
@@ -281,6 +313,38 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
       } catch (e) {
         // localStorage not available
       }
+    }
+
+    // Load copied items from localStorage
+    function getCopiedItems(): Set<string> {
+      try {
+        const stored = localStorage.getItem(COPIED_ITEMS_KEY);
+        return stored ? new Set(JSON.parse(stored)) : new Set();
+      } catch (e) {
+        return new Set();
+      }
+    }
+
+    // Save copied item to localStorage
+    function saveCopiedItem(itemId: string) {
+      try {
+        const copiedItems = getCopiedItems();
+        copiedItems.add(itemId);
+        localStorage.setItem(COPIED_ITEMS_KEY, JSON.stringify([...copiedItems]));
+      } catch (e) {
+        // localStorage not available
+      }
+    }
+
+    // Mark cards as copied if they're in localStorage (only in share mode)
+    if (isSearchMode) {
+      const copiedItems = getCopiedItems();
+      cards.forEach(card => {
+        const itemId = card.getAttribute('data-id');
+        if (itemId && copiedItems.has(itemId)) {
+          card.classList.add('has-copied-prompt');
+        }
+      });
     }
 
     /**
@@ -313,6 +377,7 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
       const prompt = card.getAttribute('data-prompt') || '';
       const imageUrl = card.getAttribute('data-image-url') || '';
       const model = card.getAttribute('data-model') || '';
+      const itemId = card.getAttribute('data-id') || '';
 
       const copyPromptBtn = card.querySelector('.copy-prompt-btn');
       const copyImageBtn = card.querySelector('.copy-image-btn');
@@ -324,8 +389,17 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
           const textToCopy = isSearchMode ? formatSocialCopy(prompt, model) : prompt;
           await navigator.clipboard.writeText(textToCopy);
           showCopied(copyPromptBtn as HTMLButtonElement);
-          // Open ad URL randomly based on config
-          if (shouldShowDirectAd()) {
+
+          // Mark card as copied and save to localStorage (only show indicator in share mode)
+          if (itemId) {
+            saveCopiedItem(itemId);
+            if (isSearchMode) {
+              (card as HTMLElement).classList.add('has-copied-prompt');
+            }
+          }
+
+          // Open ad URL randomly based on config (not when share/search param in URL)
+          if (!hasSearchParam && shouldShowDirectAd()) {
             window.open(directAdUrl, '_blank');
           }
         } catch (err) {
@@ -343,8 +417,8 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
             new ClipboardItem({ 'image/png': pngBlob })
           ]);
           showCopied(copyImageBtn as HTMLButtonElement);
-          // Open ad URL randomly based on config
-          if (shouldShowDirectAd()) {
+          // Open ad URL randomly based on config (not when share/search param in URL)
+          if (!hasSearchParam && shouldShowDirectAd()) {
             window.open(directAdUrl, '_blank');
           }
         } catch (err) {
