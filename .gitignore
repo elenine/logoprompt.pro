@@ -28,3 +28,6 @@ pnpm-debug.log*
 
 /generations
 /product-generation
+
+# Auto Claude data directory
+.auto-claude/

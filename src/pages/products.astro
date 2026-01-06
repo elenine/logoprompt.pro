@@ -6,13 +6,17 @@ import ProductCard from '../components/ProductCard.astro';
 import ModelFilter from '../components/ModelFilter.astro';
 import GalleryTabs from '../components/GalleryTabs.astro';
 import type { ProductFile, ProductGeneration } from '../types/product';
-import type { LogoFile, LogoGeneration } from '../types/logo';
+import type { LogoFile } from '../types/logo';
+import type { FlyerFile } from '../types/flyer';
 
 // Load all product files dynamically using Vite's glob import
 const productFiles = import.meta.glob('../data/products/product-*.json', { eager: true });
 
 // Load all logo files to calculate card count
 const logoFiles = import.meta.glob('../data/logos/logo-*.json', { eager: true });
+
+// Load all flyer files to calculate card count
+const flyerFiles = import.meta.glob('../data/flyers/flyer-*.json', { eager: true });
 
 // Calculate logo card count (not prompt count)
 let logoCardCount = 0;
@@ -21,6 +25,16 @@ for (const path in logoFiles) {
   const logoFile = file.default;
   for (const logo of logoFile.logos) {
     logoCardCount += logo.outputs.length;
+  }
+}
+
+// Calculate flyer card count
+let flyerCardCount = 0;
+for (const path in flyerFiles) {
+  const file = flyerFiles[path] as { default: FlyerFile };
+  const flyerFile = file.default;
+  for (const flyer of flyerFile.flyers) {
+    flyerCardCount += flyer.outputs.length;
   }
 }
 
@@ -158,7 +172,7 @@ const productCardCount = generations.length;
       })();
     </script>
 
-    <GalleryTabs activeTab="products" logoCount={logoCardCount} productCount={productCardCount} />
+    <GalleryTabs activeTab="products" logoCount={logoCardCount} productCount={productCardCount} flyerCount={flyerCardCount} />
 
     <section class="products-section">
       {generations.length > 0 ? (
