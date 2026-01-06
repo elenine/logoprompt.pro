@@ -62,9 +62,6 @@ export function createAuth(config: AuthConfig) {
         maxAge: 60 * 5, // 5 minutes
       },
     },
-    advanced: {
-      generateId: () => crypto.randomUUID(),
-    },
   });
 
   currentConfig = config;
