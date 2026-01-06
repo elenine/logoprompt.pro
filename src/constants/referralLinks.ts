@@ -29,7 +29,7 @@ export const REFERRAL_LINKS: Record<string, string> = {
   'techblog': 'https://publishoccur.com/p9djddyx9b?key=e66de2e88ddcac3038ea9158b805f474',
   'designweekly': 'https://otieu.com/4/9338002',
   'logoinsider': 'https://otieu.com/4/9338003',
-  'creativepro': 'https://publishoccur.com/abc123?key=sample_key_here',
+  'creativepro': 'https://asanka.com',
 };
 
 /**
