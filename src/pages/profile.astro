@@ -29,9 +29,6 @@ if (!user) {
           <div class="profile-info">
             <h1>{user.name}</h1>
             <p class="email">{user.email}</p>
-            {!user.emailVerified && (
-              <span class="unverified-badge">Email not verified</span>
-            )}
           </div>
         </div>
 
@@ -40,10 +37,6 @@ if (!user) {
           <div class="detail-row">
             <span class="label">Email</span>
             <span class="value">{user.email}</span>
-          </div>
-          <div class="detail-row">
-            <span class="label">Email Verified</span>
-            <span class="value">{user.emailVerified ? 'Yes' : 'No'}</span>
           </div>
           <div class="detail-row">
             <span class="label">Member Since</span>

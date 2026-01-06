@@ -2,7 +2,7 @@ import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { getDb } from '@/db';
 import * as schema from '@/db/schema';
-import { sendVerificationEmail, sendPasswordResetEmail } from './email';
+import { sendPasswordResetEmail } from './email';
 
 interface AuthConfig {
   databaseUrl: string;
@@ -36,27 +36,17 @@ export function createAuth(config: AuthConfig) {
         user: schema.user,
         session: schema.session,
         account: schema.account,
-        verification: schema.verification,
       },
     }),
     baseURL: config.baseUrl,
     secret: config.secret,
     emailAndPassword: {
       enabled: true,
-      requireEmailVerification: false,
       sendResetPassword: async ({ user, url }) => {
         if (config.brevoApiKey) {
           await sendPasswordResetEmail(config.brevoApiKey, user.email, url);
         }
       },
-    },
-    emailVerification: {
-      sendVerificationEmail: async ({ user, url }) => {
-        if (config.brevoApiKey) {
-          await sendVerificationEmail(config.brevoApiKey, user.email, url);
-        }
-      },
-      sendOnSignUp: false,
     },
     socialProviders: {
       google: {
