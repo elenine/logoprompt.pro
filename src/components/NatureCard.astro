@@ -280,9 +280,11 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
 </style>
 
 <script>
-  import { SOCIAL_COPY_CONFIG, shouldShowDirectAd } from '../constants/socialCopy';
+  import { SOCIAL_COPY_CONFIG, shouldShowDirectAd, formatSocialCopy, type ContentCategory } from '../constants/socialCopy';
   import { initReferralTracking, initReferralTrackingSync } from '../constants/referral';
   import { DEFAULT_DIRECT_URL } from '../constants/referralLinks';
+
+  const CATEGORY: ContentCategory = 'nature';
 
   document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.nature-card');
@@ -347,32 +349,6 @@ const formattedDate = new Date(generation.generatedAt).toLocaleDateString('en-US
       });
     }
 
-    /**
-     * Formats prompt for social media sharing
-     */
-    function formatSocialCopy(prompt: string, model?: string): string {
-      const { hashtags, callToAction, siteUrl } = SOCIAL_COPY_CONFIG;
-
-      const allHashtags = [...hashtags];
-      if (model) {
-        const modelHashtag = `#${model.replace(/\s+/g, '')}`;
-        allHashtags.unshift(modelHashtag);
-      }
-
-      const hashtagsString = allHashtags.join(' ');
-
-      // Include model name on separate line if available
-      const modelLine = model ? `model: ${model}` : '';
-
-      return `prompt: ${prompt}
-
-${modelLine}
-
-${hashtagsString}
-
-${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
-    }
-
     cards.forEach(card => {
       const prompt = card.getAttribute('data-prompt') || '';
       const imageUrl = card.getAttribute('data-image-url') || '';
@@ -386,7 +362,7 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
         e.stopPropagation();
         try {
           // Use social format when search=true, otherwise copy raw prompt
-          const textToCopy = isSearchMode ? formatSocialCopy(prompt, model) : prompt;
+          const textToCopy = isSearchMode ? formatSocialCopy(prompt, model, CATEGORY) : prompt;
           await navigator.clipboard.writeText(textToCopy);
           showCopied(copyPromptBtn as HTMLButtonElement);
 

@@ -3,6 +3,76 @@
  * Used when copying prompts with search=true parameter
  */
 
+export type ContentCategory = 'logos' | 'products' | 'nature' | 'people';
+
+interface CategoryConfig {
+  /** Category-specific hashtags */
+  hashtags: string[];
+  /** URL path for this category */
+  urlPath: string;
+  /** Display name for the category */
+  displayName: string;
+}
+
+export const CATEGORY_CONFIGS: Record<ContentCategory, CategoryConfig> = {
+  logos: {
+    hashtags: [
+      '#AILogo',
+      '#LogoDesign',
+      '#AIArt',
+      '#LogoPrompt',
+      '#AIGenerated',
+      '#GraphicDesign',
+      '#Branding',
+      '#DesignInspiration',
+    ],
+    urlPath: '',
+    displayName: 'Logo',
+  },
+  products: {
+    hashtags: [
+      '#AIProduct',
+      '#ProductPhotography',
+      '#AIArt',
+      '#ProductPrompt',
+      '#AIGenerated',
+      '#ProductDesign',
+      '#Ecommerce',
+      '#ProductShot',
+    ],
+    urlPath: '/products',
+    displayName: 'Product',
+  },
+  nature: {
+    hashtags: [
+      '#AINature',
+      '#NaturePhotography',
+      '#AIArt',
+      '#NaturePrompt',
+      '#AIGenerated',
+      '#Landscape',
+      '#NatureArt',
+      '#DigitalNature',
+    ],
+    urlPath: '/nature',
+    displayName: 'Nature',
+  },
+  people: {
+    hashtags: [
+      '#AIPeople',
+      '#AIPortrait',
+      '#AIArt',
+      '#PeoplePrompt',
+      '#AIGenerated',
+      '#DigitalPortrait',
+      '#AIPhotography',
+      '#CharacterDesign',
+    ],
+    urlPath: '/people',
+    displayName: 'People',
+  },
+};
+
 export const SOCIAL_COPY_CONFIG = {
   /** Site URL for call-to-action */
   siteUrl: 'logoprompt.pro',
@@ -10,7 +80,7 @@ export const SOCIAL_COPY_CONFIG = {
   /** Site name for branding */
   siteName: 'LogoPrompt.pro',
 
-  /** Default hashtags for social media posts */
+  /** Default hashtags for social media posts (used as fallback) */
   hashtags: [
     '#AILogo',
     '#LogoDesign',
@@ -24,8 +94,8 @@ export const SOCIAL_COPY_CONFIG = {
 
   /** Call-to-action messages */
   callToAction: {
-    wantMore: 'Want more prompts like this?',
-    visit: 'Visit',
+    wantMore: 'Want more AI prompts?',
+    siteDescription: 'Get free logo, product, nature & people prompts at',
   },
 
   /** LocalStorage key for persisting social copy mode */
@@ -111,15 +181,17 @@ export function shouldShowBannerAd(): boolean {
 
 /**
  * Generates a social media formatted copy text
- * @param prompt - The logo generation prompt
+ * @param prompt - The generation prompt
  * @param model - Optional model name to include as hashtag and label
+ * @param category - Content category for specific hashtags and URL
  * @returns Formatted string for social media sharing
  */
-export function formatSocialCopy(prompt: string, model?: string): string {
-  const { hashtags, callToAction, siteUrl } = SOCIAL_COPY_CONFIG;
+export function formatSocialCopy(prompt: string, model?: string, category: ContentCategory = 'logos'): string {
+  const { callToAction, siteUrl } = SOCIAL_COPY_CONFIG;
+  const categoryConfig = CATEGORY_CONFIGS[category];
 
-  // Build hashtags string, optionally including model-specific tag
-  const allHashtags = [...hashtags];
+  // Build hashtags string with category-specific tags
+  const allHashtags = [...categoryConfig.hashtags];
   if (model) {
     // Convert model name to hashtag format (remove spaces, capitalize)
     const modelHashtag = `#${model.replace(/\s+/g, '')}`;
@@ -137,7 +209,7 @@ ${modelLine}
 
 ${hashtagsString}
 
-${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
+${callToAction.wantMore} ${callToAction.siteDescription} ${siteUrl}`;
 }
 
 /**
@@ -150,6 +222,6 @@ ${callToAction.wantMore} ${callToAction.visit} ${siteUrl}`;
  *
  * #[Model] #AILogo #LogoDesign #AIArt #LogoPrompt #AIGenerated #GraphicDesign #Branding #DesignInspiration
  *
- * Want more prompts like this? Visit logoprompt.pro
+ * Want more AI prompts? Get free logo, product, nature & people prompts at logoprompt.pro
  * ---
  */
