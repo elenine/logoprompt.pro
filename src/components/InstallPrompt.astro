@@ -41,15 +41,27 @@
   const installButton = document.getElementById('install-button');
   const dismissButton = document.getElementById('dismiss-button');
 
+  // Check if app is already installed
+  function isAppInstalled(): boolean {
+    // Check if running in standalone mode (app is installed)
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      return true;
+    }
+    // Check localStorage flag set after installation
+    if (localStorage.getItem('pwa-installed') === 'true') {
+      return true;
+    }
+    return false;
+  }
+
   // Listen for beforeinstallprompt event
   window.addEventListener('beforeinstallprompt', (e) => {
     // Prevent default mini-infobar
     e.preventDefault();
     deferredPrompt = e;
 
-    // Check if user previously dismissed
-    const dismissed = localStorage.getItem('pwa-install-dismissed');
-    if (!dismissed && installPrompt) {
+    // Only show if app is not installed
+    if (!isAppInstalled() && installPrompt) {
       // Show custom install prompt
       installPrompt.style.display = 'block';
 
@@ -73,6 +85,8 @@
 
       if (outcome === 'accepted') {
         console.log('User accepted PWA install');
+        // Mark as installed in localStorage
+        localStorage.setItem('pwa-installed', 'true');
       } else {
         console.log('User dismissed PWA install');
       }
@@ -89,27 +103,27 @@
     });
   }
 
-  // Dismiss button click
+  // Dismiss button click - only hide for current session
   if (dismissButton) {
     dismissButton.addEventListener('click', () => {
-      // Hide prompt
+      // Hide prompt (only for this page load)
       if (installPrompt) {
         installPrompt.classList.remove('show');
         setTimeout(() => {
           installPrompt.style.display = 'none';
         }, 300);
       }
-
-      // Remember dismissal (for session)
-      localStorage.setItem('pwa-install-dismissed', 'true');
+      // Note: No localStorage - banner will show again on next page load
     });
   }
 
-  // Hide prompt after successful install
+  // Hide prompt permanently after successful install
   window.addEventListener('appinstalled', () => {
     if (installPrompt) {
       installPrompt.style.display = 'none';
     }
+    // Mark as installed
+    localStorage.setItem('pwa-installed', 'true');
     console.log('PWA installed successfully');
   });
 </script>
