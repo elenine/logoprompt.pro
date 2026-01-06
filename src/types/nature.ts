@@ -1,7 +1,7 @@
 /**
  * Represents a single generated output from an AI model
  */
-export interface CreativeOutput {
+export interface NatureOutput {
   /** Unique identifier for this output */
   id: string;
   /** The AI model used to generate this output */
@@ -13,38 +13,38 @@ export interface CreativeOutput {
 }
 
 /**
- * Represents a creative prompt with its various model outputs
+ * Represents a nature prompt with its various model outputs
  */
-export interface CreativePrompt {
-  /** Unique identifier for this creative prompt */
+export interface NaturePrompt {
+  /** Unique identifier for this nature prompt */
   id: string;
-  /** The prompt used to generate the creative */
+  /** The prompt used to generate the nature image */
   prompt: string;
   /** Timestamp when this prompt was created */
   createdAt: string;
   /** Array of outputs from different AI models */
-  outputs: CreativeOutput[];
+  outputs: NatureOutput[];
 }
 
 /**
- * Structure of an individual creative file (creative-1.json, creative-2.json, etc.)
+ * Structure of an individual nature file (nature-1.json, nature-2.json, etc.)
  */
-export interface CreativeFile {
-  /** Unique identifier for this creative file */
+export interface NatureFile {
+  /** Unique identifier for this nature file */
   id: string;
   /** Human-readable name for this collection */
   name: string;
   /** Timestamp when this collection was created */
   createdAt: string;
-  /** Array of creative prompts in this file */
-  creatives: CreativePrompt[];
+  /** Array of nature prompts in this file */
+  natures: NaturePrompt[];
 }
 
 /**
- * Entry in the creatives index file
+ * Entry in the natures index file
  */
-export interface CreativeFileEntry {
-  /** Unique identifier for this creative file */
+export interface NatureFileEntry {
+  /** Unique identifier for this nature file */
   id: string;
   /** Human-readable name for this collection */
   name: string;
@@ -52,18 +52,18 @@ export interface CreativeFileEntry {
   path: string;
   /** Timestamp when this collection was created */
   createdAt: string;
-  /** Number of creatives in this file */
-  creativeCount: number;
+  /** Number of natures in this file */
+  natureCount: number;
 }
 
 /**
- * Structure of the creatives index file (index.json)
+ * Structure of the natures index file (index.json)
  */
-export interface CreativesIndex {
-  /** Array of creative file entries */
-  files: CreativeFileEntry[];
-  /** Total number of creatives across all files */
-  totalCreatives: number;
+export interface NaturesIndex {
+  /** Array of nature file entries */
+  files: NatureFileEntry[];
+  /** Total number of natures across all files */
+  totalNatures: number;
   /** Timestamp when the index was last updated */
   lastUpdated: string;
 }
@@ -72,10 +72,10 @@ export interface CreativesIndex {
  * Flattened structure representing a single generation card
  * Combines prompt info with a single output for display
  */
-export interface CreativeGeneration {
+export interface NatureGeneration {
   /** Unique identifier for this generation (output id) */
   id: string;
-  /** The prompt used to generate the creative */
+  /** The prompt used to generate the nature image */
   prompt: string;
   /** The AI model used to generate this output */
   model: string;

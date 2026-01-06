@@ -3,8 +3,8 @@ import * as path from "path";
 import sharp from "sharp";
 
 // Configuration
-const GENERATIONS_DIR = path.join(process.cwd(), "creative-generations");
-const OUTPUT_DIR = path.join(process.cwd(), "src/data/creatives");
+const GENERATIONS_DIR = path.join(process.cwd(), "people-generations");
+const OUTPUT_DIR = path.join(process.cwd(), "src/data/peoples");
 const DRY_RUN = process.env.DRY_RUN === "true";
 
 // UploadThing API Token
@@ -41,43 +41,43 @@ interface ManifestEntry {
   creations: ManifestCreation[];
 }
 
-interface CreativeOutput {
+interface PeopleOutput {
   id: string;
   model: string;
   imageUrl: string;
   generatedAt: string;
 }
 
-interface Creative {
+interface People {
   id: string;
   prompt: string;
   createdAt: string;
-  outputs: CreativeOutput[];
+  outputs: PeopleOutput[];
 }
 
-interface CreativeFile {
+interface PeopleFile {
   id: string;
   name: string;
   createdAt: string;
-  creatives: Creative[];
+  peoples: People[];
 }
 
-interface CreativesIndex {
+interface PeoplesIndex {
   files: {
     id: string;
     name: string;
     path: string;
     createdAt: string;
-    creativeCount: number;
+    peopleCount: number;
   }[];
-  totalCreatives: number;
+  totalPeoples: number;
   lastUpdated: string;
 }
 
 /**
- * Get the next available creative index by reading existing index.json
+ * Get the next available people index by reading existing index.json
  */
-function getNextCreativeIndex(): number {
+function getNextPeopleIndex(): number {
   const indexPath = path.join(OUTPUT_DIR, "index.json");
 
   if (!fs.existsSync(indexPath)) {
@@ -86,15 +86,15 @@ function getNextCreativeIndex(): number {
 
   try {
     const indexContent = fs.readFileSync(indexPath, "utf-8");
-    const indexData: CreativesIndex = JSON.parse(indexContent);
+    const indexData: PeoplesIndex = JSON.parse(indexContent);
 
     if (indexData.files.length === 0) {
       return 1;
     }
 
-    // Find the highest creative number from existing files
+    // Find the highest people number from existing files
     const maxIndex = indexData.files.reduce((max, file) => {
-      const match = file.path.match(/creative-(\d+)\.json/);
+      const match = file.path.match(/people-(\d+)\.json/);
       if (match) {
         return Math.max(max, parseInt(match[1]));
       }
@@ -111,13 +111,13 @@ function getNextCreativeIndex(): number {
 /**
  * Load existing index entries from index.json
  */
-function loadExistingIndex(): CreativesIndex {
+function loadExistingIndex(): PeoplesIndex {
   const indexPath = path.join(OUTPUT_DIR, "index.json");
 
   if (!fs.existsSync(indexPath)) {
     return {
       files: [],
-      totalCreatives: 0,
+      totalPeoples: 0,
       lastUpdated: new Date().toISOString(),
     };
   }
@@ -129,7 +129,7 @@ function loadExistingIndex(): CreativesIndex {
     console.error("Error loading existing index.json:", error);
     return {
       files: [],
-      totalCreatives: 0,
+      totalPeoples: 0,
       lastUpdated: new Date().toISOString(),
     };
   }
@@ -174,7 +174,7 @@ function extractFolderName(folderName: string): string {
   if (match) {
     const timestamp = parseInt(match[1]);
     const date = new Date(timestamp);
-    return `Creatives ${date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
+    return `People ${date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
   }
   return folderName;
 }
@@ -308,7 +308,7 @@ async function uploadFile(filePath: string): Promise<string | null> {
 async function processFolder(
   folderPath: string,
   fileIndex: number
-): Promise<CreativeFile | null> {
+): Promise<PeopleFile | null> {
   const folderName = path.basename(folderPath);
   const manifestPath = path.join(folderPath, "manifest.json");
 
@@ -320,15 +320,15 @@ async function processFolder(
   const manifestContent = fs.readFileSync(manifestPath, "utf-8");
   const manifest: ManifestEntry[] = JSON.parse(manifestContent);
 
-  const creatives: Creative[] = [];
-  let creativeCounter = 1;
+  const peoples: People[] = [];
+  let peopleCounter = 1;
 
   // Get folder creation date from first entry
   const folderDate = manifest[0]?.iso_date?.split("T")[0] || new Date().toISOString().split("T")[0];
 
   for (const entry of manifest) {
-    const outputs: CreativeOutput[] = [];
-    const creativeId = `creative-${fileIndex}-${String(creativeCounter).padStart(3, "0")}`;
+    const outputs: PeopleOutput[] = [];
+    const peopleId = `people-${fileIndex}-${String(peopleCounter).padStart(3, "0")}`;
     const createdAt = entry.iso_date.split("T")[0];
 
     // Process Gemini creations from manifest
@@ -341,7 +341,7 @@ async function processFolder(
 
         if (imageUrl) {
           outputs.push({
-            id: `${creativeId}-gemini`,
+            id: `${peopleId}-gemini`,
             model: "Gemini nano banana",
             imageUrl,
             generatedAt: entry.iso_date,
@@ -356,7 +356,7 @@ async function processFolder(
 
           if (imageUrl) {
             outputs.push({
-              id: `${creativeId}-gemini`,
+              id: `${peopleId}-gemini`,
               model: "Gemini nano banana",
               imageUrl,
               generatedAt: entry.iso_date,
@@ -376,7 +376,7 @@ async function processFolder(
 
       if (imageUrl) {
         outputs.push({
-          id: `${creativeId}-ideogram${ideogramImages.length > 1 ? `-${i + 1}` : ""}`,
+          id: `${peopleId}-ideogram${ideogramImages.length > 1 ? `-${i + 1}` : ""}`,
           model: "ideogram",
           imageUrl,
           generatedAt: entry.iso_date,
@@ -384,36 +384,36 @@ async function processFolder(
       }
     }
 
-    // Only add creative if it has at least one output
+    // Only add people if it has at least one output
     if (outputs.length > 0) {
-      creatives.push({
-        id: creativeId,
+      peoples.push({
+        id: peopleId,
         prompt: entry.prompt,
         createdAt,
         outputs,
       });
-      creativeCounter++;
+      peopleCounter++;
     }
   }
 
-  if (creatives.length === 0) {
+  if (peoples.length === 0) {
     return null;
   }
 
   return {
-    id: `creative-${fileIndex}`,
+    id: `people-${fileIndex}`,
     name: extractFolderName(folderName),
     createdAt: folderDate,
-    creatives,
+    peoples,
   };
 }
 
 /**
- * Process all generation folders and create separate creative files
+ * Process all generation folders and create separate people files
  */
 async function transformGenerations(): Promise<void> {
   console.log("=".repeat(60));
-  console.log("Creative Generations Transformer (Append Mode)");
+  console.log("People Generations Transformer (Append Mode)");
   console.log("=".repeat(60));
 
   if (DRY_RUN) {
@@ -433,10 +433,10 @@ async function transformGenerations(): Promise<void> {
 
   // Load existing index to preserve entries and get next available index
   const existingIndex = loadExistingIndex();
-  const startIndex = getNextCreativeIndex();
+  const startIndex = getNextPeopleIndex();
 
-  console.log(`Existing creatives: ${existingIndex.files.length} files, ${existingIndex.totalCreatives} prompts`);
-  console.log(`Next creative index: ${startIndex}`);
+  console.log(`Existing peoples: ${existingIndex.files.length} files, ${existingIndex.totalPeoples} prompts`);
+  console.log(`Next people index: ${startIndex}`);
 
   // Get all generation folders sorted by name (which includes timestamp)
   const folders = fs
@@ -452,8 +452,8 @@ async function transformGenerations(): Promise<void> {
 
   console.log(`\nFound ${folders.length} new generation folders to process\n`);
 
-  const newIndexEntries: CreativesIndex["files"] = [];
-  let newCreativesCount = 0;
+  const newIndexEntries: PeoplesIndex["files"] = [];
+  let newPeoplesCount = 0;
   let foldersCleanedUp = 0;
   const indexPath = path.join(OUTPUT_DIR, "index.json");
 
@@ -464,23 +464,23 @@ async function transformGenerations(): Promise<void> {
 
     console.log(`\n[${i + 1}/${folders.length}] Processing ${folderName}`);
 
-    const creativeFile = await processFolder(folder, fileIndex);
+    const peopleFile = await processFolder(folder, fileIndex);
 
-    if (creativeFile) {
-      // Write individual creative file
-      const outputPath = path.join(OUTPUT_DIR, `creative-${fileIndex}.json`);
-      fs.writeFileSync(outputPath, JSON.stringify(creativeFile, null, 2));
+    if (peopleFile) {
+      // Write individual people file
+      const outputPath = path.join(OUTPUT_DIR, `people-${fileIndex}.json`);
+      fs.writeFileSync(outputPath, JSON.stringify(peopleFile, null, 2));
 
       const newEntry = {
-        id: creativeFile.id,
-        name: creativeFile.name,
-        path: `creative-${fileIndex}.json`,
-        createdAt: creativeFile.createdAt,
-        creativeCount: creativeFile.creatives.length,
+        id: peopleFile.id,
+        name: peopleFile.name,
+        path: `people-${fileIndex}.json`,
+        createdAt: peopleFile.createdAt,
+        peopleCount: peopleFile.peoples.length,
       };
 
       newIndexEntries.push(newEntry);
-      newCreativesCount += creativeFile.creatives.length;
+      newPeoplesCount += peopleFile.peoples.length;
 
       // Update index.json immediately after each successful folder
       const allIndexEntries = [...existingIndex.files, ...newIndexEntries];
@@ -488,14 +488,14 @@ async function transformGenerations(): Promise<void> {
         (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
 
-      const indexData: CreativesIndex = {
+      const indexData: PeoplesIndex = {
         files: allIndexEntries,
-        totalCreatives: existingIndex.totalCreatives + newCreativesCount,
+        totalPeoples: existingIndex.totalPeoples + newPeoplesCount,
         lastUpdated: new Date().toISOString(),
       };
       fs.writeFileSync(indexPath, JSON.stringify(indexData, null, 2));
 
-      console.log(`  Created creative-${fileIndex}.json (${creativeFile.creatives.length} prompts)`);
+      console.log(`  Created people-${fileIndex}.json (${peopleFile.peoples.length} prompts)`);
 
       // Remove folder immediately after successful processing
       removeProcessedFolder(folder);
@@ -504,24 +504,24 @@ async function transformGenerations(): Promise<void> {
   }
 
   // Final totals
-  const totalCreatives = existingIndex.totalCreatives + newCreativesCount;
+  const totalPeoples = existingIndex.totalPeoples + newPeoplesCount;
   const totalFiles = existingIndex.files.length + newIndexEntries.length;
 
   console.log("\n" + "=".repeat(60));
   console.log("Transformation Complete!");
   console.log("=".repeat(60));
   console.log(`\nStatistics:`);
-  console.log(`  New creative files created: ${newIndexEntries.length}`);
-  console.log(`  New prompts added: ${newCreativesCount}`);
-  console.log(`  Total creative files: ${totalFiles}`);
-  console.log(`  Total prompts: ${totalCreatives}`);
+  console.log(`  New people files created: ${newIndexEntries.length}`);
+  console.log(`  New prompts added: ${newPeoplesCount}`);
+  console.log(`  Total people files: ${totalFiles}`);
+  console.log(`  Total prompts: ${totalPeoples}`);
   console.log(`  Folders cleaned up: ${foldersCleanedUp}`);
   console.log(`\nOutput directory: ${OUTPUT_DIR}`);
   console.log(`Index file: ${indexPath}`);
 
   if (DRY_RUN) {
     console.log("\n[DRY RUN] No files were uploaded or deleted.");
-    console.log("To run for real, run: pnpm run transform:creatives");
+    console.log("To run for real, run: pnpm run transform:peoples");
   }
 }
 

@@ -59,7 +59,8 @@ temp/
 
 /generations
 /product-generations
-/creative-generations
+/nature-generations
+/people-generations
 
 # Auto Claude data directory
 .auto-claude/

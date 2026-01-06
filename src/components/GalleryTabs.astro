@@ -1,12 +1,13 @@
 ---
 interface Props {
-  activeTab: 'logos' | 'products' | 'creatives';
+  activeTab: 'logos' | 'products' | 'nature' | 'people';
   logoCount: number;
   productCount: number;
-  creativeCount: number;
+  natureCount: number;
+  peopleCount: number;
 }
 
-const { activeTab, logoCount, productCount, creativeCount } = Astro.props;
+const { activeTab, logoCount, productCount, natureCount, peopleCount } = Astro.props;
 ---
 
 <div class="gallery-tabs">
@@ -38,19 +39,30 @@ const { activeTab, logoCount, productCount, creativeCount } = Astro.props;
       <span class="tab-count">{productCount}</span>
     </a>
     <a
-      href="/creatives"
-      class:list={["tab-btn", { active: activeTab === 'creatives' }]}
-      data-tab="creatives"
+      href="/nature"
+      class:list={["tab-btn", { active: activeTab === 'nature' }]}
+      data-tab="nature"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <line x1="16" y1="13" x2="8" y2="13"></line>
-        <line x1="16" y1="17" x2="8" y2="17"></line>
-        <polyline points="10 9 9 9 8 9"></polyline>
+        <path d="M12 22c4-4 8-7.5 8-12a8 8 0 0 0-16 0c0 4.5 4 8 8 12z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
       </svg>
-      <span class="tab-label">Creatives</span>
-      <span class="tab-count">{creativeCount}</span>
+      <span class="tab-label">Nature</span>
+      <span class="tab-count">{natureCount}</span>
+    </a>
+    <a
+      href="/people"
+      class:list={["tab-btn", { active: activeTab === 'people' }]}
+      data-tab="people"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+      </svg>
+      <span class="tab-label">People</span>
+      <span class="tab-count">{peopleCount}</span>
     </a>
   </div>
 </div>
@@ -133,14 +145,17 @@ const { activeTab, logoCount, productCount, creativeCount } = Astro.props;
     color: white;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .tabs-container {
       width: 100%;
       padding: 0.25rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .tab-btn {
-      flex: 1;
+      flex: 1 1 calc(50% - 0.25rem);
+      min-width: 0;
       justify-content: center;
       padding: 0.625rem 0.75rem;
       font-size: 0.85rem;
@@ -154,6 +169,23 @@ const { activeTab, logoCount, productCount, creativeCount } = Astro.props;
     .tab-count {
       font-size: 0.65rem;
       padding: 0.15rem 0.4rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tab-btn {
+      padding: 0.5rem 0.5rem;
+      font-size: 0.8rem;
+      gap: 0.35rem;
+    }
+
+    .tab-label {
+      display: none;
+    }
+
+    .tab-btn svg {
+      width: 18px;
+      height: 18px;
     }
   }
 </style>

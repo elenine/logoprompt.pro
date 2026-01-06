@@ -7,7 +7,8 @@ import ModelFilter from '../components/ModelFilter.astro';
 import GalleryTabs from '../components/GalleryTabs.astro';
 import type { ProductFile, ProductGeneration } from '../types/product';
 import type { LogoFile } from '../types/logo';
-import type { CreativeFile } from '../types/creative';
+import type { NatureFile } from '../types/nature';
+import type { PeopleFile } from '../types/people';
 
 // Load all product files dynamically using Vite's glob import
 const productFiles = import.meta.glob('../data/products/product-*.json', { eager: true });
@@ -15,8 +16,11 @@ const productFiles = import.meta.glob('../data/products/product-*.json', { eager
 // Load all logo files to calculate card count
 const logoFiles = import.meta.glob('../data/logos/logo-*.json', { eager: true });
 
-// Load all creative files to calculate card count
-const creativeFiles = import.meta.glob('../data/creatives/creative-*.json', { eager: true });
+// Load all nature files to calculate card count
+const natureFiles = import.meta.glob('../data/natures/nature-*.json', { eager: true });
+
+// Load all people files to calculate card count
+const peopleFiles = import.meta.glob('../data/peoples/people-*.json', { eager: true });
 
 // Calculate logo card count (not prompt count)
 let logoCardCount = 0;
@@ -28,13 +32,23 @@ for (const path in logoFiles) {
   }
 }
 
-// Calculate creative card count
-let creativeCardCount = 0;
-for (const path in creativeFiles) {
-  const file = creativeFiles[path] as { default: CreativeFile };
-  const creativeFile = file.default;
-  for (const creative of creativeFile.creatives) {
-    creativeCardCount += creative.outputs.length;
+// Calculate nature card count
+let natureCardCount = 0;
+for (const path in natureFiles) {
+  const file = natureFiles[path] as { default: NatureFile };
+  const natureFile = file.default;
+  for (const nature of natureFile.natures) {
+    natureCardCount += nature.outputs.length;
+  }
+}
+
+// Calculate people card count
+let peopleCardCount = 0;
+for (const path in peopleFiles) {
+  const file = peopleFiles[path] as { default: PeopleFile };
+  const peopleFile = file.default;
+  for (const people of peopleFile.peoples) {
+    peopleCardCount += people.outputs.length;
   }
 }
 
@@ -147,7 +161,7 @@ const productCardCount = generations.length;
     </script>
     -->
 
-    <GalleryTabs activeTab="products" logoCount={logoCardCount} productCount={productCardCount} creativeCount={creativeCardCount} />
+    <GalleryTabs activeTab="products" logoCount={logoCardCount} productCount={productCardCount} natureCount={natureCardCount} peopleCount={peopleCardCount} />
 
     <section class="products-section">
       {generations.length > 0 ? (
