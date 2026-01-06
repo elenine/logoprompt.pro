@@ -1,7 +1,7 @@
 {
-  "name": "LogoPrompt Pro - AI Logo Generation Gallery",
-  "short_name": "LogoPrompt",
-  "description": "Discover AI-generated logo concepts and prompts. Copy prompts to use with Ideogram, Google Gemini, and other AI image generators.",
+  "name": "LogoPrompt Pro - AI Image Prompts Gallery",
+  "short_name": "PromptPro",
+  "description": "Discover free AI image prompts for logos, products, nature & people. Copy prompts to use with Ideogram, Google Gemini, and other AI image generators.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
