@@ -1,0 +1,267 @@
+{
+  "id": "product-1",
+  "name": "Products Jan 6, 2026",
+  "createdAt": "2026-01-06",
+  "products": [
+    {
+      "id": "product-1-001",
+      "prompt": "A high-resolution 8K photograph of a custom Coca-Cola can centered on a rugged white-gray rocky surface, designed with refreshing appeal in mind. The can maintains its iconic cherry red color and glistens with realistic condensation droplets, while displaying the classic white Coca-Cola script replaced with \"PATTY\" and featuring a small white heart symbol positioned elegantly above the text. Two small ceramic bowls filled with fresh strawberries sporting glossy green stems are delicately positioned on either side of the can, their surfaces catching and reflecting the ambient light to add vibrant pops of natural color. In the softly blurred background, large red roses rise majestically, creating a romantic and luxurious atmosphere that complements the custom beverage presentation.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-001-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2PEoHYKF0MsxUu2XfVw65b4a0YdcmNEKWg38D",
+          "generatedAt": "2026-01-06T11:42:47.365Z"
+        },
+        {
+          "id": "product-1-001-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2z8dXASrC350ofX6HCBqLxkQTGiaJcFjuPprm",
+          "generatedAt": "2026-01-06T11:42:47.365Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-002",
+      "prompt": "A high-end commercial studio photograph of an elegant perfume bottle floating gracefully in a flowing stream of luxurious white liquid chocolate, captured in the sophisticated style of a Vogue editorial. The sleek glass bottle with no text or branding reflects soft golden highlights as it rests suspended in the creamy, sensual flow, with gentle ripples creating mesmerizing patterns around its base. Scattered white and champagne-colored pearls of varying sizes create organic clusters throughout the composition, while delicate flakes and crumbs of white chocolate cascade from above, frozen mid-fall by the camera. The scene is bathed in premium studio lighting that emphasizes the glossy surfaces and creamy textures, set against a dreamy bokeh background that fades into soft ivory and pearl tones, creating an ultra-luxurious and feminine aesthetic.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-002-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2BroKuCILMSORyzsXlgP2vLw5AI0kGb4FjcxQ",
+          "generatedAt": "2026-01-06T11:41:59.647Z"
+        },
+        {
+          "id": "product-1-002-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2nXzUZbwUXP6TVlYGCWybpJN1eLdgIHr5jo3Z",
+          "generatedAt": "2026-01-06T11:41:59.647Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-003",
+      "prompt": "A luxurious studio photograph of an elegant gold-capped lipstick standing upright on a pristine ivory marble surface. The lipstick tube features sleek rose gold metallic casing with subtle geometric engravings, catching soft golden reflections that create warm highlights across its polished surface. The minimalist composition is bathed in professional studio lighting that emphasizes the product's premium textures and lustrous finish, with delicate shadows falling gracefully to one side. The background fades into a dreamy beige gradient with subtle golden undertones, creating an atmosphere of sophisticated luxury and timeless elegance.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-003-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2A5tfjzkztfwZoUOJQ627nISX4vxmPAlG1EuR",
+          "generatedAt": "2026-01-06T11:40:12.578Z"
+        },
+        {
+          "id": "product-1-003-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2A0wb9fkztfwZoUOJQ627nISX4vxmPAlG1EuR",
+          "generatedAt": "2026-01-06T11:40:12.578Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-004",
+      "prompt": "A professional hyper-realistic product photography shot featuring a 300ml transparent glass bottle and ocean-blue can of FeeJee Beer, positioned on a bed of fine golden sand that sparkles in the warm light. The Corona-style bottle contains crisp golden lager with a perfect white foam head, while both containers display vibrant tropical labels showcasing palm trees, sunny beaches, and the slogan \"Fiji's Liquid Gold\" in sharp detail, with realistic condensation droplets glistening on their surfaces. The background reveals a stunning tropical cove with crystal-clear turquoise water and gentle waves, complemented by distant coconut palms rendered in soft bokeh to maintain product focus. Golden hour sunlight bathes the entire scene, creating brilliant highlights and sharp reflections on the glass and aluminum surfaces, captured with commercial DSLR quality using an 85mm lens with shallow depth of field for maximum visual impact.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-004-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2155zK07ZKJD5CfLUHAYcwr2RxbhVP4Odnpuv",
+          "generatedAt": "2026-01-06T11:39:24.202Z"
+        },
+        {
+          "id": "product-1-004-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2LkVQNbO2l3sd87SnxZgIhMebXVHLTGCF0QqD",
+          "generatedAt": "2026-01-06T11:39:24.202Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-005",
+      "prompt": "A luxurious still life photograph showcasing an elegant \"NoNa\" lipstick tube as the central focus, nestled within a sumptuous red velvet presentation box. The lipstick sits gracefully on a polished white marble surface, its sleek design complemented by gold cursive lettering on the velvet box and a playfully tilted rhinestone-studded cap that catches the light. A delicate gold key charm adorned with intricate crystal details rests beside the cosmetic, while a single deep burgundy rose unfurls in the foreground, surrounded by scattered soft pink and cream rose petals. Gentle, diffused natural light streams through a nearby window, creating subtle highlights on the marble and velvet textures while casting a warm, intimate glow across the opulent arrangement.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-005-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2OIBqN8rP48FGD2xSoiTXfVQRpjcmKHUyns67",
+          "generatedAt": "2026-01-06T11:38:45.152Z"
+        },
+        {
+          "id": "product-1-005-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2skU7JEYZHP9trK20NXcquLGohVW3g8aw6bYB",
+          "generatedAt": "2026-01-06T11:38:45.152Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-006",
+      "prompt": "A professional product photograph of a white Dove hand wash bottle with an elegant teardrop shape and pump dispenser, positioned slightly left of center on a pristine white marble surface. The bottle features the \"Dove\" brand name in navy blue text, \"NOURISHING SECRETS\" in gold lettering, and \"INVIGORATING RITUAL HANDWASH\" in vibrant orange text, along with detailed illustrations of a halved avocado and two bright orange marigold flowers adorning the label. The white marble surface beneath showcases delicate gray veining that adds subtle texture and luxury to the composition. Bright, even lighting illuminates the scene from above, casting gentle shadows beneath the bottle while creating a softly blurred, minimalist bathroom background that emphasizes the product's premium quality and clean aesthetic.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-006-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2AXNixIkztfwZoUOJQ627nISX4vxmPAlG1EuR",
+          "generatedAt": "2026-01-06T11:38:09.979Z"
+        },
+        {
+          "id": "product-1-006-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2X2jahrnbblUYSrA6ih1fmEqOI9tycuNa7HpG",
+          "generatedAt": "2026-01-06T11:38:09.979Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-007",
+      "prompt": "luxury product photography of a black 2 oz room spray bottle labeled “Atelier Neige – Just A Sniff”, sitting on a marble surface with soft winter light. Create an ultra-clean, high-end aesthetic. Surround the bottle with elegant floating fragrance notes illustrated as delicate translucent elements: white birch branches with icy texture, frosted amber crystals glowing softly, and silky white musk mist swirling gently around the bottle. Include shimmering cool-toned bokeh, soft snow-kissed air, minimalistic winter ambiance, crisp whites and silvers, editorial beauty lighting, depth of field, 85mm lens, high-resolution, no hands, no people.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-007-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2OFVqXYrP48FGD2xSoiTXfVQRpjcmKHUyns67",
+          "generatedAt": "2026-01-06T11:37:41.134Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-008",
+      "prompt": "A hyper-realistic beauty product photograph shot with a professional DSLR camera and 50mm lens, featuring a young woman with naturally glowing skin holding a sleek glass serum bottle close to her face. Her skin shows authentic texture with visible pores and a healthy radiance, while she gazes confidently at the camera with relaxed, natural expressions. The elegant serum bottle features a matte label reading \"Go Glow – Vitamin D Serum\" and displays a small clear \"Contra.com\" logo on the front, with a fresh orange cut in half positioned beside her hand, revealing juicy pulp and glistening droplets. Soft natural sunlight streams from the side, creating subtle reflections on the glass bottle and a gentle bokeh effect in the background, achieving the polished aesthetic of a high-end skincare campaign.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-008-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR20RG4B85bylzOHvVT5R436ZqpGBghsL9fSda2",
+          "generatedAt": "2026-01-06T11:37:09.690Z"
+        },
+        {
+          "id": "product-1-008-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2NKr8OOgaBdlqjPXw341U9QsWauVkMpxJZHy8",
+          "generatedAt": "2026-01-06T11:37:09.690Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-009",
+      "prompt": "A dreamy product photography shot of a sleek beverage bottle labeled \"MAJU\" floating weightlessly in a ethereal cloud of soft pastel mist. The bottle features elegant minimalist typography and catches prismatic light that creates rainbow reflections across its smooth surface. Delicate water droplets suspended in mid-air sparkle like tiny diamonds around the product, while a gentle gradient of lavender and mint green hues creates a serene, otherworldly atmosphere. Soft diffused lighting bathes the entire scene in a luminous glow, giving the composition a floating, celestial quality perfect for a refreshing beverage.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-009-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2wM9iHEB3HbAZuGDSxhYtsldyqnc58oQjOefL",
+          "generatedAt": "2026-01-06T11:36:32.406Z"
+        },
+        {
+          "id": "product-1-009-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2Kw0m838RXdWHSgj7U5ELMtwr4aQD3oKRBvel",
+          "generatedAt": "2026-01-06T11:36:32.406Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-010",
+      "prompt": "A vibrant product photography shot of a translucent coral bottle containing a citrus-açaí blend, positioned on a speckled terrazzo kitchen countertop. The bottle reveals a beautiful warm pink-to-orange gradient liquid inside and features a sunrise-mimicking gradient label with a pearlized cap and slim energy indicator stripe in coral pink, apricot, and soft gold tones. The terrazzo surface is artfully scattered with dried orange peels, citrus fruit fragments, a small bowl of dried peels, and a glass of juice with visible condensation droplets, while a potted plant adds a touch of life to the composition. Bright, natural midday light streams through a nearby window with gentle reflector softening, creating a warm bias that enhances the bottle's gradient colors and casts soft shadows across the textured countertop.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-010-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2G72hwn0gHyTkplSLqNZC8fehjDvc4xAuWJmI",
+          "generatedAt": "2026-01-06T11:35:56.826Z"
+        },
+        {
+          "id": "product-1-010-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2oeUZgK9Cd74YJSfcD1rjQy2EbZRFuwn3vqsp",
+          "generatedAt": "2026-01-06T11:35:56.826Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-011",
+      "prompt": "A photograph in the style of Annie Leibovitz portrays a single, exquisitely crafted bottle of \"Courisse senteur\" designed by \"Courisse,\" elegantly positioned upon a luxurious bed of warm, ochre-colored desert sand, reminiscent of the sun-drenched landscapes of antiquity. The perfume bottle, a study in minimalist design, subtly mirrors the graceful curves of ancient architecture, its glass surface reflecting the golden hues of the setting sun with an ethereal, otherworldly luminescence that catches every facet of its crystalline form. Behind the bottle, a softly blurred panorama of undulating dunes melts into a fiery horizon painted in amber and coral tones, hinting at the rich, fragrant origins of the scent. The scene is bathed in warm directional lighting that creates dramatic shadows across the wind-carved patterns in the textured sand, amplifying the sense of serene beauty and timeless luxury.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-011-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR233J55EDzUDICgu1tQyAJBX8vPxVrRMqi7dmf",
+          "generatedAt": "2026-01-06T11:35:13.851Z"
+        },
+        {
+          "id": "product-1-011-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2zsN4TqC350ofX6HCBqLxkQTGiaJcFjuPprmY",
+          "generatedAt": "2026-01-06T11:35:13.851Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-012",
+      "prompt": "A clean, minimalist product photography setup featuring an elegant collection of skincare products arranged on a pristine white marble surface. The products include sleek glass serum bottles with dropper caps, luxurious cream jars with gold accents, and modern pump dispensers in soft pastel colors of rose gold, pearl white, and sage green. Delicate elements like fresh eucalyptus leaves, smooth river stones, and scattered rose petals create a spa-like atmosphere around the products. The scene is bathed in soft, diffused natural light that creates gentle shadows and highlights the premium textures and finishes of each skincare item.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-012-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2Br4sqNjLMSORyzsXlgP2vLw5AI0kGb4FjcxQ",
+          "generatedAt": "2026-01-06T11:34:33.381Z"
+        },
+        {
+          "id": "product-1-012-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2abewX7xFGkj31DwQeHxu4IEm8V2CJOWPvNtf",
+          "generatedAt": "2026-01-06T11:34:33.381Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-013",
+      "prompt": "A professional studio product photograph of a crystal-clear glass perfume bottle with a brushed metallic silver cap, elegantly centered against a soft gradient background transitioning from light beige to pale blue. The transparent bottle features crisp black text reading \"MG34 EAU DE PARFUM\" on its minimalist label, with the glass beautifully refracting diffused light from the left side. Surrounding the bottle is an artful arrangement of fresh lemon slices revealing vibrant yellow flesh, delicate blue forget-me-not flowers with emerald green stems, scattered dried black tea leaves, golden amber honeycomb pieces, and rich brown leather accents. The entire composition rests on a glossy reflective surface creating subtle mirror effects and gentle shadows, while professional studio lighting emphasizes every premium detail with razor-sharp focus and a sophisticated muted color palette.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-013-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2aArOlvxFGkj31DwQeHxu4IEm8V2CJOWPvNtf",
+          "generatedAt": "2026-01-06T11:33:30.293Z"
+        },
+        {
+          "id": "product-1-013-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR22KstNmjpaLYQPdi1vN4OEWnBlV2UKIMDb0rR",
+          "generatedAt": "2026-01-06T11:33:30.293Z"
+        }
+      ]
+    },
+    {
+      "id": "product-1-014",
+      "prompt": "A photograph showcases a sleek black bottle of \"Charcoal Face Wash\" standing upright against a textured dark slate background. The bottle has a minimalist design with subtle silver lettering and a matte finish, centered within the frame. Surrounding the base are scattered charcoal chunks of varying sizes, interspersed with vibrant green tea tree leaves and a splash of frothy white foam, creating a sense of deep cleansing and natural ingredients. Soft, diffused lighting highlights the bottle and surrounding elements, casting subtle leaf shadow effects and evoking a detoxifying, modern, and ayurvedic aesthetic.",
+      "createdAt": "2026-01-06",
+      "outputs": [
+        {
+          "id": "product-1-014-gemini",
+          "model": "Gemini nano banana",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2YvvQXG4fvb1IFo053ymRaWAQXt9p4OGVxlUe",
+          "generatedAt": "2026-01-06T11:32:50.443Z"
+        },
+        {
+          "id": "product-1-014-ideogram",
+          "model": "ideogram",
+          "imageUrl": "https://vez0oe5meo.ufs.sh/f/8CbD1x3pxqR2wOOQKciB3HbAZuGDSxhYtsldyqnc58oQjOef",
+          "generatedAt": "2026-01-06T11:32:50.443Z"
+        }
+      ]
+    }
+  ]
+}

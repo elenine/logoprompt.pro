@@ -58,7 +58,8 @@ temp/
 *.sqlite3
 
 /generations
-/product-generation
+/product-generations
+/creative-generations
 
 # Auto Claude data directory
 .auto-claude/

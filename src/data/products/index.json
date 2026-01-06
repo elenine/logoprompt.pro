@@ -1,0 +1,13 @@
+{
+  "files": [
+    {
+      "id": "product-1",
+      "name": "Products Jan 6, 2026",
+      "path": "product-1.json",
+      "createdAt": "2026-01-06",
+      "productCount": 14
+    }
+  ],
+  "totalProducts": 14,
+  "lastUpdated": "2026-01-06T11:47:42.394Z"
+}

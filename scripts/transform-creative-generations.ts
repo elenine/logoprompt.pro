@@ -9,7 +9,7 @@ const DRY_RUN = process.env.DRY_RUN === "true";
 
 // UploadThing API Token
 const UPLOADTHING_TOKEN =
-  "eyJhcGlLZXkiOiJza19saXZlXzExNjQ3M2M4MjQ1YjRhYTlmMjdiM2E0OWI3MGYzNzE1YjY5Y2E1OTJkYjQ5ODUwOGMxNjRiMmQyMmE1NjkxYjAiLCJhcHBJZCI6Imx6MXN1dDZlNmsiLCJyZWdpb25zIjpbInNlYTEiXX0=";
+  "eyJhcGlLZXkiOiJza19saXZlXzkwOTA3ZDkxOTRmYWE0OTMzNDNjODljMDlkYzMyNmUyN2FiODBmNGExNjdkM2FiMzBlZjEzNjU0YTFiOGY1ZjYiLCJhcHBJZCI6ImRkdTJ5YzJ4a3giLCJyZWdpb25zIjpbInNlYTEiXX0=";
 
 // Image optimization settings
 const MAX_DIMENSION = 800; // Max width/height in pixels
