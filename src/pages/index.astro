@@ -8,7 +8,7 @@ import GalleryTabs from '../components/GalleryTabs.astro';
 import InstallPrompt from '../components/InstallPrompt.astro';
 import type { LogoFile, LogoGeneration } from '../types/logo';
 import type { ProductFile } from '../types/product';
-import type { FlyerFile } from '../types/flyer';
+import type { CreativeFile } from '../types/creative';
 
 // Load all logo files dynamically using Vite's glob import
 const logoFiles = import.meta.glob('../data/logos/logo-*.json', { eager: true });
@@ -16,8 +16,8 @@ const logoFiles = import.meta.glob('../data/logos/logo-*.json', { eager: true })
 // Load all product files to calculate card count
 const productFiles = import.meta.glob('../data/products/product-*.json', { eager: true });
 
-// Load all flyer files to calculate card count
-const flyerFiles = import.meta.glob('../data/flyers/flyer-*.json', { eager: true });
+// Load all creative files to calculate card count
+const creativeFiles = import.meta.glob('../data/creatives/creative-*.json', { eager: true });
 
 // Calculate product card count (not prompt count)
 let productCardCount = 0;
@@ -29,13 +29,13 @@ for (const path in productFiles) {
   }
 }
 
-// Calculate flyer card count
-let flyerCardCount = 0;
-for (const path in flyerFiles) {
-  const file = flyerFiles[path] as { default: FlyerFile };
-  const flyerFile = file.default;
-  for (const flyer of flyerFile.flyers) {
-    flyerCardCount += flyer.outputs.length;
+// Calculate creative card count
+let creativeCardCount = 0;
+for (const path in creativeFiles) {
+  const file = creativeFiles[path] as { default: CreativeFile };
+  const creativeFile = file.default;
+  for (const creative of creativeFile.creatives) {
+    creativeCardCount += creative.outputs.length;
   }
 }
 
@@ -166,7 +166,7 @@ const logoCardCount = generations.length;
       })();
     </script>
 
-    <GalleryTabs activeTab="logos" logoCount={logoCardCount} productCount={productCardCount} flyerCount={flyerCardCount} />
+    <GalleryTabs activeTab="logos" logoCount={logoCardCount} productCount={productCardCount} creativeCount={creativeCardCount} />
 
     <section class="logos-section">
       <ModelFilter models={models} />

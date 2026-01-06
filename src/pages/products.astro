@@ -7,7 +7,7 @@ import ModelFilter from '../components/ModelFilter.astro';
 import GalleryTabs from '../components/GalleryTabs.astro';
 import type { ProductFile, ProductGeneration } from '../types/product';
 import type { LogoFile } from '../types/logo';
-import type { FlyerFile } from '../types/flyer';
+import type { CreativeFile } from '../types/creative';
 
 // Load all product files dynamically using Vite's glob import
 const productFiles = import.meta.glob('../data/products/product-*.json', { eager: true });
@@ -15,8 +15,8 @@ const productFiles = import.meta.glob('../data/products/product-*.json', { eager
 // Load all logo files to calculate card count
 const logoFiles = import.meta.glob('../data/logos/logo-*.json', { eager: true });
 
-// Load all flyer files to calculate card count
-const flyerFiles = import.meta.glob('../data/flyers/flyer-*.json', { eager: true });
+// Load all creative files to calculate card count
+const creativeFiles = import.meta.glob('../data/creatives/creative-*.json', { eager: true });
 
 // Calculate logo card count (not prompt count)
 let logoCardCount = 0;
@@ -28,13 +28,13 @@ for (const path in logoFiles) {
   }
 }
 
-// Calculate flyer card count
-let flyerCardCount = 0;
-for (const path in flyerFiles) {
-  const file = flyerFiles[path] as { default: FlyerFile };
-  const flyerFile = file.default;
-  for (const flyer of flyerFile.flyers) {
-    flyerCardCount += flyer.outputs.length;
+// Calculate creative card count
+let creativeCardCount = 0;
+for (const path in creativeFiles) {
+  const file = creativeFiles[path] as { default: CreativeFile };
+  const creativeFile = file.default;
+  for (const creative of creativeFile.creatives) {
+    creativeCardCount += creative.outputs.length;
   }
 }
 
@@ -152,7 +152,7 @@ const productCardCount = generations.length;
       })();
     </script>
 
-    <GalleryTabs activeTab="products" logoCount={logoCardCount} productCount={productCardCount} flyerCount={flyerCardCount} />
+    <GalleryTabs activeTab="products" logoCount={logoCardCount} productCount={productCardCount} creativeCount={creativeCardCount} />
 
     <section class="products-section">
       {generations.length > 0 ? (

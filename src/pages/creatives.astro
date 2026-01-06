@@ -2,15 +2,15 @@
 export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
-import FlyerCard from '../components/FlyerCard.astro';
+import CreativeCard from '../components/CreativeCard.astro';
 import ModelFilter from '../components/ModelFilter.astro';
 import GalleryTabs from '../components/GalleryTabs.astro';
-import type { FlyerFile, FlyerGeneration } from '../types/flyer';
+import type { CreativeFile, CreativeGeneration } from '../types/creative';
 import type { LogoFile } from '../types/logo';
 import type { ProductFile } from '../types/product';
 
-// Load all flyer files dynamically using Vite's glob import
-const flyerFiles = import.meta.glob('../data/flyers/flyer-*.json', { eager: true });
+// Load all creative files dynamically using Vite's glob import
+const creativeFiles = import.meta.glob('../data/creatives/creative-*.json', { eager: true });
 
 // Load all logo files to calculate card count
 const logoFiles = import.meta.glob('../data/logos/logo-*.json', { eager: true });
@@ -38,19 +38,19 @@ for (const path in productFiles) {
   }
 }
 
-// Combine all flyers from all files
-const allFlyers: FlyerGeneration[] = [];
+// Combine all creatives from all files
+const allCreatives: CreativeGeneration[] = [];
 
-for (const path in flyerFiles) {
-  const file = flyerFiles[path] as { default: FlyerFile };
-  const flyerFile = file.default;
+for (const path in creativeFiles) {
+  const file = creativeFiles[path] as { default: CreativeFile };
+  const creativeFile = file.default;
 
-  // Flatten flyers into individual generation cards
-  for (const flyer of flyerFile.flyers) {
-    for (const output of flyer.outputs) {
-      allFlyers.push({
+  // Flatten creatives into individual generation cards
+  for (const creative of creativeFile.creatives) {
+    for (const output of creative.outputs) {
+      allCreatives.push({
         id: output.id,
-        prompt: flyer.prompt,
+        prompt: creative.prompt,
         model: output.model,
         imageUrl: output.imageUrl,
         generatedAt: output.generatedAt,
@@ -60,18 +60,18 @@ for (const path in flyerFiles) {
 }
 
 // Sort by generation date (newest first)
-const generations = allFlyers.sort(
+const generations = allCreatives.sort(
   (a, b) => new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime()
 );
 
 // Get unique models for filter
 const models = [...new Set(generations.map(g => g.model))].sort();
 
-// Flyer card count = generations.length (flattened outputs)
-const flyerCardCount = generations.length;
+// Creative card count = generations.length (flattened outputs)
+const creativeCardCount = generations.length;
 ---
 
-<Layout title="LogoPrompt Pro - AI Flyer Generation Gallery">
+<Layout title="LogoPrompt Pro - AI Creative Generation Gallery">
   <main>
     <header class="hero">
       <div class="hero-glow"></div>
@@ -82,16 +82,16 @@ const flyerCardCount = generations.length;
         </div>
         <h1>
           <span class="hero-title-line">Discover stunning</span>
-          <span class="hero-title-gradient">AI flyer prompts</span>
+          <span class="hero-title-gradient">AI creative prompts</span>
         </h1>
         <p class="tagline">
-          Explore our curated collection of AI-generated flyer designs, updated every week. Copy prompts instantly
-          and create unique flyers with Ideogram, Gemini, and more.
+          Explore our curated collection of AI-generated creative designs, updated every week. Copy prompts instantly
+          and create unique creatives with Ideogram, Gemini, and more.
         </p>
         <div class="hero-stats">
           <div class="stat">
             <span class="stat-value">{generations.length}</span>
-            <span class="stat-label">Flyers</span>
+            <span class="stat-label">Creatives</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat">
@@ -112,7 +112,7 @@ const flyerCardCount = generations.length;
         <li class="step-item">
           <span class="step-num">1</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          <span><strong>Copy prompt</strong> from any flyer</span>
+          <span><strong>Copy prompt</strong> from any creative</span>
         </li>
         <li class="step-item">
           <span class="step-num">2</span>
@@ -122,7 +122,7 @@ const flyerCardCount = generations.length;
         <li class="step-item">
           <span class="step-num">3</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          <span><strong>Paste & generate</strong> your flyer</span>
+          <span><strong>Paste & generate</strong> your creative</span>
         </li>
       </ol>
     </section>
@@ -172,15 +172,15 @@ const flyerCardCount = generations.length;
       })();
     </script>
 
-    <GalleryTabs activeTab="flyers" logoCount={logoCardCount} productCount={productCardCount} flyerCount={flyerCardCount} />
+    <GalleryTabs activeTab="creatives" logoCount={logoCardCount} productCount={productCardCount} creativeCount={creativeCardCount} />
 
-    <section class="flyers-section">
+    <section class="creatives-section">
       {generations.length > 0 ? (
         <>
-          <ModelFilter models={models} gridSelector=".flyers-grid" cardSelector=".flyer-card" />
-          <div class="flyers-grid">
+          <ModelFilter models={models} gridSelector=".creatives-grid" cardSelector=".creative-card" />
+          <div class="creatives-grid">
             {generations.map((generation) => (
-              <FlyerCard generation={generation} />
+              <CreativeCard generation={generation} />
             ))}
           </div>
 
@@ -204,8 +204,8 @@ const flyerCardCount = generations.length;
               <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
           </div>
-          <h2>No Flyers Yet</h2>
-          <p>Flyers will appear here once they are generated and processed.</p>
+          <h2>No Creatives Yet</h2>
+          <p>Creatives will appear here once they are generated and processed.</p>
           <a href="/" class="back-to-logos">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             Browse Logos Instead
@@ -592,12 +592,12 @@ const flyerCardCount = generations.length;
     }
   }
 
-  /* Flyers Section */
-  .flyers-section {
+  /* Creatives Section */
+  .creatives-section {
     padding-top: 1rem;
   }
 
-  .flyers-grid {
+  .creatives-grid {
     --grid-columns: 6;
     display: grid;
     grid-template-columns: repeat(var(--grid-columns), 1fr);
@@ -605,44 +605,44 @@ const flyerCardCount = generations.length;
   }
 
   @media (max-width: 1200px) {
-    .flyers-grid {
+    .creatives-grid {
       grid-template-columns: repeat(min(var(--grid-columns), 3), 1fr);
     }
   }
 
   @media (max-width: 900px) {
-    .flyers-grid {
+    .creatives-grid {
       grid-template-columns: repeat(min(var(--grid-columns), 2), 1fr);
     }
   }
 
   /* Animation for cards loading in */
-  .flyers-grid :global(.flyer-card) {
+  .creatives-grid :global(.creative-card) {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
-  .flyers-grid :global(.flyer-card.fade-in) {
+  .creatives-grid :global(.creative-card.fade-in) {
     opacity: 1;
     transform: translateY(0);
   }
 
   /* Ad banner styles (for dynamically inserted ads) */
-  .flyers-grid :global(.ad-banner) {
+  .creatives-grid :global(.ad-banner) {
     grid-column: 1 / -1;
     width: 100%;
     padding: 1rem 0;
   }
 
-  .flyers-grid :global(.ad-content) {
+  .creatives-grid :global(.ad-content) {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  .flyers-grid :global(.ad-label) {
+  .creatives-grid :global(.ad-label) {
     font-size: 0.6rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -651,7 +651,7 @@ const flyerCardCount = generations.length;
     margin-bottom: 0.25rem;
   }
 
-  .flyers-grid :global(.ad-container) {
+  .creatives-grid :global(.ad-container) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -660,7 +660,7 @@ const flyerCardCount = generations.length;
     max-width: 728px;
   }
 
-  .flyers-grid :global(.ad-container iframe) {
+  .creatives-grid :global(.ad-container iframe) {
     max-width: 100%;
   }
 
@@ -750,13 +750,13 @@ const flyerCardCount = generations.length;
   }
 
   @media (max-width: 768px) {
-    .flyers-grid :global(.ad-container) {
+    .creatives-grid :global(.ad-container) {
       overflow-x: auto;
     }
   }
 
   @media (max-width: 500px) {
-    .flyers-grid {
+    .creatives-grid {
       grid-template-columns: 1fr;
     }
   }
